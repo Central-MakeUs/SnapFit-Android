@@ -1,47 +1,114 @@
 [versions]
+# project
 compileSdk = "34"
-minSdk = "24"
+minSdk = "32"
 targetSdk = "34"
 
-activityCompose = "1.9.0"
+# android & kotlin
 agp = "8.5.0"
-composeBom = "2024.06.00"
-koinAndroidxCompose = "3.5.6"
+coreKtx = "1.13.1"
 kotlin = "2.0.0"
-coreKtx = "1.10.1"
+lifecycle = "2.8.3"
+composeMaterialIcons = "1.6.8"
+
+# compose
+compose = "1.6.8"
+composeBom = "2024.06.00"
+activityy = "1.9.0"
+
+# tests
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-appcompat = "1.6.1"
-ktor = "2.3.12"
-lifecycle = "2.8.3"
-material = "1.10.0"
-constraintlayout = "2.1.4"
+
+# koin
+koin = "3.5.6"
+
+# coil
+coil = "2.6.0"
+
+# navigation
+navigation = "2.7.7"
+
+# orbit
+orbit = "8.0.0"
+
+# ksp
 ksp = "2.0.0-1.0.21"
+
+# room
 room = "2.6.1"
 
+# ktor
+ktor = "2.3.12"
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.0.0"
+
 [libraries]
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+# android essentials
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeMaterialIcons" }
+
+# unit tests
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
-ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
-ktor-client-cio-jvm = { group = "io.ktor", name = "ktor-client-cio-jvm", version.ref = "ktor" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+
+# compose
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityy" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+
+# compose tests
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose" }
+
+# koin
+koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+
+# coil
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# navigation
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+koin-navigation = { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
+
+# orbit
+orbit = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
+orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbit" }
+orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
+orbit-test = { group = "org.orbit-mvi", name = "orbit-test", version.ref = "orbit" }
+
+# room
+room = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# ktor
+ktor = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [bundles]
-ktor = ["ktor-client-android", "ktor-client-cio-jvm"]
-koin = ["koin-androidx-compose"]
+essentials = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "androidx-compose-material3", "androidx-compose-material-icons"]
+unitTests = ["junit"]
+androidTests = ["androidx-junit", "androidx-espresso-core"]
+compose = ["androidx-activity-compose", "androidx-compose-ui", "androidx-compose-ui-graphics", "androidx-compose-ui-tooling", "androidx-compose-ui-tooling-preview", "androidx-compose-ui-test-manifest", "androidx-lifecycle-runtime-compose"]
+composeTests = ["androidx-compose-ui-test-junit4"]
+koin = ["koin", "koin-compose"]
+coil = ["coil", "coil-compose"]
+navigation = ["androidx-navigation-compose", "koin-navigation"]
+orbit = ["orbit", "orbit-compose", "orbit-viewmodel", "orbit-test"]
+ktor = ["ktor", "ktor-cio"]
