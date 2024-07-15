@@ -43,4 +43,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="auth_loginWithKakao">카카오로 계속하기</string>
+    <string name="auth_loginWithApple">Apple로 계속하기</string>
+    <string name="auth_lookAround">둘러보기</string>
 </resources>
