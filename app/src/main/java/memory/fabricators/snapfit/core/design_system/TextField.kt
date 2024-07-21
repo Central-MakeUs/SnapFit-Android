@@ -15,6 +15,7 @@ fun TextField(
     value: String,
     onValueChange: (String) -> Unit,
     hintValue: String? = null,
+    maxLines: Int = 1,
 ) = androidx.compose.material3.OutlinedTextField(
     modifier = modifier,
     value = value,
@@ -25,7 +26,8 @@ fun TextField(
     } else {
         null
     },
-    colors = TextFieldDefaults.colors()
+    colors = TextFieldDefaults.colors(),
+    maxLines = maxLines,
 )
 
 object TextFieldDefaults {

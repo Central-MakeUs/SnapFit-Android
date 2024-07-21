@@ -5,8 +5,7 @@ import memory.fabricators.snapfit.data.dataModule
 import memory.fabricators.snapfit.database.databaseModule
 import memory.fabricators.snapfit.datastore.dataStoreModule
 import memory.fabricators.snapfit.network.networkModule
-import memory.fabricators.snapfit.ui.signup.NicknameContent
-import memory.fabricators.snapfit.ui.signup.TermsContent
+import memory.fabricators.snapfit.ui.signup.PhotoMoodSelectionContent
 import memory.fabricators.snapfit.ui.uiModule
 import org.koin.compose.KoinApplication
 import org.koin.core.module.Module
@@ -19,7 +18,7 @@ fun SnapfitApp() {
             modules(snapfitModule)
         },
     ) {
-        NicknameContent()
+        PhotoMoodSelectionContent()
     }
 }
 
