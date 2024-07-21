@@ -47,11 +47,16 @@
     <string name="auth_loginWithApple">Apple로 계속하기</string>
     <string name="auth_lookAround">둘러보기</string>
     <string name="navigate_back">뒤로가기</string>
-    <string name="terms_title_pleaseAgreeWithServiceTerms">스냅핏 서비스 이용약관에\n동의해주세요.</string>
-    <string name="terms_subtitle_pleaseAgreeWithRegisterAndInformationProviding">서비스 시작 및 가입을 위해 먼저\n가입 및 정보 제공에 동의해주세요.</string>
-    <string name="terms_cd_agree">동의</string>
-    <string name="terms_cd_enterTermsDescription">약관 상세 보기</string>
-    <string name="terms_cd_agreeAll">전체 동의</string>
-    <string name="terms_items_title_agreeAllWithOptionalInformation">전체 동의 (선택 정보 포함)</string>
-    <string name="nickname_pleaseEnterNickname">스냅핏에 오신 걸 환영합니다!\n닉네임을 설정해주세요.</string>
+    <string name="signUp_terms_title_pleaseAgreeWithServiceTerms">스냅핏 서비스 이용약관에\n동의해주세요.</string>
+    <string name="signUp_terms_subtitle_pleaseAgreeWithRegisterAndInformationProviding">서비스 시작 및 가입을 위해 먼저\n가입 및 정보 제공에 동의해주세요.</string>
+    <string name="signUp_terms_cd_agree">동의</string>
+    <string name="signUp_terms_cd_enterTermsDescription">약관 상세 보기</string>
+    <string name="signUp_terms_cd_agreeAll">전체 동의</string>
+    <string name="signUp_terms_items_title_agreeAllWithOptionalInformation">전체 동의 (선택 정보 포함)</string>
+    <string name="signUp_nickname_pleaseEnterNickname">스냅핏에 오신 걸 환영합니다!\n닉네임을 설정해주세요.</string>
+    <string name="signUp_terms_button_next">다음</string>
+    <string name="signUp_nickname_button_next">다음</string>
+    <string name="signUp_photoMoodSelection_title_whichMoodDoYouWant">어느 분위기의\n사진 촬영 원하시나요?</string>
+    <string name="signUp_photoMoodSelection_subtitle_canChooseTwoMoods">최대 2개까지 선택이 가능합니다.</string>
+    <string name="signUp_photoMoodSelection_button_start">시작하기</string>
 </resources>
