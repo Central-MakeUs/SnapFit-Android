@@ -1,16 +1,16 @@
 package memory.fabricators.snapfit
 
 import androidx.compose.runtime.Composable
-import memory.fabricators.snapfit.ui.auth.AuthScreen
+import memory.fabricators.snapfit.ui.signup.TermsContent
 import org.koin.compose.KoinApplication
 
 @Composable
-fun FabricatorsApp() {
+fun SnapfitApp() {
     KoinApplication(
         application = {
             modules()
         },
     ) {
-        AuthScreen()
+        TermsContent()
     }
 }
