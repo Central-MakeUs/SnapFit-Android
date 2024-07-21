@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
+import memory.fabricators.snapfit.ui.theme.SnapfitTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +19,9 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            FabricatorsApp()
+            SnapfitTheme {
+                SnapfitApp()
+            }
         }
     }
 }
