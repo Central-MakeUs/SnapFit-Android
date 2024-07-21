@@ -1,7 +1,6 @@
 package memory.fabricators.snapfit.ui.signup
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,16 +15,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -34,120 +28,94 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
-import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
+import memory.fabricators.snapfit.core.design_system.LocalTypography
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TermsContent(
     modifier: Modifier = Modifier,
 ) {
-    Scaffold(
-        modifier = modifier,
-        containerColor = LocalColorScheme.current.primaryWhite,
-        topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBackIosNew,
-                            contentDescription = stringResource(id = R.string.navigate_back),
-                        )
-                    }
-                },
-            )
-        },
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+    Box(
+        modifier = modifier.fillMaxSize(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        top = 32.dp,
-                    ),
-                    text = stringResource(id = R.string.terms_title_pleaseAgreeWithServiceTerms),
-                    style = LocalTypography.current.title1Semibold,
-                    color = LocalColorScheme.current.primaryBlack,
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                    ),
-                    text = stringResource(id = R.string.terms_subtitle_pleaseAgreeWithRegisterAndInformationProviding),
-                    style = LocalTypography.current.body1Regular,
-                    color = LocalColorScheme.current.secondary400,
-                )
-                Spacer(modifier = Modifier.height(32.dp))
+            Text(
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    top = 32.dp,
+                ),
+                text = stringResource(id = R.string.signUp_terms_title_pleaseAgreeWithServiceTerms),
+                style = LocalTypography.current.title1Semibold,
+                color = LocalColorScheme.current.primaryBlack,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Text(
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                ),
+                text = stringResource(id = R.string.signUp_terms_subtitle_pleaseAgreeWithRegisterAndInformationProviding),
+                style = LocalTypography.current.body1Regular,
+                color = LocalColorScheme.current.secondary400,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
 
 
-                TermsCheckGroup(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.terms_items_title_agreeAllWithOptionalInformation),
-                        )
-                    },
-                    // TODO
-                    isChecked = false,
-                    onCheckAll = {},
-                    onItemCheck = {},
-                    checks = listOf(
-                        TermsCheckItem(
-                            id = "asdfa",
-                            isChecked = false,
-                            title = "[필수] 이용 약관 동의",
-                            url = "ㅁㄴㅇㄹ",
-                        ),
-                        TermsCheckItem(
-                            id = "asdfa",
-                            isChecked = false,
-                            title = "[필수] 이용 약관 동의",
-                            url = "ㅁㄴㅇㄹ",
-                        ),
-                        TermsCheckItem(
-                            id = "asdfa",
-                            isChecked = true,
-                            title = "[필수] 이용 약관 동의",
-                            url = "ㅁㄴㅇㄹ",
-                        ),
-                        TermsCheckItem(
-                            id = "asdfa",
-                            isChecked = true,
-                            title = "[필수] 이용 약관 동의",
-                            url = "ㅁㄴㅇㄹ",
-                        ),
-                    ),
-                )
-            }
-            Box(
+            TermsCheckGroup(
                 modifier = Modifier
-                    .clickable { }
-                    .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .background(
-                        color = LocalColorScheme.current.primaryBlack,
+                    .padding(horizontal = 16.dp),
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.signUp_terms_items_title_agreeAllWithOptionalInformation),
+                    )
+                },
+                // TODO
+                isChecked = false,
+                onCheckAll = {},
+                onItemCheck = {},
+                checks = listOf(
+                    TermsCheckItem(
+                        id = "asdfa",
+                        isChecked = false,
+                        title = "[필수] 이용 약관 동의",
+                        url = "ㅁㄴㅇㄹ",
                     ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    modifier = Modifier.padding(all = 24.dp),
-                    text = "다음",
-                    style = LocalTypography.current.body1Semibold,
-                    color = LocalColorScheme.current.primaryWhite,
-                )
-            }
+                    TermsCheckItem(
+                        id = "asdfa",
+                        isChecked = false,
+                        title = "[필수] 이용 약관 동의",
+                        url = "ㅁㄴㅇㄹ",
+                    ),
+                    TermsCheckItem(
+                        id = "asdfa",
+                        isChecked = true,
+                        title = "[필수] 이용 약관 동의",
+                        url = "ㅁㄴㅇㄹ",
+                    ),
+                    TermsCheckItem(
+                        id = "asdfa",
+                        isChecked = true,
+                        title = "[필수] 이용 약관 동의",
+                        url = "ㅁㄴㅇㄹ",
+                    ),
+                ),
+            )
+        }
+        Button(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 24.dp,
+                ),
+            onClick = { /*TODO*/ },
+        ) {
+            Text(text = stringResource(id = R.string.signUp_terms_button_next))
         }
     }
 }
@@ -188,7 +156,7 @@ private fun TermsCheckGroup(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_check),
-                            contentDescription = stringResource(id = R.string.terms_cd_agreeAll),
+                            contentDescription = stringResource(id = R.string.signUp_terms_cd_agreeAll),
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
@@ -235,7 +203,7 @@ private fun TermsCheckItem(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.ic_check),
                 tint = if (isChecked) LocalColorScheme.current.secondary500 else LocalColorScheme.current.secondary300,
-                contentDescription = stringResource(id = R.string.terms_cd_agree),
+                contentDescription = stringResource(id = R.string.signUp_terms_cd_agree),
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -253,7 +221,7 @@ private fun TermsCheckItem(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(id = R.drawable.ic_arrow_right),
                 tint = LocalColorScheme.current.secondary300,
-                contentDescription = stringResource(id = R.string.terms_cd_enterTermsDescription),
+                contentDescription = stringResource(id = R.string.signUp_terms_cd_enterTermsDescription),
             )
         }
     }
