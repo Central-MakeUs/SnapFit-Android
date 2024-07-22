@@ -1,4 +1,4 @@
-package memory.fabricators.snapfit.ui.auth
+package memory.fabricators.snapfit.ui.start
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
 
 @Composable
-fun AuthScreen(
+fun StartScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -45,7 +45,7 @@ fun AuthScreen(
     ) { innerPadding ->
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.img_auth_background),
+            painter = painterResource(id = R.drawable.img_start_background),
             contentScale = ContentScale.Crop,
             contentDescription = null,
             colorFilter = ColorFilter.tint(
@@ -64,12 +64,12 @@ fun AuthScreen(
                 verticalArrangement = Arrangement.spacedBy(32.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.app_logo),
+                    painter = painterResource(id = R.drawable.app_logo_dark),
                     tint = Color.White,
                     contentDescription = null,
                 )
                 Text(
-                    text = "나에게 맞는 사진을 만날 수 있는,\n스냅핏에 오신걸 환영합니다!",
+                    text = stringResource(R.string.start_title_welcomeToSnapfit),
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.White,
                 )
@@ -96,10 +96,10 @@ fun AuthScreen(
                     },
                 ) {
                     Text(
-                        text = stringResource(id = R.string.auth_loginWithKakao),
+                        text = stringResource(id = R.string.start_loginWithKakao),
                     )
                 }
-                AuthButton(
+                /*AuthButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         // TODO
@@ -114,9 +114,9 @@ fun AuthScreen(
                     },
                 ) {
                     Text(
-                        text = stringResource(id = R.string.auth_loginWithApple),
+                        text = stringResource(id = R.string.start_loginWithApple),
                     )
-                }
+                }*/
                 TextButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = { /*TODO*/ },
@@ -125,7 +125,7 @@ fun AuthScreen(
                     ),
                 ) {
                     Text(
-                        text = stringResource(id = R.string.auth_lookAround),
+                        text = stringResource(id = R.string.start_lookAround),
                         textDecoration = TextDecoration.Underline,
                     )
                 }
