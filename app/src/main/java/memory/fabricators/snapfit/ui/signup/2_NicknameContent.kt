@@ -21,12 +21,13 @@ import memory.fabricators.snapfit.core.design_system.TextField
 
 @Composable
 fun NicknameContent(
+    onNext: () -> Unit,
     nickname: String,
     onChangeNickname: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -60,7 +61,7 @@ fun NicknameContent(
                     end = 16.dp,
                     bottom = 24.dp,
                 ),
-            onClick = { /*TODO*/ },
+            onClick = onNext,
         ) {
             Text(text = stringResource(id = R.string.signUp_nickname_button_next))
         }

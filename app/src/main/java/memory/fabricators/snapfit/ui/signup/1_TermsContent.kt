@@ -34,10 +34,11 @@ import memory.fabricators.snapfit.core.design_system.LocalTypography
 
 @Composable
 fun TermsContent(
+    onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -113,7 +114,7 @@ fun TermsContent(
                     end = 16.dp,
                     bottom = 24.dp,
                 ),
-            onClick = { /*TODO*/ },
+            onClick = onNext,
         ) {
             Text(text = stringResource(id = R.string.signUp_terms_button_next))
         }
