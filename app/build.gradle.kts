@@ -1,3 +1,9 @@
+import java.util.Properties
+
+val localProperties = Properties().also {
+    it.load(project.rootProject.file("local.properties").inputStream())
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -20,6 +26,16 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField(
+            type = "String",
+            name = "BASE_URL",
+            value = localProperties.getProperty("BASE_URL"),
+        )
+        buildConfigField(
+            type = "String",
+            name = "KAKAO_API_KEY",
+            value = localProperties.getProperty("KAKAO_API_KEY"),
+        )
     }
 
     buildTypes {
@@ -40,6 +56,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -61,6 +78,8 @@ dependencies {
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.orbit)
     implementation(libs.bundles.ktor)
+
+    implementation("com.kakao.sdk:v2-user:2.12.1")
 
     implementation(libs.room)
     ksp(libs.room.compiler)
