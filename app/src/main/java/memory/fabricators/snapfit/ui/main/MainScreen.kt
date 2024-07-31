@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -26,6 +29,8 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -50,6 +55,7 @@ import memory.fabricators.snapfit.core.design_system.SectionHeader
 fun MainScreen(
     modifier: Modifier = Modifier,
 ) {
+    val scrollState = rememberScrollState()
     Scaffold(
         modifier = modifier,
         containerColor = LocalColorScheme.current.primaryWhite,
@@ -82,7 +88,7 @@ fun MainScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPaddings)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(scrollState),
             // TODO
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -135,25 +141,25 @@ fun MainScreen(
 
             // TODO
             val temp = listOf(
-                Recommendation(
+                PhotoRecommendation(
                     id = "1234",
                     title = "감성을 담은 스냅사진",
                     location = "서울 중구",
                     price = 36500,
                 ),
-                Recommendation(
+                PhotoRecommendation(
                     id = "12345",
                     title = "감성을 담은 스냅사진",
                     location = "서울 중구",
                     price = 36500,
                 ),
-                Recommendation(
+                PhotoRecommendation(
                     id = "12346",
                     title = "감성을 담은 스냅사진",
                     location = "서울 중구",
                     price = 36500,
                 ),
-                Recommendation(
+                PhotoRecommendation(
                     id = "12347",
                     title = "감성을 담은 스냅사진",
                     location = "서울 중구",
@@ -172,7 +178,7 @@ fun MainScreen(
                     key = { it.id },
                 ) { recommendation ->
                     PhotoRecommendationItem(
-                        recommendation = recommendation,
+                        photoRecommendation = recommendation,
                     )
                 }
             }
@@ -196,6 +202,96 @@ fun MainScreen(
                     }
                 },
             )
+
+            val tempRecommendation = listOf(
+                MemoryRecommendation(
+                    id = "123",
+                    title = "추카랜드",
+                    tags = listOf(
+                        MemoryRecommendation.Tag(
+                            id = "1234",
+                            title = "시크",
+                        ),
+                        MemoryRecommendation.Tag(
+                            id = "123432",
+                            title = "시크",
+                        ),
+                        MemoryRecommendation.Tag(
+                            id = "123413",
+                            title = "시크",
+                        ),
+                    ),
+                ),
+                MemoryRecommendation(
+                    id = "1234",
+                    title = "추카랜드",
+                    tags = listOf(
+                        MemoryRecommendation.Tag(
+                            id = "1234",
+                            title = "시크",
+                        ),
+                    ),
+                ),
+                MemoryRecommendation(
+                    id = "1235",
+                    title = "추카랜드",
+                    tags = listOf(
+                        MemoryRecommendation.Tag(
+                            id = "12355",
+                            title = "시크",
+                        ),
+                        MemoryRecommendation.Tag(
+                            id = "1234",
+                            title = "시크",
+                        ),
+                    ),
+                ),
+
+                MemoryRecommendation(
+                    id = "12352",
+                    title = "추카랜드",
+                    tags = listOf(
+                        MemoryRecommendation.Tag(
+                            id = "12355",
+                            title = "시크",
+                        ),
+                    ),
+                ),
+
+                MemoryRecommendation(
+                    id = "123522",
+                    title = "추카랜드",
+                    tags = listOf(
+                        MemoryRecommendation.Tag(
+                            id = "12355",
+                            title = "시크",
+                        ),
+                        MemoryRecommendation.Tag(
+                            id = "12343",
+                            title = "시크",
+                        ),
+                    ),
+                ),
+            )
+            val height = 300 * ((tempRecommendation.size + 1) / 2)
+            LazyVerticalGrid(
+                modifier = Modifier.height(height.dp),
+                columns = GridCells.Fixed(count = 2),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(16.dp),
+                userScrollEnabled = false,
+            ) {
+                items(
+                    items = tempRecommendation,
+                    key = { it.id },
+                ) { recommendation ->
+                    MemoryRecommendationItem(
+                        modifier = Modifier.weight(1f),
+                        memoryRecommendation = recommendation,
+                    )
+                }
+            }
         }
     }
 }
@@ -244,16 +340,17 @@ private fun Header(
     }
 }
 
-data class Recommendation(
+data class PhotoRecommendation(
     val id: String,
     val title: String,
     val location: String,
     val price: Long,
+    // val imageUrl: String,
 )
 
 @Composable
 private fun PhotoRecommendationItem(
-    recommendation: Recommendation,
+    photoRecommendation: PhotoRecommendation,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -280,14 +377,14 @@ private fun PhotoRecommendationItem(
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = recommendation.title,
+            text = photoRecommendation.title,
             style = LocalTypography.current.body2Semibold,
             color = LocalColorScheme.current.primaryBlack,
             overflow = TextOverflow.Ellipsis,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = recommendation.location,
+            text = photoRecommendation.location,
             style = LocalTypography.current.caption2Regular,
             color = LocalColorScheme.current.secondary500,
             overflow = TextOverflow.Ellipsis,
@@ -296,11 +393,105 @@ private fun PhotoRecommendationItem(
         Text(
             modifier = Modifier.fillMaxWidth(),
             // TODO
-            text = "${recommendation.price}원",
+            text = "${photoRecommendation.price}원",
             style = LocalTypography.current.body2Semibold,
             color = LocalColorScheme.current.secondary500,
             overflow = TextOverflow.Ellipsis,
         )
+    }
+}
+
+data class MemoryRecommendation(
+    // val imageUrl: String,
+    val id: String,
+    val title: String,
+    val tags: List<Tag>,
+) {
+    data class Tag(
+        val id: String,
+        val title: String,
+    )
+}
+
+@Composable
+private fun MemoryRecommendationItem(
+    memoryRecommendation: MemoryRecommendation,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(
+                    color = Color.Green,
+                    shape = RoundedCornerShape(5.dp),
+                ),
+        ) {/*
+            IconButton(
+                modifier = Modifier.align(Alignment.TopEnd),
+                onClick = { *//*TODO*//* },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "favorite",
+                )
+            }*/
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = memoryRecommendation.title,
+            style = LocalTypography.current.body2Semibold,
+            color = LocalColorScheme.current.primaryBlack,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(
+                items = memoryRecommendation.tags,
+                key = { it.id },
+            ) { tag ->
+                MemoryRecommendationTag {
+                    Text(text = tag.title)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MemoryRecommendationTag(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .background(
+                color = LocalColorScheme.current.accentPink.copy(
+                    alpha = 0.1f,
+                ),
+                shape = RoundedCornerShape(2.dp),
+            )
+            .padding(
+                horizontal = 8.dp,
+                vertical = 2.dp,
+            ),
+    ) {
+        ProvideTextStyle(
+            value = LocalTypography.current.caption1Semibold.copy(
+                color = LocalColorScheme.current.accentPink,
+            ),
+            content = content,
+        )
+        OutlinedButton(onClick = { /*TODO*/ }) {
+
+        }
     }
 }
 
