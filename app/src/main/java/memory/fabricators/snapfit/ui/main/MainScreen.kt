@@ -29,7 +29,6 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -489,9 +488,6 @@ private fun MemoryRecommendationTag(
             ),
             content = content,
         )
-        OutlinedButton(onClick = { /*TODO*/ }) {
-
-        }
     }
 }
 
