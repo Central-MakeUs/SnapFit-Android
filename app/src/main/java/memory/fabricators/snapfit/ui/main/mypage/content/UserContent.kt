@@ -1,4 +1,4 @@
-package memory.fabricators.snapfit.ui.mypage.content
+package memory.fabricators.snapfit.ui.main.mypage.content
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
-import memory.fabricators.snapfit.ui.mypage.composables.Setting
-import memory.fabricators.snapfit.ui.mypage.composables.SettingsList
+import memory.fabricators.snapfit.ui.main.mypage.composables.Setting
+import memory.fabricators.snapfit.ui.main.mypage.composables.SettingsList
 
 @Composable
 fun UserContent(

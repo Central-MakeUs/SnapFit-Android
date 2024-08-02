@@ -1,5 +1,6 @@
-package memory.fabricators.snapfit.ui.mypage
+package memory.fabricators.snapfit.ui.main.mypage
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -48,9 +49,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
-import memory.fabricators.snapfit.ui.mypage.content.ArtistContent
-import memory.fabricators.snapfit.ui.mypage.content.UserContent
+import memory.fabricators.snapfit.ui.main.mypage.content.ArtistContent
+import memory.fabricators.snapfit.ui.main.mypage.content.UserContent
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyPageScreen(
@@ -60,6 +62,7 @@ fun MyPageScreen(
     val scrollState = rememberScrollState()
     Scaffold(
         modifier = modifier,
+        containerColor = LocalColorScheme.current.primaryWhite,
         topBar = {
             MyPageTopAppBar(
                 username = "한소희",
@@ -99,15 +102,19 @@ fun MyPageScreen(
             ArtistContent(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(scrollState)
-                    .padding(innerPaddings),
+                    .padding(
+                        top = innerPaddings.calculateTopPadding(),
+                    )
+                    .verticalScroll(scrollState),
             )
         } else {
             UserContent(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(scrollState)
-                    .padding(innerPaddings),
+                    .padding(
+                        top = innerPaddings.calculateTopPadding(),
+                    )
+                    .verticalScroll(scrollState),
             )
         }
     }
