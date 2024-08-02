@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.ui.main.home.HomeContent
-import memory.fabricators.snapfit.ui.main.mypage.MyPageScreen
+import memory.fabricators.snapfit.ui.main.mypage.MyPageContent
 
 @Composable
 fun MainScreen(
@@ -69,7 +69,7 @@ fun MainScreen(
                     .background(color = Color.Red),
             )
 
-            MainSections.MY_PAGE -> MyPageScreen(
+            MainSections.MY_PAGE -> MyPageContent(
                 isArtist = false,
                 modifier = Modifier
                     .fillMaxSize()

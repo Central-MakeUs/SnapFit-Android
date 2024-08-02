@@ -56,7 +56,7 @@ import memory.fabricators.snapfit.ui.main.mypage.content.UserContent
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyPageScreen(
+fun MyPageContent(
     isArtist: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -298,7 +298,7 @@ data class Tag(
 @Preview
 @Composable
 private fun MyPageScreenPreview() {
-    MyPageScreen(
+    MyPageContent(
         isArtist = false,
     )
 }
