@@ -2,6 +2,7 @@ package memory.fabricators.snapfit.core.design_system
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -27,7 +28,7 @@ fun SectionHeader(
     action: (@Composable () -> Unit)? = null,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         HorizontalDivider(
@@ -65,20 +66,17 @@ fun SectionHeader(
 private fun SectionTitlePreview(
     modifier: Modifier = Modifier,
 ) {
-    SectionHeader(
-        title = {
-            Text(text = "이런 사진 어때요?")
-        },
-        action = {
-            IconButton(
-                modifier = Modifier.size(16.dp),
-                onClick = { /*TODO*/ },
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = null,
-                )
-            }
+    SectionHeader(title = {
+        Text(text = "이런 사진 어때요?")
+    }, action = {
+        IconButton(
+            modifier = Modifier.size(16.dp),
+            onClick = { /*TODO*/ },
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                contentDescription = null,
+            )
         }
-    )
+    })
 }
