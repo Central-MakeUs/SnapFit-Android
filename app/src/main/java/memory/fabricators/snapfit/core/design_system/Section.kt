@@ -12,7 +12,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -38,16 +37,12 @@ fun SectionHeader(
             color = LocalColorScheme.current.primaryBlack,
             thickness = 2.dp,
         )
-        Surface(
-            modifier = Modifier.align(Alignment.CenterVertically),
-        ) {
-            CompositionLocalProvider(
-                value = LocalTextStyle provides LocalTypography.current.body1Semibold.copy(
-                    color = LocalColorScheme.current.primaryBlack,
-                ),
-                content = title,
-            )
-        }
+        CompositionLocalProvider(
+            value = LocalTextStyle provides LocalTypography.current.body1Semibold.copy(
+                color = LocalColorScheme.current.primaryBlack,
+            ),
+            content = title,
+        )
         Spacer(modifier = Modifier.weight(1f))
         if (action != null) {
             CompositionLocalProvider(

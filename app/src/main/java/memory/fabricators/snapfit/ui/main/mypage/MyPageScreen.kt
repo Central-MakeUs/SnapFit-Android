@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.PostAdd
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -222,6 +223,11 @@ private fun MyPageTopAppBar(
                     }
                     TagList(tags = tags)
                 }
+            }
+            if (!expanded) {
+                HorizontalDivider(
+                    color = LocalColorScheme.current.secondary100,
+                )
             }
         }
     }
