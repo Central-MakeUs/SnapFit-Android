@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -283,6 +284,10 @@ fun HomeContent(
                 ),
             )
             val height = 300 * ((tempRecommendation.size + 1) / 2)
+
+            // TODO
+            //FlowRow {}
+
             LazyVerticalGrid(
                 modifier = Modifier.height(height.dp),
                 columns = GridCells.Fixed(count = 2),

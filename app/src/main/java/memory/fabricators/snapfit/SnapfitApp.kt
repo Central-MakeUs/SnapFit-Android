@@ -10,7 +10,10 @@ import memory.fabricators.snapfit.data.dataModule
 import memory.fabricators.snapfit.database.databaseModule
 import memory.fabricators.snapfit.datastore.dataStoreModule
 import memory.fabricators.snapfit.network.networkModule
+import memory.fabricators.snapfit.ui.artist.details.ArtistDetailsScreen
 import memory.fabricators.snapfit.ui.main.MainScreen
+import memory.fabricators.snapfit.ui.signup.SignUpScreen
+import memory.fabricators.snapfit.ui.start.StartScreen
 import memory.fabricators.snapfit.ui.uiModule
 import org.koin.compose.KoinApplication
 import org.koin.core.module.Module
@@ -27,15 +30,24 @@ fun SnapfitApp() {
         NavHost(
             modifier = Modifier.fillMaxSize(),
             navController = navController,
-            startDestination = SnapfitDestinations.MAIN.route,
+            // startDestination = SnapfitDestinations.MAIN.route,
+            startDestination = SnapfitDestinations.ARTIST_DETAILS.route,
         ) {
             composable(route = SnapfitDestinations.MAIN.route) {
                 MainScreen()
             }
             composable(route = SnapfitDestinations.START.route) {
-
+                StartScreen()
             }
             composable(route = SnapfitDestinations.SIGN_UP.route) {
+                SignUpScreen(
+                    onOpenMain = { /*TODO*/ },
+                )
+            }
+            composable(route = SnapfitDestinations.ARTIST_DETAILS.route) {
+                ArtistDetailsScreen()
+            }
+            composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
 
             }
         }
@@ -64,5 +76,11 @@ enum class SnapfitDestinations(
     ),
     MAIN(
         route = "main",
+    ),
+    ARTIST_DETAILS(
+        route = "artist_details",
+    ),
+    BOOKING_COMPLETION(
+        route = "reser",
     ),
 }
