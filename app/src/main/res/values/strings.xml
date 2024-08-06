@@ -59,6 +59,6 @@
     <string name="home_subtitle_youCanFindPhotoOfMoods">스냅핏에서는 원하는\n분위기의 사진을 찾을 수 있어요.</string>
     <string name="home_sectionTitle_photoSuggestions">이런 사진은 어때요?</string>
     <string name="main_bottomNavigation_homeRoute">홈</string>
-    <string name="main_bottomNavigation_photoListRoute">사진리스트</string>
+    <string name="main_bottomNavigation_artistListRoute">사진리스트</string>
     <string name="main_bottomNavigation_myPage">마이페이지</string>
 </resources>

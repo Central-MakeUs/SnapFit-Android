@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.data.dataModule
 import memory.fabricators.snapfit.database.databaseModule
 import memory.fabricators.snapfit.datastore.dataStoreModule
@@ -32,8 +31,7 @@ fun SnapfitApp() {
         NavHost(
             modifier = Modifier.fillMaxSize(),
             navController = navController,
-            // startDestination = SnapfitDestinations.MAIN.route,
-            startDestination = SnapfitDestinations.BOOKING_COMPLETION.route,
+            startDestination = SnapfitDestinations.MAIN.route,
         ) {
             composable(route = SnapfitDestinations.MAIN.route) {
                 MainScreen()

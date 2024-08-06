@@ -1,7 +1,5 @@
 package memory.fabricators.snapfit.ui.main
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
@@ -13,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
+import memory.fabricators.snapfit.ui.main.artistlist.ArtistListContent
 import memory.fabricators.snapfit.ui.main.home.HomeContent
 import memory.fabricators.snapfit.ui.main.mypage.MyPageContent
 
@@ -63,10 +61,12 @@ fun MainScreen(
                     ),
             )
 
-            MainSections.PHOTO_LIST -> Box(
+            MainSections.ARTIST_LIST -> ArtistListContent(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color.Red),
+                    .padding(
+                        bottom = innerPaddings.calculateBottomPadding(),
+                    ),
             )
 
             MainSections.MY_PAGE -> MyPageContent(
@@ -92,9 +92,9 @@ enum class MainSections(
         // TODO
         iconRes = R.drawable.ic_check,
     ),
-    PHOTO_LIST(
-        route = "photo_list",
-        labelRes = R.string.main_bottomNavigation_photoListRoute,
+    ARTIST_LIST(
+        route = "artist_list",
+        labelRes = R.string.main_bottomNavigation_artistListRoute,
         // TODO
         iconRes = R.drawable.ic_check,
     ),
