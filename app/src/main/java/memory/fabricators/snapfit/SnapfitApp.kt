@@ -6,11 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.data.dataModule
 import memory.fabricators.snapfit.database.databaseModule
 import memory.fabricators.snapfit.datastore.dataStoreModule
 import memory.fabricators.snapfit.network.networkModule
 import memory.fabricators.snapfit.ui.artist.details.ArtistDetailsScreen
+import memory.fabricators.snapfit.ui.artist.result.BookingCompletionScreen
 import memory.fabricators.snapfit.ui.main.MainScreen
 import memory.fabricators.snapfit.ui.signup.SignUpScreen
 import memory.fabricators.snapfit.ui.start.StartScreen
@@ -31,7 +33,7 @@ fun SnapfitApp() {
             modifier = Modifier.fillMaxSize(),
             navController = navController,
             // startDestination = SnapfitDestinations.MAIN.route,
-            startDestination = SnapfitDestinations.ARTIST_DETAILS.route,
+            startDestination = SnapfitDestinations.BOOKING_COMPLETION.route,
         ) {
             composable(route = SnapfitDestinations.MAIN.route) {
                 MainScreen()
@@ -48,7 +50,7 @@ fun SnapfitApp() {
                 ArtistDetailsScreen()
             }
             composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
-
+                BookingCompletionScreen()
             }
         }
     }
