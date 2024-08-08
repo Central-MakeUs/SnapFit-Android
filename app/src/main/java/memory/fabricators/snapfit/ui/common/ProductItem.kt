@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -33,7 +33,7 @@ import memory.fabricators.snapfit.core.design_system.LocalTypography
 fun ProductItem(
     backgroundImageUrl: String,
     title: @Composable () -> Unit,
-    tags: @Composable RowScope.() -> Unit,
+    tags: List<ProductItemTag>,
     price: @Composable () -> Unit,
     subtitle: @Composable () -> Unit,
     modifier: Modifier = Modifier,
@@ -91,8 +91,11 @@ fun ProductItem(
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                content = tags,
-            )
+            ) {
+                tags.forEach { tag ->
+                    ProductItemTag { Text(text = tag.text) }
+                }
+            }
         }
         ProvideTextStyle(
             value = LocalTypography.current.body1Semibold.copy(
@@ -128,6 +131,11 @@ fun ProductItemTag(
         },
     )
 }
+
+data class ProductItemTag(
+    val id: String,
+    val text: String,
+)
 
 @Preview
 @Composable

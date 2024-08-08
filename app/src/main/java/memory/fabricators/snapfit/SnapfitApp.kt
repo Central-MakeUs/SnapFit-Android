@@ -11,6 +11,7 @@ import memory.fabricators.snapfit.database.databaseModule
 import memory.fabricators.snapfit.datastore.dataStoreModule
 import memory.fabricators.snapfit.network.networkModule
 import memory.fabricators.snapfit.ui.artist.details.ArtistDetailsScreen
+import memory.fabricators.snapfit.ui.artist.listfilter.ArtistListFilterScreen
 import memory.fabricators.snapfit.ui.artist.result.BookingCompletionScreen
 import memory.fabricators.snapfit.ui.main.MainScreen
 import memory.fabricators.snapfit.ui.signup.SignUpScreen
@@ -31,7 +32,8 @@ fun SnapfitApp() {
         NavHost(
             modifier = Modifier.fillMaxSize(),
             navController = navController,
-            startDestination = SnapfitDestinations.MAIN.route,
+            // startDestination = SnapfitDestinations.MAIN.route,
+            startDestination = SnapfitDestinations.ARTIST_LIST_FILTER.route,
         ) {
             composable(route = SnapfitDestinations.MAIN.route) {
                 MainScreen()
@@ -49,6 +51,9 @@ fun SnapfitApp() {
             }
             composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
                 BookingCompletionScreen()
+            }
+            composable(route = SnapfitDestinations.ARTIST_LIST_FILTER.route) {
+                ArtistListFilterScreen()
             }
         }
     }
@@ -82,5 +87,8 @@ enum class SnapfitDestinations(
     ),
     BOOKING_COMPLETION(
         route = "reser",
+    ),
+    ARTIST_LIST_FILTER(
+        route = "artist_list_filter",
     ),
 }
