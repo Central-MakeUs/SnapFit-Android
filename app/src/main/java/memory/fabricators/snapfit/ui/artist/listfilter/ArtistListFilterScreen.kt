@@ -1,8 +1,6 @@
 package memory.fabricators.snapfit.ui.artist.listfilter
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -27,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.ui.common.Filter
+import memory.fabricators.snapfit.ui.common.FilterButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -165,31 +164,3 @@ private fun FilterList(
         }
     }
 }
-
-@Composable
-private fun FilterButton(
-    filter: Filter,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .background(
-                color = LocalColorScheme.current.primaryBlack,
-                shape = RoundedCornerShape(5.dp),
-            )
-            .padding(all = 16.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = filter.text,
-            style = LocalTypography.current.body1Semibold.copy(
-                color = LocalColorScheme.current.primaryWhite,
-            ),
-        )
-    }
-}
-
-data class Filter(
-    val id: String,
-    val text: String,
-)

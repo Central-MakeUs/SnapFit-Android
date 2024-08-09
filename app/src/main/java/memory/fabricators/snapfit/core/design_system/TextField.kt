@@ -11,9 +11,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextField(
-    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     hintValue: String? = null,
     maxLines: Int = 1,
 ) = androidx.compose.material3.OutlinedTextField(
