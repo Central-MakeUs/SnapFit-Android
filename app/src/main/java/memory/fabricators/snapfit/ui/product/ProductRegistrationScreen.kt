@@ -223,18 +223,18 @@ fun ProductRegistrationScreen(
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
-        }
-        Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp,
-                ),
-        ) {
-            Text(text = "등록하기")
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp,
+                    ),
+            ) {
+                Text(text = "등록하기")
+            }
         }
     }
 }
