@@ -69,7 +69,7 @@ fun HomeContent(
                 title = {
                     Icon(
                         tint = LocalColorScheme.current.secondary500,
-                        painter = painterResource(id = R.drawable.app_logo_dark),
+                        painter = painterResource(id = R.drawable.app_logo_light),
                         contentDescription = null,
                     )
                 },

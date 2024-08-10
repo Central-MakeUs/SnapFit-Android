@@ -64,7 +64,7 @@ fun StartScreen(
                 verticalArrangement = Arrangement.spacedBy(32.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.app_logo_dark),
+                    painter = painterResource(id = R.drawable.app_logo_light),
                     tint = Color.White,
                     contentDescription = null,
                 )

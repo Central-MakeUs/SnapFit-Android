@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -59,7 +60,12 @@ fun ProductItem(
                 contentDescription = null,
                 modifier = Modifier
                     .size(imageBoxWidth)
-                    .clip(RoundedCornerShape(5.dp)),
+                    .clip(RoundedCornerShape(5.dp))
+                    // TODO
+                    .background(
+                        color = Color.Green,
+                        shape = RoundedCornerShape(5.dp),
+                    ),
             )
             if (favoriteIcon != null) {
                 Box(
