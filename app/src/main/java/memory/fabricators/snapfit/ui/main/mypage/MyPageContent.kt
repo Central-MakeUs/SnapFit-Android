@@ -45,9 +45,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.ui.main.mypage.content.ArtistContent
@@ -83,7 +85,8 @@ fun MyPageContent(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBackIosNew,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_arrow_left),
                             contentDescription = "back",
                         )
                     }
@@ -91,7 +94,8 @@ fun MyPageContent(
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
-                            imageVector = Icons.Default.PostAdd,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_write),
                             contentDescription = "post",
                         )
                     }
@@ -273,7 +277,8 @@ private fun TagListItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = Icons.Default.Star,
+                tint = LocalColorScheme.current.primaryWhite,
+                painter = painterResource(id = R.drawable.icon_add),
                 contentDescription = null,
             )
             Text(

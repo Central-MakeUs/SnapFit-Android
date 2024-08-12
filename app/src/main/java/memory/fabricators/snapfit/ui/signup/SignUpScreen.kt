@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
@@ -41,7 +42,9 @@ fun SignUpScreen(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBackIosNew,
+
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_arrow_left),
                             contentDescription = stringResource(id = R.string.navigate_back),
                         )
                     }

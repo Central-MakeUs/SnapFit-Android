@@ -16,7 +16,9 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 
@@ -71,9 +73,9 @@ fun SettingsListItem(
         Spacer(modifier = Modifier.weight(1f))
         Icon(
             modifier = Modifier.size(16.dp),
-            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+            tint = LocalColorScheme.current.primaryBlack,
+            painter = painterResource(id = R.drawable.icon_arrow_right),
             contentDescription = null,
-            tint = LocalColorScheme.current.secondary300,
         )
     }
 }

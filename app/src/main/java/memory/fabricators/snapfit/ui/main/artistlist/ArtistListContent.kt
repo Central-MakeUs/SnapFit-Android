@@ -159,7 +159,8 @@ fun ArtistListContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Default.FilterList,
+                    tint = LocalColorScheme.current.primaryBlack,
+                    painter = painterResource(id = R.drawable.icon_menu),
                     contentDescription = null,
                     modifier = Modifier.size(24.dp),
                 )

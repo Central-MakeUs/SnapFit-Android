@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,10 +22,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -78,7 +73,8 @@ fun HomeContent(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Notifications,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_notification),
                             contentDescription = stringResource(id = R.string.home_notification),
                         )
                     }
@@ -127,7 +123,8 @@ fun HomeContent(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_arrow_right),
                             contentDescription = stringResource(
                                 id = R.string.home_sectionTitle_photoSuggestions,
                             ),
@@ -206,7 +203,9 @@ fun HomeContent(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_arrow_right),
                             contentDescription = "메이커와 소중한 추억을 만들어보세요",
                         )
                     }
@@ -383,7 +382,8 @@ private fun PhotoRecommendationItem(
                 onClick = { /*TODO*/ },
             ) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
+                    tint = LocalColorScheme.current.primaryBlack,
+                    painter = painterResource(id = R.drawable.icon_favorite_outlined),
                     contentDescription = "favorite",
                 )
             }

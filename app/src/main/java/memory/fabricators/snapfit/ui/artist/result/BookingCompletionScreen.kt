@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -26,8 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
@@ -47,7 +47,8 @@ fun BookingCompletionScreen(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Close,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_cancel),
                             contentDescription = "close",
                         )
                     }

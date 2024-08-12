@@ -22,10 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -85,7 +82,8 @@ fun ArtistDetailsScreen(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBackIosNew,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_arrow_left),
                             contentDescription = "back",
                         )
                     }
@@ -95,7 +93,8 @@ fun ArtistDetailsScreen(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.FavoriteBorder,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_favorite_outlined),
                             contentDescription = "favorite",
                         )
                     }
@@ -103,7 +102,8 @@ fun ArtistDetailsScreen(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.MoreHoriz,
+                            tint = LocalColorScheme.current.primaryBlack,
+                            painter = painterResource(id = R.drawable.icon_more),
                             contentDescription = "more",
                         )
                     }
