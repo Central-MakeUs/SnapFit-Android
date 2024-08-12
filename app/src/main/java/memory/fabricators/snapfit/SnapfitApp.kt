@@ -60,7 +60,7 @@ enum class SnapfitDestinations(
         route = "artist_details",
     ),
     BOOKING_COMPLETION(
-        route = "reser",
+        route = "booking_completion",
     ),
     ARTIST_LIST_FILTER(
         route = "artist_list_filter",

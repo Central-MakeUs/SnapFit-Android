@@ -19,8 +19,8 @@ android {
         applicationId = "memory.fabricators.snapfit"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "0.1.0-alpha02"
+        versionCode = 4
+        versionName = "0.1.0-alpha04"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -79,7 +79,7 @@ dependencies {
     implementation(libs.bundles.orbit)
     implementation(libs.bundles.ktor)
 
-    implementation("com.kakao.sdk:v2-user:2.12.1")
+    implementation(libs.kakao.user)
 
     implementation(libs.room)
     ksp(libs.room.compiler)

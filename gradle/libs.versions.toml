@@ -5,7 +5,7 @@ minSdk = "32"
 targetSdk = "34"
 
 # android & kotlin
-agp = "8.5.0"
+agp = "8.5.2"
 coreKtx = "1.13.1"
 kotlin = "2.0.0"
 lifecycle = "2.8.3"
@@ -41,8 +41,9 @@ room = "2.6.1"
 
 # ktor
 ktor = "2.3.12"
-googleGmsGoogleServices = "4.4.2"
-firebaseAuth = "23.0.0"
+
+# kakao
+kakao-user = "2.12.1"
 
 [libraries]
 # android essentials
@@ -94,6 +95,9 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 # ktor
 ktor = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+
+#kakao
+kakao-user = { module = "com.kakao.sdk:v2-user", version.ref = "kakao-user" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
