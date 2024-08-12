@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,6 +26,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
@@ -76,7 +78,7 @@ fun StartScreen(
                     colors = AuthButtonDefaults.kakaoColors(),
                     leadingIcon = {
                         Icon(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(20.dp),
                             painter = painterResource(id = R.drawable.ic_kakao),
                             contentDescription = null,
                         )
@@ -85,11 +87,9 @@ fun StartScreen(
                     Text(
                         text = stringResource(id = R.string.start_loginWithKakao),
                     )
-                }
-                /*AuthButton(
+                }/*AuthButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        // TODO
                     },
                     colors = AuthButtonDefaults.appleColors(),
                     leadingIcon = {
@@ -121,12 +121,15 @@ private fun AuthButton(
         LocalContentColor provides colors.contentColor,
     ) {
         ProvideTextStyle(
-            value = MaterialTheme.typography.bodyMedium.copy(
+            value = LocalTypography.current.body2Semibold.copy(
                 color = colors.contentColor,
             ),
         ) {
             Box(
                 modifier = modifier
+                    .semantics {
+                        role = Role.Button
+                    }
                     .clickable(
                         onClick = onClick,
                     )
@@ -154,9 +157,8 @@ private fun AuthButton(
                 }
                 Box(
                     modifier = Modifier.align(Alignment.Center),
-                ) {
-                    content()
-                }
+                    content = { content() },
+                )
             }
         }
     }
