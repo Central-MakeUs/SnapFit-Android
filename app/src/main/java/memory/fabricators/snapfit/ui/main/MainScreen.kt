@@ -1,18 +1,23 @@
 package memory.fabricators.snapfit.ui.main
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.ui.main.artistlist.ArtistListContent
@@ -29,25 +34,45 @@ fun MainScreen(
     Scaffold(
         modifier = modifier,
         containerColor = LocalColorScheme.current.primaryWhite,
+        contentColor = LocalColorScheme.current.primaryBlack,
         bottomBar = {
-            BottomAppBar {
-                MainSections.entries.forEach { section ->
-                    val selected = section == currentSection
-                    NavigationBarItem(
-                        selected = selected,
-                        onClick = { onCurrentSectionChange(section) },
-                        icon = {
-                            Icon(
-                                painter = painterResource(id = section.iconRes),
-                                contentDescription = null,
-                            )
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(id = section.labelRes),
-                            )
-                        },
-                    )
+            val containerColor = LocalColorScheme.current.primaryWhite
+            val contentColor = LocalColorScheme.current.primaryBlack
+            val unselectedContentColor = LocalColorScheme.current.secondary300
+            Column {
+                HorizontalDivider(
+                    color = LocalColorScheme.current.secondary100,
+                )
+                BottomAppBar(
+                    containerColor = containerColor,
+                    contentColor = contentColor,
+                    tonalElevation = 0.dp,
+                ) {
+                    MainSections.entries.forEach { section ->
+                        val selected = section == currentSection
+                        NavigationBarItem(
+                            selected = selected,
+                            onClick = { onCurrentSectionChange(section) },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = contentColor,
+                                unselectedIconColor = unselectedContentColor,
+                                selectedTextColor = contentColor,
+                                unselectedTextColor = unselectedContentColor,
+                                indicatorColor = Color.Transparent,
+                            ),
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = section.iconRes),
+                                    contentDescription = null,
+                                )
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(id = section.labelRes),
+                                )
+                            },
+                        )
+                    }
                 }
             }
         }
@@ -89,19 +114,16 @@ enum class MainSections(
     HOME(
         route = "home",
         labelRes = R.string.main_bottomNavigation_homeRoute,
-        // TODO
-        iconRes = R.drawable.ic_check,
+        iconRes = R.drawable.icon_home,
     ),
     ARTIST_LIST(
         route = "artist_list",
         labelRes = R.string.main_bottomNavigation_artistListRoute,
-        // TODO
-        iconRes = R.drawable.ic_check,
+        iconRes = R.drawable.icon_create,
     ),
     MY_PAGE(
         route = "my_page",
         labelRes = R.string.main_bottomNavigation_myPage,
-        // TODO
-        iconRes = R.drawable.ic_check,
+        iconRes = R.drawable.icon_user,
     ),
 }
