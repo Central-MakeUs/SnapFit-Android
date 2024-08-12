@@ -1,6 +1,5 @@
 package memory.fabricators.snapfit.ui.start
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,32 +8,29 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
+import memory.fabricators.snapfit.core.design_system.LocalColorScheme
+import memory.fabricators.snapfit.core.design_system.LocalTypography
 
 @Composable
 fun StartScreen(
@@ -42,39 +38,32 @@ fun StartScreen(
 ) {
     Scaffold(
         modifier = modifier,
+        containerColor = LocalColorScheme.current.primaryBlack,
+        contentColor = LocalColorScheme.current.primaryWhite,
     ) { innerPadding ->
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.img_start_background),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(
-                color = Color.Black.copy(alpha = 0.5f),
-                blendMode = BlendMode.Darken,
-            ),
-        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(128.dp))
             Column(
-                modifier = Modifier.padding(start = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(32.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.app_logo_light),
-                    tint = Color.White,
+                    painter = painterResource(id = R.drawable.app_logo_extended),
                     contentDescription = null,
+                    modifier = Modifier.padding(start = 16.dp),
+                    tint = Color.Unspecified,
                 )
                 Text(
-                    text = stringResource(R.string.start_title_welcomeToSnapfit),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White,
+                    text = stringResource(R.string.start_subtitle),
+                    modifier = Modifier.padding(start = 16.dp),
+                    style = LocalTypography.current.body1Regular,
+                    color = LocalColorScheme.current.secondary400,
                 )
             }
-            Spacer(modifier = Modifier.weight(4f))
+            Spacer(modifier = Modifier.weight(1f))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,9 +72,7 @@ fun StartScreen(
             ) {
                 AuthButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        // TODO
-                    },
+                    onClick = {/* TODO */ },
                     colors = AuthButtonDefaults.kakaoColors(),
                     leadingIcon = {
                         Icon(
@@ -117,18 +104,6 @@ fun StartScreen(
                         text = stringResource(id = R.string.start_loginWithApple),
                     )
                 }*/
-                TextButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = Color(0xFFBDBDBD),
-                    ),
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.start_lookAround),
-                        textDecoration = TextDecoration.Underline,
-                    )
-                }
             }
         }
     }
