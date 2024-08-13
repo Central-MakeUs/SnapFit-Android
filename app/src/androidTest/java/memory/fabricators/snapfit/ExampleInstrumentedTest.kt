@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("memory.fabricators.android", appContext.packageName)
+        assertEquals("memory.fabricators.snapfit", appContext.packageName)
     }
 }

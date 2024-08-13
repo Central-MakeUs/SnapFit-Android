@@ -19,8 +19,8 @@ android {
         applicationId = "memory.fabricators.snapfit"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 4
-        versionName = "0.1.0-alpha04"
+        versionCode = 6
+        versionName = "0.1.0-alpha06"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
