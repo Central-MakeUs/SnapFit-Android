@@ -31,7 +31,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -79,26 +78,6 @@ fun MyPageContent(
                 profileImageUrl = state.userInfo?.profile,
                 vibes = state.userInfo?.vibes?.map { it.name } ?: emptyList(),
                 expanded = !scrollState.canScrollBackward,
-                /*navigationIcon = {
-                    IconButton(
-                        onClick = { *//*TODO*//* },
-                    ) {
-                        Icon(
-                            tint = LocalColorScheme.current.primaryBlack,
-                            painter = painterResource(id = R.drawable.icon_arrow_left),
-                            contentDescription = "back",
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { *//*TODO*//* }) {
-                        Icon(
-                            tint = LocalColorScheme.current.primaryBlack,
-                            painter = painterResource(id = R.drawable.icon_write),
-                            contentDescription = "post",
-                        )
-                    }
-                },*/
             )
         },
     ) { innerPaddings ->
