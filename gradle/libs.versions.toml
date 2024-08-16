@@ -45,6 +45,9 @@ ktor = "2.3.12"
 # kakao
 kakao-user = "2.12.1"
 
+# kotlin seralization
+kotlinSeralization = "1.7.1"
+
 [libraries]
 # android essentials
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -99,11 +102,15 @@ ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 #kakao
 kakao-user = { module = "com.kakao.sdk:v2-user", version.ref = "kakao-user" }
 
+# kotlin seralization
+kotlin-seralization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSeralization" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-seralization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]
 essentials = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "androidx-compose-material3", "androidx-compose-material-icons"]

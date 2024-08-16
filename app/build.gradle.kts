@@ -6,7 +6,8 @@ val localProperties = Properties().also {
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.seralization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
 }
@@ -34,7 +35,12 @@ android {
         buildConfigField(
             type = "String",
             name = "KAKAO_API_KEY",
-            value = localProperties.getProperty("KAKAO_API_KEY"),
+            value = "\"${localProperties.getProperty("KAKAO_API_KEY")}\"",
+        )
+        buildConfigField(
+            type = "String",
+            name = "KAKAO_API_KEY_STRING",
+            value = "\"kakao${localProperties.getProperty("KAKAO_API_KEY")}\"",
         )
     }
 
@@ -80,6 +86,8 @@ dependencies {
     implementation(libs.bundles.ktor)
 
     implementation(libs.kakao.user)
+
+    implementation(libs.kotlin.seralization)
 
     implementation(libs.room)
     ksp(libs.room.compiler)

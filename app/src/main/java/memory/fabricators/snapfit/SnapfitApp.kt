@@ -19,7 +19,7 @@ fun SnapfitApp() {
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = SnapfitDestinations.MAIN.route,
+        startDestination = SnapfitDestinations.START.route,
     ) {
         composable(route = SnapfitDestinations.MAIN.route) {
             MainScreen()

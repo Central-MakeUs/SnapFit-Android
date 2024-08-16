@@ -32,17 +32,16 @@
             android:exported="true"
             android:launchMode="singleTask">
 
-
-            <!-- TODO
-          <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="oauth"
-                    android:scheme="@" />
-            </intent-filter>-->
+                    android:scheme="memory.fabricators.snapfit.BuildConfig$KAKAO_API_KEY_STRING" />
+            </intent-filter>
         </activity>
 
     </application>
