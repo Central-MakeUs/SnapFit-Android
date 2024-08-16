@@ -26,7 +26,7 @@ fun SnapfitApp(
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = if(skipSignUp){
+        startDestination = if (skipSignUp) {
             SnapfitDestinations.MAIN.route
         } else {
             SnapfitDestinations.START.route
@@ -104,8 +104,7 @@ fun SnapfitApp(
         ) { backStackEntry ->
             val postId = backStackEntry.arguments?.getLong("postId")
                 ?: throw RuntimeException("Post ID not found.")
-            PostDetailsScreen(
-                postId = postId,
+            PostDetailsScreen(postId = postId,
                 onNavigateUp = navController::navigateUp,
                 onNavigateToBooking = {
                     navController.navigate(
@@ -118,8 +117,7 @@ fun SnapfitApp(
                     navController.navigate(
                         route = SnapfitDestinations.POST_DETAILS.route + "?postId=$postId",
                     )
-                }
-            )
+                })
         }
         composable(
             route = SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId={bookingId}",
