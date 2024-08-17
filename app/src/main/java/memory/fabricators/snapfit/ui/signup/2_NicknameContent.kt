@@ -50,9 +50,11 @@ fun NicknameContent(
                     ),
                 value = nickname,
                 onValueChange = onChangeNickname,
+                hintValue = stringResource(R.string.signup_nickname_hint_nickname),
             )
         }
         Button(
+            onClick = onNext,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
@@ -61,7 +63,7 @@ fun NicknameContent(
                     end = 16.dp,
                     bottom = 24.dp,
                 ),
-            onClick = onNext,
+            enabled = nickname.isNotBlank(),
         ) {
             Text(text = stringResource(id = R.string.signup_nickname_button_main))
         }

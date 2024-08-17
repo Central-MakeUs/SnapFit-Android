@@ -19,6 +19,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,12 +30,28 @@ import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.data.user.model.Vibe
 
 @Composable
 fun PhotoMoodSelectionContent(
     onNext: () -> Unit,
+    vibes: List<Vibe>?,
     modifier: Modifier = Modifier,
 ) {
+    val formed = remember { mutableStateListOf<Mood>() }
+    LaunchedEffect(key1 = vibes) {
+        if (vibes != null) {
+            formed.addAll(
+                vibes.map {
+                    Mood(
+                        vibe = it,
+                        selected = false,
+                    )
+                },
+            )
+        }
+    }
+
     Box(
         modifier = modifier,
     ) {
@@ -57,29 +76,18 @@ fun PhotoMoodSelectionContent(
             )
             Spacer(modifier = Modifier.height(24.dp))
             MoodList(
-                // TODO
-                moods = listOf(
-                    Mood(
-                        id = "123",
-                        title = "분위기",
-                        selected = true,
-                    ),
-                    Mood(
-                        id = "1234",
-                        title = "분위기",
-                        selected = false,
-                    ),
-                    Mood(
-                        id = "12345",
-                        title = "분위기",
-                        selected = true,
-                    ),
-                    Mood(
-                        id = "123456",
-                        title = "분위기",
-                        selected = false,
-                    ),
-                ),
+                moods = formed,
+                onMoodClick = {
+                    formed.replaceAll { mood ->
+                        if (mood.vibe.id == it.vibe.id) {
+                            mood.copy(
+                                selected = !mood.selected,
+                            )
+                        } else {
+                            mood
+                        }
+                    }
+                },
             )
         }
         Button(
@@ -101,14 +109,14 @@ fun PhotoMoodSelectionContent(
 }
 
 data class Mood(
-    val id: String,
-    val title: String,
-    val selected: Boolean,
+    val vibe: Vibe,
+    var selected: Boolean,
 )
 
 @Composable
 private fun MoodList(
     moods: List<Mood>,
+    onMoodClick: (Mood) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -120,15 +128,13 @@ private fun MoodList(
     ) {
         items(
             items = moods,
-            key = { it.id },
+            key = { it.vibe.id },
         ) { mood ->
             MoodListItem(
                 selected = mood.selected,
-                onSelect = {
-
-                },
+                onSelect = { onMoodClick(mood) },
             ) {
-                Text(text = mood.title)
+                Text(text = mood.vibe.name)
             }
         }
     }

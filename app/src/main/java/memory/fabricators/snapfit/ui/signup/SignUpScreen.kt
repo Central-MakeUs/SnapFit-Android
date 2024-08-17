@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui.signup
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,6 +23,8 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
+import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -28,7 +32,9 @@ fun SignUpScreen(
     onNavigateUp: () -> Unit,
     onOpenMain: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: SignUpViewModel = koinViewModel(),
 ) {
+    val state by viewModel.collectAsState()
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { SignUpContents.entries.size }
     val (nickname, onChangeNickname) = remember { mutableStateOf("") }
@@ -70,6 +76,7 @@ fun SignUpScreen(
         HorizontalPager(
             state = pagerState,
             userScrollEnabled = false,
+            beyondBoundsPageCount = 2,
         ) { pageIndex ->
             when (pageIndex) {
                 0 -> TermsContent(
@@ -92,11 +99,19 @@ fun SignUpScreen(
 
                 2 -> PhotoMoodSelectionContent(
                     onNext = onOpenMain,
+                    vibes = state.vibes,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding),
                 )
             }
+        }
+    }
+    BackHandler(
+        enabled = pagerState.currentPage > 0,
+    ) {
+        scope.launch {
+            pagerState.animateScrollToPage(pagerState.currentPage - 1)
         }
     }
 }

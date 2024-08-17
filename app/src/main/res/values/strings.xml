@@ -64,4 +64,5 @@
     <string name="main_bottomNavigation_artist">사진리스트</string>
     <string name="main_bottomNavigation_mypage">마이페이지</string>
     <string name="start_login_failure">로그인에 실패하였습니다\n%s</string>
+    <string name="signup_nickname_hint_nickname">8자 이내 닉네임을 작성해주세요</string>
 </resources>

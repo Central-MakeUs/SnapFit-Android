@@ -1,37 +1,46 @@
 package memory.fabricators.snapfit.ui.signup
 
 import androidx.lifecycle.ViewModel
-import memory.fabricators.snapfit.data.auth.AuthRepository
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import memory.fabricators.snapfit.data.user.UserRepository
+import memory.fabricators.snapfit.data.user.model.Vibe
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class SignUpViewModel(
-    val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel(),
     ContainerHost<SignUpState, SignUpSideEffect> {
     override val container = container<SignUpState, SignUpSideEffect>(
-        SignUpState.initial(),
+        initialState = SignUpState(),
     )
 
-    fun updateNickname(value: String) = intent {
-        reduce {
-            state.copy(nickname = value)
+    init {
+        fetchVibes()
+    }
+
+    private fun fetchVibes() = intent {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                userRepository.fetchVibes()
+            }.onSuccess { fetchedVibes ->
+                reduce {
+                    state.copy(vibes = fetchedVibes)
+                }
+            }.onFailure {
+                // TODO
+            }
         }
     }
 }
 
 data class SignUpState(
-    val nickname: String,
-
-    ) {
-    companion object {
-        fun initial(): SignUpState = SignUpState(
-            nickname = "",
-        )
-    }
-}
+    val vibes: List<Vibe>? = null,
+)
 
 sealed class SignUpSideEffect {
 

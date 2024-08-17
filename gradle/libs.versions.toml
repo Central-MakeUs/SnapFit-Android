@@ -103,6 +103,7 @@ ktor = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 
 #kakao
 kakao-user = { module = "com.kakao.sdk:v2-user", version.ref = "kakao-user" }
@@ -130,4 +131,4 @@ koin = ["koin", "koin-compose"]
 coil = ["coil", "coil-compose"]
 navigation = ["androidx-navigation-compose", "koin-navigation"]
 orbit = ["orbit", "orbit-compose", "orbit-viewmodel", "orbit-test"]
-ktor = ["ktor", "ktor-cio", "ktor-logging", "ktor-serialization-json"]
+ktor = ["ktor", "ktor-cio", "ktor-logging", "ktor-serialization-json", "ktor-contentNegotiation"]
