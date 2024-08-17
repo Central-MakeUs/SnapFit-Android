@@ -38,7 +38,6 @@ fun SignUpScreen(
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { SignUpContents.entries.size }
     val (nickname, onChangeNickname) = remember { mutableStateOf("") }
-    val (requiredTermsAgreed, onChangeRequiredTermsAgreed) = remember { mutableStateOf(false) }
     Scaffold(
         modifier = modifier,
         containerColor = LocalColorScheme.current.primaryWhite,
@@ -48,7 +47,7 @@ fun SignUpScreen(
                     containerColor = LocalColorScheme.current.primaryWhite,
                     actionIconContentColor = LocalColorScheme.current.primaryBlack,
                 ),
-                title = {},
+                title = { /* explicit blank */ },
                 navigationIcon = {
                     IconButton(
                         onClick = {
@@ -81,8 +80,6 @@ fun SignUpScreen(
             when (pageIndex) {
                 0 -> TermsContent(
                     onNext = { scope.launch { pagerState.animateScrollToPage(1) } },
-                    requiredTermsAgreed = requiredTermsAgreed,
-                    onChangeRequiredTermsAgreed = onChangeRequiredTermsAgreed,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding),
