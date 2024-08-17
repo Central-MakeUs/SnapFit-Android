@@ -1,6 +1,8 @@
 package memory.fabricators.snapfit.core.design_system
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -16,6 +18,8 @@ fun TextField(
     modifier: Modifier = Modifier,
     hintValue: String? = null,
     maxLines: Int = 1,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) = androidx.compose.material3.OutlinedTextField(
     modifier = modifier,
     value = value,
@@ -27,6 +31,8 @@ fun TextField(
         null
     },
     colors = TextFieldDefaults.colors(),
+    keyboardOptions = keyboardOptions,
+    keyboardActions = keyboardActions,
     maxLines = maxLines,
 )
 
@@ -45,19 +51,18 @@ object TextFieldDefaults {
         focusedTrailingIconColor: Color = Color.Unspecified,
         unfocusedTrailingIconColor: Color = Color.Unspecified,
         placeholderColor: Color = Color.Unspecified,
-    ): TextFieldColors =
-        OutlinedTextFieldDefaults.colors().copy(
-            focusedTextColor = focusedTextColor,
-            unfocusedTextColor = unfocusedTextColor,
-            errorTextColor = errorTextColor,
-            cursorColor = cursorColor,
-            focusedIndicatorColor = focusedBorderColor,
-            unfocusedIndicatorColor = unfocusedBorderColor,
-            errorIndicatorColor = errorBorderColor,
-            focusedLeadingIconColor = focusedLeadingIconColor,
-            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
-            focusedTrailingIconColor = focusedTrailingIconColor,
-            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
-            focusedPlaceholderColor = placeholderColor,
-        )
+    ): TextFieldColors = OutlinedTextFieldDefaults.colors().copy(
+        focusedTextColor = focusedTextColor,
+        unfocusedTextColor = unfocusedTextColor,
+        errorTextColor = errorTextColor,
+        cursorColor = cursorColor,
+        focusedIndicatorColor = focusedBorderColor,
+        unfocusedIndicatorColor = unfocusedBorderColor,
+        errorIndicatorColor = errorBorderColor,
+        focusedLeadingIconColor = focusedLeadingIconColor,
+        unfocusedLeadingIconColor = unfocusedLeadingIconColor,
+        focusedTrailingIconColor = focusedTrailingIconColor,
+        unfocusedTrailingIconColor = unfocusedTrailingIconColor,
+        focusedPlaceholderColor = placeholderColor,
+    )
 }
