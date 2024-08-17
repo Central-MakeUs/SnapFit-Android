@@ -25,11 +25,36 @@ fun SnapfitApp() {
             MainScreen()
         }
         composable(route = SnapfitDestinations.START.route) {
-            StartScreen()
+            StartScreen(
+                onOpenSignUp = {
+                    navController.navigate(
+                        route = SnapfitDestinations.SIGN_UP.route,
+                    ) {
+                        launchSingleTop = true
+                    }
+                },
+                onOpenMain = {
+                    navController.navigate(
+                        route = SnapfitDestinations.MAIN.route,
+                    ) {
+                        launchSingleTop = true
+                    }
+                },
+            )
         }
         composable(route = SnapfitDestinations.SIGN_UP.route) {
             SignUpScreen(
-                onOpenMain = { /*TODO*/ },
+                onNavigateUp = navController::navigateUp,
+                onOpenMain = {
+                    navController.navigate(
+                        route = SnapfitDestinations.MAIN.route,
+                    ) {
+                        launchSingleTop = true
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                },
             )
         }
         composable(route = SnapfitDestinations.ARTIST_DETAILS.route) {

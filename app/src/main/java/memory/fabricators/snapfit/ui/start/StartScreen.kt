@@ -41,9 +41,12 @@ import memory.fabricators.snapfit.core.kakao.kakaoTalkLoginAvailable
 import memory.fabricators.snapfit.core.kakao.loginWithKakaoAccount
 import memory.fabricators.snapfit.core.kakao.loginWithKakaoTalk
 import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun StartScreen(
+    onOpenSignUp: () -> Unit,
+    onOpenMain: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartViewModel = koinViewModel(),
 ) {
@@ -56,7 +59,20 @@ fun StartScreen(
     }
     val onKakaoLoginFailure = remember {
         { error: Throwable ->
-            Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(
+                    R.string.start_login_failure,
+                    error.localizedMessage,
+                ),
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            StartSideEffect.LoginFailure -> onOpenSignUp()
+            StartSideEffect.LoginSuccess -> onOpenMain()
         }
     }
 
@@ -119,7 +135,7 @@ fun StartScreen(
                     },
                 ) {
                     Text(
-                        text = stringResource(id = R.string.start_loginWithKakao),
+                        text = stringResource(id = R.string.start_login_kakao),
                     )
                 }
 

@@ -44,14 +44,14 @@ fun PhotoMoodSelectionContent(
                     start = 16.dp,
                     top = 32.dp,
                 ),
-                text = stringResource(id = R.string.signUp_photoMoodSelection_title_whichMoodDoYouWant),
+                text = stringResource(id = R.string.signup_photoMoodSelection_title),
                 style = LocalTypography.current.title1Semibold,
                 color = LocalColorScheme.current.primaryBlack,
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
                 modifier = Modifier.padding(start = 16.dp),
-                text = stringResource(id = R.string.signUp_photoMoodSelection_subtitle_canChooseTwoMoods),
+                text = stringResource(id = R.string.signup_photoMoodSelection_subtitle),
                 style = LocalTypography.current.body1Regular,
                 color = LocalColorScheme.current.secondary400,
             )
@@ -94,7 +94,7 @@ fun PhotoMoodSelectionContent(
             onClick = onNext,
         ) {
             Text(
-                text = stringResource(id = R.string.signUp_photoMoodSelection_button_start),
+                text = stringResource(id = R.string.signup_photoMoodSelection_button_main),
             )
         }
     }

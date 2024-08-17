@@ -113,17 +113,17 @@ enum class MainSections(
 ) {
     HOME(
         route = "home",
-        labelRes = R.string.main_bottomNavigation_homeRoute,
+        labelRes = R.string.main_bottomNavigation_home,
         iconRes = R.drawable.icon_home,
     ),
     ARTIST_LIST(
         route = "artist_list",
-        labelRes = R.string.main_bottomNavigation_artistListRoute,
+        labelRes = R.string.main_bottomNavigation_artist,
         iconRes = R.drawable.icon_create,
     ),
     MY_PAGE(
         route = "my_page",
-        labelRes = R.string.main_bottomNavigation_myPage,
+        labelRes = R.string.main_bottomNavigation_mypage,
         iconRes = R.drawable.icon_user,
     ),
 }

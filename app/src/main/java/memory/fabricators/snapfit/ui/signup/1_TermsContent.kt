@@ -22,6 +22,8 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,8 +37,58 @@ import memory.fabricators.snapfit.core.design_system.LocalTypography
 @Composable
 fun TermsContent(
     onNext: () -> Unit,
+    requiredTermsAgreed: Boolean,
+    onChangeRequiredTermsAgreed: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val termsItem = remember {
+        mutableStateListOf(
+            TermsCheckItem(
+                id = "1",
+                isChecked = false,
+                title = "[필수] 이용 약관",
+                url = "https://mixolydian-beef-6a0.notion.site/04cb97bab76c40d68aa17475c6e53172?pvs=4",
+            ),
+            TermsCheckItem(
+                id = "2",
+                isChecked = false,
+                title = "[필수] 개인정보처리방침",
+                url = "https://mixolydian-beef-6a0.notion.site/497ab7ab659743c8b797e2c62e4c7bc9?pvs=4",
+            ),
+            TermsCheckItem(
+                id = "3",
+                isChecked = false,
+                title = "[필수] 만 14세 이상입니다",
+                url = "https://mixolydian-beef-6a0.notion.site/14-c96d3cf1df7c449690452b07c55459c9?pvs=4",
+            ),
+            TermsCheckItem(
+                id = "4",
+                isChecked = false,
+                title = "[선택] 광고성 정보 수신 및 마케팅 활용 동의",
+                url = "https://mixolydian-beef-6a0.notion.site/9bdc6cfbb2474b58ad4f99421feab6cf?pvs=4",
+            ),
+        )
+    }
+
+    val allChecked = termsItem.all { it.isChecked }
+    fun onCheckAll() {
+        termsItem.replaceAll {
+            it.copy(isChecked = !allChecked)
+        }
+    }
+
+    fun onItemCheck(id: String) {
+        termsItem.replaceAll { item ->
+            if (item.id == id) {
+                item.copy(
+                    isChecked = !item.isChecked,
+                )
+            } else {
+                item
+            }
+        }
+    }
+
     Box(
         modifier = modifier,
     ) {
@@ -48,7 +100,7 @@ fun TermsContent(
                     start = 16.dp,
                     top = 32.dp,
                 ),
-                text = stringResource(id = R.string.signUp_terms_title_pleaseAgreeWithServiceTerms),
+                text = stringResource(id = R.string.signup_terms_title),
                 style = LocalTypography.current.title1Semibold,
                 color = LocalColorScheme.current.primaryBlack,
             )
@@ -57,7 +109,7 @@ fun TermsContent(
                 modifier = Modifier.padding(
                     start = 16.dp,
                 ),
-                text = stringResource(id = R.string.signUp_terms_subtitle_pleaseAgreeWithRegisterAndInformationProviding),
+                text = stringResource(id = R.string.signup_terms_subtitle),
                 style = LocalTypography.current.body1Regular,
                 color = LocalColorScheme.current.secondary400,
             )
@@ -70,39 +122,13 @@ fun TermsContent(
                     .padding(horizontal = 16.dp),
                 title = {
                     Text(
-                        text = stringResource(id = R.string.signUp_terms_items_title_agreeAllWithOptionalInformation),
+                        text = stringResource(id = R.string.signup_terms_button_agreeAll),
                     )
                 },
-                // TODO
-                isChecked = false,
-                onCheckAll = {},
-                onItemCheck = {},
-                checks = listOf(
-                    TermsCheckItem(
-                        id = "asdfa",
-                        isChecked = false,
-                        title = "[필수] 이용 약관 동의",
-                        url = "ㅁㄴㅇㄹ",
-                    ),
-                    TermsCheckItem(
-                        id = "asdfa",
-                        isChecked = false,
-                        title = "[필수] 이용 약관 동의",
-                        url = "ㅁㄴㅇㄹ",
-                    ),
-                    TermsCheckItem(
-                        id = "asdfa",
-                        isChecked = true,
-                        title = "[필수] 이용 약관 동의",
-                        url = "ㅁㄴㅇㄹ",
-                    ),
-                    TermsCheckItem(
-                        id = "asdfa",
-                        isChecked = true,
-                        title = "[필수] 이용 약관 동의",
-                        url = "ㅁㄴㅇㄹ",
-                    ),
-                ),
+                isGroupChecked = allChecked,
+                onCheckAll = { onCheckAll() },
+                onSingleItemCheck = { onItemCheck(it) },
+                terms = termsItem,
             )
         }
         Button(
@@ -116,7 +142,7 @@ fun TermsContent(
                 ),
             onClick = onNext,
         ) {
-            Text(text = stringResource(id = R.string.signUp_terms_button_next))
+            Text(text = stringResource(id = R.string.signup_terms_button_main))
         }
     }
 }
@@ -125,25 +151,32 @@ fun TermsContent(
 private fun TermsCheckGroup(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit,
-    isChecked: Boolean,
-    onCheckAll: (check: Boolean) -> Unit,
-    onItemCheck: (id: String) -> Unit,
-    checks: List<TermsCheckItem>,
+    isGroupChecked: Boolean,
+    onCheckAll: () -> Unit,
+    onSingleItemCheck: (id: String) -> Unit,
+    terms: List<TermsCheckItem>,
 ) {
     LazyColumn(
         modifier = modifier,
     ) {
         item {
-            // TITLE
             CompositionLocalProvider(
-                value = LocalContentColor provides LocalColorScheme.current.primaryWhite,
+                value = LocalContentColor provides if (isGroupChecked) {
+                    LocalColorScheme.current.primaryWhite
+                } else {
+                    LocalColorScheme.current.secondary500
+                },
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding()
                         .background(
-                            color = LocalColorScheme.current.primaryBlack,
+                            color = if (isGroupChecked) {
+                                LocalColorScheme.current.primaryBlack
+                            } else {
+                                LocalColorScheme.current.secondary200
+                            },
                             shape = RoundedCornerShape(4.dp),
                         )
                         .padding(all = 4.dp),
@@ -151,13 +184,17 @@ private fun TermsCheckGroup(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(
-                        onClick = {
-                            onCheckAll(!isChecked)
-                        },
+                        onClick = onCheckAll,
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_check),
+                            painter = painterResource(id = R.drawable.icon_check),
                             contentDescription = stringResource(id = R.string.signUp_terms_cd_agreeAll),
+                            modifier = Modifier.size(24.dp),
+                            tint = if (isGroupChecked) {
+                                LocalColorScheme.current.primaryWhite
+                            } else {
+                                LocalColorScheme.current.secondary400
+                            },
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
@@ -171,11 +208,11 @@ private fun TermsCheckGroup(
                 }
             }
         }
-        items(checks) { check ->
+        items(terms) { check ->
             TermsCheckItem(
                 title = { Text(text = check.title) },
                 isChecked = check.isChecked,
-                onCheck = { onItemCheck(check.id) },
+                onCheck = { onSingleItemCheck(check.id) },
                 onClick = {
                     // TODO: open web terms
                 },
@@ -204,7 +241,7 @@ private fun TermsCheckItem(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.ic_check),
                 tint = if (isChecked) LocalColorScheme.current.secondary500 else LocalColorScheme.current.secondary300,
-                contentDescription = stringResource(id = R.string.signUp_terms_cd_agree),
+                contentDescription = stringResource(id = R.string.signup_terms_cd_agree),
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -222,7 +259,7 @@ private fun TermsCheckItem(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(id = R.drawable.ic_arrow_right),
                 tint = LocalColorScheme.current.secondary300,
-                contentDescription = stringResource(id = R.string.signUp_terms_cd_enterTermsDescription),
+                contentDescription = stringResource(id = R.string.signup_terms_cd_showDetails),
             )
         }
     }
@@ -230,7 +267,7 @@ private fun TermsCheckItem(
 
 data class TermsCheckItem(
     val id: String,
-    val isChecked: Boolean,
+    var isChecked: Boolean,
     val title: String,
     val url: String,
 )

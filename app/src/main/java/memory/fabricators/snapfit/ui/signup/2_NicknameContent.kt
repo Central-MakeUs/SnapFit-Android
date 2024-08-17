@@ -37,7 +37,7 @@ fun NicknameContent(
                     start = 16.dp,
                     top = 32.dp,
                 ),
-                text = stringResource(id = R.string.signUp_nickname_pleaseEnterNickname),
+                text = stringResource(id = R.string.signup_nickname_title),
                 style = LocalTypography.current.title1Semibold,
                 color = LocalColorScheme.current.primaryBlack,
             )
@@ -63,7 +63,7 @@ fun NicknameContent(
                 ),
             onClick = onNext,
         ) {
-            Text(text = stringResource(id = R.string.signUp_nickname_button_next))
+            Text(text = stringResource(id = R.string.signup_nickname_button_main))
         }
     }
 }

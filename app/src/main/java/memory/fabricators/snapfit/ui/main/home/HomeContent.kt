@@ -114,7 +114,7 @@ fun HomeContent(
                 modifier = Modifier.fillMaxWidth(),
                 title = {
                     Text(
-                        text = stringResource(id = R.string.home_sectionTitle_photoSuggestions),
+                        text = stringResource(id = R.string.home_section_photoRecommendation),
                     )
                 },
                 action = {
@@ -126,7 +126,7 @@ fun HomeContent(
                             tint = LocalColorScheme.current.primaryBlack,
                             painter = painterResource(id = R.drawable.icon_arrow_right),
                             contentDescription = stringResource(
-                                id = R.string.home_sectionTitle_photoSuggestions,
+                                id = R.string.home_section_photoRecommendation,
                             ),
                         )
                     }
@@ -332,7 +332,7 @@ private fun Header(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(
-                    id = R.string.home_subtitle_youCanFindPhotoOfMoods,
+                    id = R.string.home_title,
                 ),
                 style = LocalTypography.current.body2Regular.copy(
                     color = LocalColorScheme.current.secondary400,
