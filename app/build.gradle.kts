@@ -77,7 +77,6 @@ android {
 dependencies {
     implementation(libs.bundles.essentials)
     implementation(platform(libs.androidx.compose.bom))
-
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coil)
     implementation(libs.bundles.koin)

@@ -14,7 +14,7 @@ composeMaterialIcons = "1.6.8"
 # compose
 compose = "1.6.8"
 composeBom = "2024.06.00"
-activityy = "1.9.0"
+activity = "1.9.0"
 
 # tests
 junit = "4.13.2"
@@ -48,6 +48,9 @@ kakao-user = "2.12.1"
 # kotlin seralization
 kotlinSeralization = "1.7.1"
 
+# slf4j
+slf4jAndroid = "2.0.16"
+
 [libraries]
 # android essentials
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,7 +64,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 # compose
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityy" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -98,12 +101,17 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 # ktor
 ktor = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 #kakao
 kakao-user = { module = "com.kakao.sdk:v2-user", version.ref = "kakao-user" }
 
 # kotlin seralization
 kotlin-seralization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSeralization" }
+
+# slf4j
+slf4j-android = { module = "org.slf4j:slf4j-android", version.ref = "slf4jAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -122,4 +130,4 @@ koin = ["koin", "koin-compose"]
 coil = ["coil", "coil-compose"]
 navigation = ["androidx-navigation-compose", "koin-navigation"]
 orbit = ["orbit", "orbit-compose", "orbit-viewmodel", "orbit-test"]
-ktor = ["ktor", "ktor-cio"]
+ktor = ["ktor", "ktor-cio", "ktor-logging", "ktor-serialization-json"]

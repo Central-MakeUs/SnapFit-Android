@@ -2,6 +2,7 @@ package memory.fabricators.snapfit
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
+import memory.fabricators.snapfit.core.coreModule
 import memory.fabricators.snapfit.data.dataModule
 import memory.fabricators.snapfit.database.databaseModule
 import memory.fabricators.snapfit.datastore.dataStoreModule
@@ -31,6 +32,7 @@ class SnapfitApplication : Application() {
 val snapfitModule: Module
     get() = module {
         includes(
+            coreModule,
             dataModule,
             databaseModule,
             dataStoreModule,

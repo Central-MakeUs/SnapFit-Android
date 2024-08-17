@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui.start
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,29 +34,29 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.util.Utility
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.kakao.kakaoTalkLoginAvailable
 import memory.fabricators.snapfit.core.kakao.loginWithKakaoAccount
 import memory.fabricators.snapfit.core.kakao.loginWithKakaoTalk
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun StartScreen(
     modifier: Modifier = Modifier,
+    viewModel: StartViewModel = koinViewModel(),
 ) {
     val context = LocalContext.current
     val onKakaoLoginSuccess = remember {
         { token: OAuthToken ->
-            println("SUCCSUCC")
-            println(token)
+            viewModel.login(token.accessToken)
+            Unit
         }
     }
     val onKakaoLoginFailure = remember {
         { error: Throwable ->
-            println("ERROERRO")
-            error.printStackTrace()
+            Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -73,7 +74,6 @@ fun StartScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(24.dp),
             ) {
-                println("HASHHASH ${Utility.getKeyHash(context)}")
                 Icon(
                     painter = painterResource(id = R.drawable.app_logo_extended),
                     contentDescription = null,
@@ -121,7 +121,9 @@ fun StartScreen(
                     Text(
                         text = stringResource(id = R.string.start_loginWithKakao),
                     )
-                }/*AuthButton(
+                }
+
+                /*AuthButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                     },
