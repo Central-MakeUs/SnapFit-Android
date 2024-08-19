@@ -52,7 +52,6 @@ class SignUpViewModel(
                     deviceType = "android",
                     deviceToken = "",
                     nickname = nickname,
-                    // TODO
                     marketing = true,
                 )
             }.onSuccess {
