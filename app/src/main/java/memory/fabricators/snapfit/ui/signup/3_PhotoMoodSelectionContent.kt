@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
@@ -43,13 +44,35 @@ fun PhotoMoodSelectionContent(
     val formedMoods = remember { mutableStateListOf<Mood>() }
 
     val (shouldShowDialog, onChangeShouldShowDialog) = remember { mutableStateOf(false) }
+    fun closeDialog() = onChangeShouldShowDialog(false)
 
     if (shouldShowDialog) {
         // TODO
         BasicDialog(
-            content = { /*TODO*/ },
-            primaryAction = { /*TODO*/ },
-            onDismissRequest = { onChangeShouldShowDialog(false) },
+            content = {
+                Text("최대 2개까지 선택이 가능합니다")
+            },
+            primaryAction = {
+                TextButton(
+                    onClick = { closeDialog() },
+                ) {
+                    Text(
+                        text = "확인",
+                        modifier = Modifier.padding(all = 12.dp),
+                    )
+                }
+            },
+            secondaryAction = {
+                TextButton(
+                    onClick = { closeDialog() },
+                ) {
+                    Text(
+                        text = "취소",
+                        modifier = Modifier.padding(all = 12.dp),
+                    )
+                }
+            },
+            onDismissRequest = { closeDialog() },
         )
     }
 
