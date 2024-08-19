@@ -9,7 +9,7 @@ val userDataModule: Module
     get() = module {
         single<UserRepository> {
             UserRepositoryImpl(
-                userDataStoreDataSource = get(),
+                tokenManager = get(),
                 userNetworkDataSource = get(),
             )
         }
