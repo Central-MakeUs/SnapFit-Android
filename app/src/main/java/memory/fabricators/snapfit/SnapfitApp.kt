@@ -30,7 +30,7 @@ fun SnapfitApp() {
             StartScreen(
                 onOpenSignUp = { token ->
                     navController.navigate(
-                        route = SnapfitDestinations.SIGN_UP.route,
+                        route = SnapfitDestinations.SIGN_UP.route + "?socialAccessToken=$token",
                     ) {
                         launchSingleTop = true
                     }
