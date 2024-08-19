@@ -47,9 +47,9 @@ fun PhotoMoodSelectionContent(
     fun closeDialog() = onChangeShouldShowDialog(false)
 
     if (shouldShowDialog) {
-        // TODO
         BasicDialog(
             content = {
+                // TODO: resources
                 Text("최대 2개까지 선택이 가능합니다")
             },
             primaryAction = {
@@ -57,17 +57,8 @@ fun PhotoMoodSelectionContent(
                     onClick = { closeDialog() },
                 ) {
                     Text(
+                        // TODO: resources
                         text = "확인",
-                        modifier = Modifier.padding(all = 12.dp),
-                    )
-                }
-            },
-            secondaryAction = {
-                TextButton(
-                    onClick = { closeDialog() },
-                ) {
-                    Text(
-                        text = "취소",
                         modifier = Modifier.padding(all = 12.dp),
                     )
                 }
