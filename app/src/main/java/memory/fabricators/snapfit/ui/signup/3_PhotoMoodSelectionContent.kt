@@ -21,12 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
+import memory.fabricators.snapfit.core.design_system.BasicDialog
 import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
@@ -38,10 +40,22 @@ fun PhotoMoodSelectionContent(
     vibes: List<Vibe>?,
     modifier: Modifier = Modifier,
 ) {
-    val formed = remember { mutableStateListOf<Mood>() }
+    val formedMoods = remember { mutableStateListOf<Mood>() }
+
+    val (shouldShowDialog, onChangeShouldShowDialog) = remember { mutableStateOf(false) }
+
+    if (shouldShowDialog) {
+        // TODO
+        BasicDialog(
+            content = { /*TODO*/ },
+            primaryAction = { /*TODO*/ },
+            onDismissRequest = { onChangeShouldShowDialog(false) },
+        )
+    }
+
     LaunchedEffect(key1 = vibes) {
         if (vibes != null) {
-            formed.addAll(
+            formedMoods.addAll(
                 vibes.map {
                     Mood(
                         vibe = it,
@@ -76,13 +90,24 @@ fun PhotoMoodSelectionContent(
             )
             Spacer(modifier = Modifier.height(24.dp))
             MoodList(
-                moods = formed,
+                moods = formedMoods,
                 onMoodClick = {
-                    formed.replaceAll { mood ->
+                    formedMoods.replaceAll { mood ->
                         if (mood.vibe.id == it.vibe.id) {
-                            mood.copy(
-                                selected = !mood.selected,
-                            )
+                            if (mood.selected) {
+                                return@replaceAll mood.copy(
+                                    selected = false,
+                                )
+                            } else {
+                                if (formedMoods.count { it.selected } >= 2) {
+                                    onChangeShouldShowDialog(true)
+                                    mood
+                                } else {
+                                    mood.copy(
+                                        selected = !mood.selected,
+                                    )
+                                }
+                            }
                         } else {
                             mood
                         }
