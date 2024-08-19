@@ -37,7 +37,7 @@ import memory.fabricators.snapfit.data.user.model.Vibe
 
 @Composable
 fun PhotoMoodSelectionContent(
-    onNext: () -> Unit,
+    onNext: (selectedVibes: List<String>) -> Unit,
     vibes: List<Vibe>?,
     modifier: Modifier = Modifier,
 ) {
@@ -138,7 +138,10 @@ fun PhotoMoodSelectionContent(
                     end = 16.dp,
                     bottom = 24.dp,
                 ),
-            onClick = onNext,
+            onClick = {
+                val selectedVibes = formedMoods.filter { it.selected }.map { it.vibe.name }
+                onNext(selectedVibes)
+            },
         ) {
             Text(
                 text = stringResource(id = R.string.signup_photoMoodSelection_button_main),

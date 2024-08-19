@@ -36,6 +36,25 @@ class SignUpViewModel(
             }
         }
     }
+
+    fun signUp(
+        selectedVibes: List<String>,
+        nickname: String,
+    ) = intent {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                userRepository.signUp(
+                    social = "kakao",
+                    vibes = selectedVibes,
+                    deviceType = "android",
+                    deviceToken = "",
+                    nickname = nickname,
+                    // TODO
+                    marketing = true,
+                )
+            }
+        }
+    }
 }
 
 data class SignUpState(

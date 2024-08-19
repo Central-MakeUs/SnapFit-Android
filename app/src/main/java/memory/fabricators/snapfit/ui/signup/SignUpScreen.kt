@@ -95,7 +95,12 @@ fun SignUpScreen(
                 )
 
                 2 -> PhotoMoodSelectionContent(
-                    onNext = onOpenMain,
+                    onNext = { selectedVibes ->
+                        viewModel.signUp(
+                            selectedVibes = selectedVibes,
+                            nickname = nickname,
+                        )
+                    },
                     vibes = state.vibes,
                     modifier = Modifier
                         .fillMaxSize()

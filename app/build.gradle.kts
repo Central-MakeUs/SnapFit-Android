@@ -88,6 +88,8 @@ dependencies {
 
     implementation(libs.kotlin.seralization)
 
+    implementation(libs.datastore.preference)
+
     implementation(libs.room)
     ksp(libs.room.compiler)
 

@@ -1,6 +1,16 @@
 package memory.fabricators.snapfit.core.token
 
-class TokenManagerImpl : TokenManager() {
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class TokenManagerImpl(
+    private val dataStore: DataStore<Preferences>,
+) : TokenManager() {
 
     private lateinit var _cachedAccessToken: AccessToken
     private lateinit var _cachedRefreshToken: RefreshToken
@@ -23,11 +33,18 @@ class TokenManagerImpl : TokenManager() {
         accessToken: AccessToken,
         refreshToken: RefreshToken,
     ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataStore.edit {
+                it[KEY_REFRESH_TOKEN] = refreshToken
+            }
+        }
         _cachedAccessToken = accessToken
         _cachedRefreshToken = refreshToken
     }
 
     override fun initialize() {
-        TODO("Not yet implemented")
+
     }
 }
+
+private val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
