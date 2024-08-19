@@ -22,7 +22,7 @@ class StartViewModel(
             }.onSuccess {
                 postSideEffect(StartSideEffect.LoginSuccess)
             }.onFailure {
-                postSideEffect(StartSideEffect.LoginFailure)
+                postSideEffect(StartSideEffect.LoginFailure(socialAccessToken = token))
             }
         }
     }
@@ -30,5 +30,5 @@ class StartViewModel(
 
 sealed class StartSideEffect {
     data object LoginSuccess : StartSideEffect()
-    data object LoginFailure : StartSideEffect()
+    class LoginFailure(val socialAccessToken: String) : StartSideEffect()
 }

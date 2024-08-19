@@ -13,7 +13,12 @@ import org.koin.dsl.module
 val tokenCoreModule: Module
     get() = module {
         single<DataStore<Preferences>> { androidContext().dataStore }
-        single<TokenManager> { TokenManagerImpl(get()) }
+        single<TokenManager> {
+            TokenManagerImpl(
+                httpClient = get(),
+                dataStore = get(),
+            )
+        }
     }
 
 private val Context.dataStore by preferencesDataStore(

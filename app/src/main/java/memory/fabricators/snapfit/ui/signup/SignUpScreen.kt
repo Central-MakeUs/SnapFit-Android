@@ -25,12 +25,14 @@ import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun SignUpScreen(
     onNavigateUp: () -> Unit,
     onOpenMain: () -> Unit,
+    socialAccessToken: String,
     modifier: Modifier = Modifier,
     viewModel: SignUpViewModel = koinViewModel(),
 ) {
@@ -38,6 +40,14 @@ fun SignUpScreen(
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { SignUpContents.entries.size }
     val (nickname, onChangeNickname) = remember { mutableStateOf("") }
+
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            SignUpSideEffect.SignUpFailure -> {}
+            SignUpSideEffect.SignUpSuccess -> onOpenMain()
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         containerColor = LocalColorScheme.current.primaryWhite,
@@ -98,6 +108,7 @@ fun SignUpScreen(
                     onNext = { selectedVibes ->
                         viewModel.signUp(
                             selectedVibes = selectedVibes,
+                            socialAccessToken = socialAccessToken,
                             nickname = nickname,
                         )
                     },

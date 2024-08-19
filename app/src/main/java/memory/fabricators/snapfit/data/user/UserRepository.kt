@@ -6,6 +6,7 @@ abstract class UserRepository {
     abstract suspend fun fetchVibes(): List<Vibe>
     abstract suspend fun signUp(
         social: String,
+        socialAccessToken: String,
         vibes: List<String>,
         deviceType: String,
         deviceToken: String,

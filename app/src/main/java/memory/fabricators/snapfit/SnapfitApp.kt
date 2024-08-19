@@ -3,9 +3,11 @@ package memory.fabricators.snapfit
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import memory.fabricators.snapfit.ui.artist.details.ArtistDetailsScreen
 import memory.fabricators.snapfit.ui.artist.listfilter.ArtistListFilterScreen
 import memory.fabricators.snapfit.ui.artist.result.BookingCompletionScreen
@@ -26,7 +28,7 @@ fun SnapfitApp() {
         }
         composable(route = SnapfitDestinations.START.route) {
             StartScreen(
-                onOpenSignUp = {
+                onOpenSignUp = { token ->
                     navController.navigate(
                         route = SnapfitDestinations.SIGN_UP.route,
                     ) {
@@ -42,7 +44,16 @@ fun SnapfitApp() {
                 },
             )
         }
-        composable(route = SnapfitDestinations.SIGN_UP.route) {
+        composable(
+            route = SnapfitDestinations.SIGN_UP.route + "?socialAccessToken={socialAccessToken}",
+            arguments = listOf(
+                navArgument("socialAccessToken") {
+                    type = NavType.StringType
+                },
+            )
+        ) { backStackEntry ->
+            val socialAccessToken = backStackEntry.arguments?.getString("socialAccessToken")
+                ?: throw IllegalArgumentException("Social access token not received")
             SignUpScreen(
                 onNavigateUp = navController::navigateUp,
                 onOpenMain = {
@@ -55,6 +66,7 @@ fun SnapfitApp() {
                         }
                     }
                 },
+                socialAccessToken = socialAccessToken,
             )
         }
         composable(route = SnapfitDestinations.ARTIST_DETAILS.route) {

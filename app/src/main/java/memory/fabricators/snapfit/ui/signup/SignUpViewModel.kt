@@ -8,6 +8,7 @@ import memory.fabricators.snapfit.data.user.UserRepository
 import memory.fabricators.snapfit.data.user.model.Vibe
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
@@ -39,12 +40,14 @@ class SignUpViewModel(
 
     fun signUp(
         selectedVibes: List<String>,
+        socialAccessToken: String,
         nickname: String,
     ) = intent {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userRepository.signUp(
                     social = "kakao",
+                    socialAccessToken = socialAccessToken,
                     vibes = selectedVibes,
                     deviceType = "android",
                     deviceToken = "",
@@ -52,6 +55,10 @@ class SignUpViewModel(
                     // TODO
                     marketing = true,
                 )
+            }.onSuccess {
+                postSideEffect(SignUpSideEffect.SignUpSuccess)
+            }.onFailure {
+                postSideEffect(SignUpSideEffect.SignUpFailure)
             }
         }
     }
@@ -62,5 +69,6 @@ data class SignUpState(
 )
 
 sealed class SignUpSideEffect {
-
+    data object SignUpSuccess : SignUpSideEffect()
+    data object SignUpFailure : SignUpSideEffect()
 }

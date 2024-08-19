@@ -45,7 +45,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun StartScreen(
-    onOpenSignUp: () -> Unit,
+    onOpenSignUp: (token: String) -> Unit,
     onOpenMain: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartViewModel = koinViewModel(),
@@ -71,7 +71,7 @@ fun StartScreen(
     }
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            StartSideEffect.LoginFailure -> onOpenSignUp()
+            is StartSideEffect.LoginFailure -> onOpenSignUp(sideEffect.socialAccessToken)
             StartSideEffect.LoginSuccess -> onOpenMain()
         }
     }
