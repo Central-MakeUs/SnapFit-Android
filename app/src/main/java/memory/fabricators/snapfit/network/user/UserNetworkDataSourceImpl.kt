@@ -2,6 +2,7 @@ package memory.fabricators.snapfit.network.user
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -15,12 +16,6 @@ class UserNetworkDataSourceImpl(
 ) : UserNetworkDataSource() {
     override suspend fun fetchVibes(): List<Vibe> {
         val response = httpClient.get("/snapfit/vibes")
-        try {
-            response.body<List<Vibe>>()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
         return response.body()
     }
 
@@ -29,7 +24,7 @@ class UserNetworkDataSourceImpl(
         socialAccessToken: String,
     ): TokenResponse {
         val response = httpClient.post("/snapfit/user") {
-            header("Authorization", "Bearer $socialAccessToken")
+            bearerAuth(socialAccessToken)
             setBody(req)
         }
         return response.body()

@@ -10,5 +10,5 @@ data class SignUpRequest(
     val deviceType: String,
     val deviceToken: String,
     @SerialName("nickName") val nickname: String,
-    @SerialName("isMarketing") val marketing: Boolean,
+    val marketing: Boolean,
 )

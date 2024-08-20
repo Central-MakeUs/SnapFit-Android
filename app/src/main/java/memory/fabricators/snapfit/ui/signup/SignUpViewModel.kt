@@ -52,7 +52,7 @@ class SignUpViewModel(
                     deviceType = "android",
                     deviceToken = "iloveandroid",
                     nickname = nickname,
-                    marketing = true,
+                    marketing = false,
                 )
             }.onSuccess {
                 postSideEffect(SignUpSideEffect.SignUpSuccess)
