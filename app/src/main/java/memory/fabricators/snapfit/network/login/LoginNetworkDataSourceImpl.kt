@@ -22,6 +22,10 @@ class LoginNetworkDataSourceImpl(
         return response.body()
     }
 
+    override suspend fun logout(token: String) {
+        // TODO()
+    }
+
     override suspend fun socialSignUp(
         req: SocialSignUpRequest,
         socialAccessToken: String,
