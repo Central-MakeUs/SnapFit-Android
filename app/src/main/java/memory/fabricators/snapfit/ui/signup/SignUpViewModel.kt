@@ -50,13 +50,14 @@ class SignUpViewModel(
                     socialAccessToken = socialAccessToken,
                     vibes = selectedVibes,
                     deviceType = "android",
-                    deviceToken = "",
+                    deviceToken = "iloveandroid",
                     nickname = nickname,
                     marketing = true,
                 )
             }.onSuccess {
                 postSideEffect(SignUpSideEffect.SignUpSuccess)
             }.onFailure {
+                it.printStackTrace()
                 postSideEffect(SignUpSideEffect.SignUpFailure)
             }
         }
