@@ -5,6 +5,9 @@ import io.ktor.client.call.body
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import memory.fabricators.snapfit.network.login.model.SocialSignUpRequest
 import memory.fabricators.snapfit.network.login.model.TokenResponse
 
 class LoginNetworkDataSourceImpl(
@@ -19,8 +22,15 @@ class LoginNetworkDataSourceImpl(
         return response.body()
     }
 
-    override suspend fun socialSignUp(token: String): TokenResponse {
-        TODO("Not yet implemented")
+    override suspend fun socialSignUp(
+        req: SocialSignUpRequest,
+        socialAccessToken: String,
+    ): TokenResponse {
+        val response = httpClient.post("/snapfit/user") {
+            bearerAuth(socialAccessToken)
+            setBody(req)
+        }
+        return response.body()
     }
 
     override suspend fun reissueToken(): TokenResponse {

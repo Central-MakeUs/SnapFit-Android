@@ -3,7 +3,7 @@ package memory.fabricators.snapfit.data.user
 import memory.fabricators.snapfit.core.token.TokenManager
 import memory.fabricators.snapfit.data.user.model.Vibe
 import memory.fabricators.snapfit.network.user.UserNetworkDataSource
-import memory.fabricators.snapfit.network.user.model.SignUpRequest
+import memory.fabricators.snapfit.network.login.model.SocialSignUpRequest
 
 class UserRepositoryImpl(
     private val tokenManager: TokenManager,
@@ -24,7 +24,7 @@ class UserRepositoryImpl(
     ) {
         userNetworkDataSource.signUp(
             socialAccessToken = socialAccessToken,
-            req = SignUpRequest(
+            req = SocialSignUpRequest(
                 social = social,
                 vibes = vibes,
                 deviceType = deviceType,

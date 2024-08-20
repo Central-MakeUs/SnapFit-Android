@@ -1,10 +1,10 @@
-package memory.fabricators.snapfit.network.user.model
+package memory.fabricators.snapfit.network.login.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SignUpRequest(
+data class SocialSignUpRequest(
     val social: String,
     val vibes: List<String>,
     val deviceType: String,
