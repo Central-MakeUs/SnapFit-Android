@@ -11,6 +11,7 @@ val userDataModule: Module
             UserRepositoryImpl(
                 tokenManager = get(),
                 userNetworkDataSource = get(),
+                loginNetworkDataSource = get(),
             )
         }
     }
