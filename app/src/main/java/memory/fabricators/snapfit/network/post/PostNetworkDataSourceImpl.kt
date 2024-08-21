@@ -1,6 +1,10 @@
 package memory.fabricators.snapfit.network.post
 
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.delete
+import io.ktor.client.request.get
+import io.ktor.client.request.post
 import memory.fabricators.snapfit.network.post.model.PostDetailsResponse
 import memory.fabricators.snapfit.network.post.model.PostLikeCountResponse
 import memory.fabricators.snapfit.network.post.model.PostListResponse
@@ -8,49 +12,48 @@ import memory.fabricators.snapfit.network.post.model.PostRequest
 import memory.fabricators.snapfit.network.post.model.PostResponse
 
 class PostNetworkDataSourceImpl(
-    private val httpClient: HttpClient // Replace with your HTTP client
+    private val httpClient: HttpClient,
 ) : PostNetworkDataSource() {
-
     override suspend fun getPostLikes(postId: String): PostListResponse {
-        // Replace with actual API call using httpClient
-        return PostListResponse() // Replace with actual data
+        val response = httpClient.get("/snapfit/post/$postId/likes")
+        return response.body()
     }
 
     override suspend fun getMakerPosts(makerId: String): PostListResponse {
-        // Replace with actual API call using httpClient
-        return PostListResponse() // Replace with actual data
+        val response = httpClient.get("/snapfit/maker/$makerId/posts")
+        return response.body()
     }
 
     override suspend fun getPostDetails(postId: String): PostDetailsResponse {
-        // Replace with actual API call using httpClient
-        return PostDetailsResponse() // Replace with actual data
+        val response = httpClient.get("/snapfit/post/$postId")
+        return response.body()
     }
 
     override suspend fun createPost(postRequest: PostRequest): PostResponse {
-        // Replace with actual API call using httpClient
-        return PostResponse() // Replace with actual data
+        val response = httpClient.post("/snapfit/post")
+        return response.body()
     }
 
     override suspend fun likePost(postId: String) {
-        // Replace with actual API call using httpClient
+        httpClient.post("/snapfit/post/$postId/like")
     }
 
     override suspend fun unlikePost(postId: String) {
-        // Replace with actual API call using httpClient
+        httpClient.delete("/snapfit/post/$postId/like")
     }
 
     override suspend fun getPostLikeCount(postId: String): PostLikeCountResponse {
-        // Replace with actual API call using httpClient
-        return PostLikeCountResponse() // Replace with actual data
+        val response = httpClient.get("/snapfit/post/$postId/like/count")
+        return response.body()
     }
 
     override suspend fun getAllPosts(): PostListResponse {
-        // Replace with actual API call using httpClient
-        return PostListResponse() // Replace with actual data
+        val response = httpClient.get("/snapfit/posts")
+        return response.body()
     }
 
     override suspend fun getPostsByVibes(vibes: List<String>): PostListResponse {
-        // Replace with actual API call using httpClient
-        return PostListResponse() // Replace with actual data
+        val response = httpClient.get("/snapfit/posts/vibes") {}
+        return response.body()
     }
 }
