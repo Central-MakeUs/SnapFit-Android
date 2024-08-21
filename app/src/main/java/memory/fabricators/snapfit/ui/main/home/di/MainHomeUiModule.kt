@@ -7,5 +7,10 @@ import org.koin.dsl.module
 
 val mainHomeUiModule: Module
     get() = module {
-        viewModel { HomeViewModel(userRepository = get()) }
+        viewModel {
+            HomeViewModel(
+                userRepository = get(),
+                postRepository = get(),
+            )
+        }
     }

@@ -7,5 +7,10 @@ import org.koin.dsl.module
 
 val loginDataModule: Module
     get() = module {
-        single<LoginRepository> { LoginRepositoryImpl(loginNetworkDataSource = get()) }
+        single<LoginRepository> {
+            LoginRepositoryImpl(
+                loginNetworkDataSource = get(),
+                tokenManager = get(),
+            )
+        }
     }

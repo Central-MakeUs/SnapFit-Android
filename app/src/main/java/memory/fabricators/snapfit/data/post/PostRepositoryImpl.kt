@@ -9,7 +9,7 @@ class PostRepositoryImpl(
     private val postNetworkDataSource: PostNetworkDataSource,
 ) : PostRepository() {
     override suspend fun getLikedPosts(postId: String): PostList {
-        val response = postNetworkDataSource.getPostLikes(postId)
+        val response = postNetworkDataSource.getLikedPosts(postId)
         return with(response) {
             PostList(
                 offset = offset,

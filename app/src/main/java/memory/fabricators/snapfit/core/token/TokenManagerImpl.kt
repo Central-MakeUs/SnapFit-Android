@@ -5,9 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import io.ktor.client.HttpClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TokenManagerImpl(
     private val httpClient: HttpClient,
@@ -35,17 +33,19 @@ class TokenManagerImpl(
         accessToken: AccessToken,
         refreshToken: RefreshToken,
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
+        runBlocking {
             dataStore.edit {
                 it[KEY_REFRESH_TOKEN] = refreshToken
             }
+            _cachedAccessToken = accessToken
+            _cachedRefreshToken = refreshToken
         }
-        _cachedAccessToken = accessToken
-        _cachedRefreshToken = refreshToken
     }
 
     override fun initialize() {
-
+        runBlocking {
+            // dataStore[KEY_REFRESH_TOKEN]
+        }
     }
 }
 

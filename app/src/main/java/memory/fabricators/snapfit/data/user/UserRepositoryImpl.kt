@@ -35,6 +35,7 @@ class UserRepositoryImpl(
                 marketing = marketing,
             ),
         ).also { (accessToken, refreshToken) ->
+            println("TOKENTOKEN\n$accessToken\n$refreshToken")
             tokenManager.setTokens(
                 accessToken = accessToken,
                 refreshToken = refreshToken,

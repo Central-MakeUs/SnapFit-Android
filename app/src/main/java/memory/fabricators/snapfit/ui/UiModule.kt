@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui
 
+import memory.fabricators.snapfit.ui.main.home.di.mainHomeUiModule
 import memory.fabricators.snapfit.ui.signup.di.signUpUiModule
 import memory.fabricators.snapfit.ui.start.di.startUiModule
 import org.koin.core.module.Module
@@ -10,5 +11,6 @@ val uiModule: Module
         includes(
             signUpUiModule,
             startUiModule,
+            mainHomeUiModule,
         )
     }

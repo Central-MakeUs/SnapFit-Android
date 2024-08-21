@@ -34,7 +34,14 @@ class LoginNetworkDataSourceImpl(
             bearerAuth(socialAccessToken)
             setBody(req)
         }
-        return response.body()
+        try {
+            val res = response.body<TokenResponse>()
+            println("RESRES $res")
+        }
+         catch (e: Exception) {
+             e.printStackTrace()
+         }
+        return response.body<TokenResponse>()
     }
 
     override suspend fun reissueToken(): TokenResponse {
