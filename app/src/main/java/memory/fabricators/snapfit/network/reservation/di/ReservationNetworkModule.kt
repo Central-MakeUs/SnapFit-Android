@@ -5,7 +5,7 @@ import memory.fabricators.snapfit.network.reservation.ReservationNetworkDataSour
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-val networkReservationModule: Module
+val reservationNetworkModule: Module
     get() = module {
         single<ReservationNetworkDataSource> { ReservationNetworkDataSourceImpl(httpClient = get()) }
     }
