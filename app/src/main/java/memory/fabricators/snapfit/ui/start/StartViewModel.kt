@@ -25,7 +25,7 @@ class StartViewModel(
                 postSideEffect(StartSideEffect.LoginFailure(socialAccessToken = token))
             }
         }
-    }
+    } 
 }
 
 sealed class StartSideEffect {

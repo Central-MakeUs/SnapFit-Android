@@ -65,7 +65,7 @@ class PostNetworkDataSourceImpl(
     }
 
     override suspend fun getAllPosts(): PostListResponse {
-        val response = httpClient.get("/snapfit/posts?limit=20&offset=1") {
+        val response = httpClient.get("/snapfit/posts/all?limit=20&offset=0") {
             bearerAuth(token = tokenManager.accessToken)
         }
         return response.body()
