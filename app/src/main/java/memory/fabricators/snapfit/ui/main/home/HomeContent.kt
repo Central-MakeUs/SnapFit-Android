@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -31,20 +33,25 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
+import memory.fabricators.snapfit.data.post.model.PostList
 import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +60,7 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
+    val state by viewModel.collectAsState()
     val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -147,34 +155,6 @@ fun HomeContent(
                         shape = RoundedCornerShape(2.dp),
                     ),
             )
-
-            // TODO
-            val temp = listOf(
-                PhotoRecommendation(
-                    id = "1234",
-                    title = "감성을 담은 스냅사진",
-                    location = "서울 중구",
-                    price = 36500,
-                ),
-                PhotoRecommendation(
-                    id = "12345",
-                    title = "감성을 담은 스냅사진",
-                    location = "서울 중구",
-                    price = 36500,
-                ),
-                PhotoRecommendation(
-                    id = "12346",
-                    title = "감성을 담은 스냅사진",
-                    location = "서울 중구",
-                    price = 36500,
-                ),
-                PhotoRecommendation(
-                    id = "12347",
-                    title = "감성을 담은 스냅사진",
-                    location = "서울 중구",
-                    price = 36500,
-                ),
-            )
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(
@@ -182,13 +162,15 @@ fun HomeContent(
                 ),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(
-                    items = temp,
-                    key = { it.id },
-                ) { recommendation ->
-                    PhotoRecommendationItem(
-                        photoRecommendation = recommendation,
-                    )
+                if (state.posts != null) {
+                    items(
+                        items = state.posts!!,
+                        key = { it.id },
+                    ) { post ->
+                        PhotoRecommendationItem(
+                            post = post,
+                        )
+                    }
                 }
             }
             // TODO
@@ -205,7 +187,6 @@ fun HomeContent(
                         onClick = { /*TODO*/ },
                     ) {
                         Icon(
-
                             tint = LocalColorScheme.current.primaryBlack,
                             painter = painterResource(id = R.drawable.icon_arrow_right),
                             contentDescription = "메이커와 소중한 추억을 만들어보세요",
@@ -355,61 +336,61 @@ private fun Header(
     }
 }
 
-data class PhotoRecommendation(
-    val id: String,
-    val title: String,
-    val location: String,
-    val price: Long,
-    // val imageUrl: String,
-)
-
 @Composable
 private fun PhotoRecommendationItem(
-    photoRecommendation: PhotoRecommendation,
+    post: PostList.Post,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         Box(
-            modifier = Modifier
-                .size(120.dp)
-                .background(
-                    color = Color.Blue,
-                    shape = RoundedCornerShape(2.dp),
-                ),
+            modifier = Modifier.size(120.dp),
         ) {
+            AsyncImage(
+                model = post.thumbnail,
+                contentDescription = post.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+            )
             IconButton(
                 modifier = Modifier.align(Alignment.TopEnd),
                 onClick = { /*TODO*/ },
             ) {
                 Icon(
-                    tint = LocalColorScheme.current.primaryBlack,
                     painter = painterResource(id = R.drawable.icon_favorite_outlined),
                     contentDescription = "favorite",
+                    modifier = Modifier.size(24.dp),
+                    tint = LocalColorScheme.current.primaryWhite,
                 )
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = photoRecommendation.title,
+            text = post.title,
+            modifier = Modifier.widthIn(max = 120.dp),
+            maxLines = 1,
             style = LocalTypography.current.body2Semibold,
             color = LocalColorScheme.current.primaryBlack,
             overflow = TextOverflow.Ellipsis,
         )
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = photoRecommendation.location,
-            style = LocalTypography.current.caption2Regular,
-            color = LocalColorScheme.current.secondary500,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Row {
+            post.locations.forEach { location ->
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = location,
+                    style = LocalTypography.current.caption2Regular,
+                    color = LocalColorScheme.current.secondary500,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+            }
+        }
 
         Text(
             modifier = Modifier.fillMaxWidth(),
             // TODO
-            text = "${photoRecommendation.price}원",
+            text = "${post.price}원",
             style = LocalTypography.current.body2Semibold,
             color = LocalColorScheme.current.secondary500,
             overflow = TextOverflow.Ellipsis,
