@@ -1,6 +1,7 @@
 package memory.fabricators.snapfit.ui.main.home
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -111,8 +112,7 @@ fun HomeContent(
             // TODO
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // TODO
-            if (state.userInfo != null) {
+            AnimatedVisibility(visible = state.userInfo != null) {
                 Header(
                     username = state.userInfo!!.nickname,
                     profileImage = state.userInfo!!.profile,
