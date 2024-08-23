@@ -7,5 +7,10 @@ import org.koin.dsl.module
 
 val userNetworkModule: Module
     get() = module {
-        single<UserNetworkDataSource> { UserNetworkDataSourceImpl(httpClient = get()) }
+        single<UserNetworkDataSource> {
+            UserNetworkDataSourceImpl(
+                httpClient = get(),
+                tokenManager = get(),
+            )
+        }
     }
