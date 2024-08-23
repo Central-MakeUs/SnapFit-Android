@@ -2,10 +2,12 @@ package memory.fabricators.snapfit.network.user
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import memory.fabricators.snapfit.core.token.TokenManager
 import memory.fabricators.snapfit.data.user.model.Vibe
 import memory.fabricators.snapfit.network.user.model.LocationResponse
 import memory.fabricators.snapfit.network.user.model.UpdateUserInfoRequest
@@ -13,6 +15,7 @@ import memory.fabricators.snapfit.network.user.model.UserInfoResponse
 
 class UserNetworkDataSourceImpl(
     private val httpClient: HttpClient, // Replace with your HTTP client
+    private val tokenManager: TokenManager,
 ) : UserNetworkDataSource() {
 
     override suspend fun getLocations(): List<LocationResponse> {
@@ -24,6 +27,7 @@ class UserNetworkDataSourceImpl(
 
     override suspend fun getUserInfo(): UserInfoResponse {
         val response = httpClient.get("/snapfit/user") {
+            bearerAuth(tokenManager.accessToken)
         }
         return response.body()
     }
