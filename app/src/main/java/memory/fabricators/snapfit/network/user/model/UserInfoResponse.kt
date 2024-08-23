@@ -9,7 +9,7 @@ data class UserInfoResponse(
     @SerialName("nickName") val nickname: String,
     val vibes: List<VibeResponse>,
     val socialType: String,
-    val profile: String,
+    val profile: String?,
     val marketingReceive: Boolean,
     val photographer: Boolean,
     val noti: Boolean,
