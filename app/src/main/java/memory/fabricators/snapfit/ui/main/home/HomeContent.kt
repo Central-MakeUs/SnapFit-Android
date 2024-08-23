@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
@@ -78,17 +79,19 @@ fun HomeContent(
                         contentDescription = null,
                     )
                 },
-                actions = {
+                /*actions = {
                     IconButton(
-                        onClick = { /*TODO*/ },
-                    ) {
-                        Icon(
-                            tint = LocalColorScheme.current.primaryBlack,
-                            painter = painterResource(id = R.drawable.icon_notification),
-                            contentDescription = stringResource(id = R.string.home_notification),
-                        )
-                    }
-                },
+                        onClick = { */
+                /*TODO*/
+                /* },
+                                    ) {
+                                        Icon(
+                                            tint = LocalColorScheme.current.primaryBlack,
+                                            painter = painterResource(id = R.drawable.icon_notification),
+                                            contentDescription = stringResource(id = R.string.home_notification),
+                                        )
+                                    }
+                                },*/
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -109,15 +112,18 @@ fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             // TODO
-            Header(
-                username = "한소희",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 32.dp,
-                    ),
-            )
+            if (state.userInfo != null) {
+                Header(
+                    username = state.userInfo!!.nickname,
+                    profileImage = state.userInfo!!.profile,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 32.dp,
+                        ),
+                )
+            }
 
             // TODO
             SectionHeader(
@@ -295,6 +301,7 @@ fun HomeContent(
 @Composable
 private fun Header(
     username: String,
+    profileImage: String?,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -322,16 +329,18 @@ private fun Header(
                 ),
             )
         }
-        // Image(painter = , contentDescription = )
-        Box(
+        AsyncImage(
+            model = profileImage,
+            contentDescription = "profile",
             modifier = Modifier
                 .size(
                     50.dp,
                 )
-                .background(
-                    color = Color.Red,
+                .clip(
                     shape = CircleShape,
                 ),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.ic_launcher_background)
         )
     }
 }
