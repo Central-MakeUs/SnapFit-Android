@@ -334,7 +334,7 @@ private fun Header(
             contentDescription = "profile",
             modifier = Modifier
                 .size(
-                    50.dp,
+                    size = 50.dp,
                 )
                 .clip(
                     shape = CircleShape,
