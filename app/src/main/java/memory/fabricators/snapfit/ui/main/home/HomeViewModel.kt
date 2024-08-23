@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import memory.fabricators.snapfit.data.post.PostRepository
 import memory.fabricators.snapfit.data.post.model.PostList
 import memory.fabricators.snapfit.data.user.UserRepository
+import memory.fabricators.snapfit.data.user.model.UserInfo
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -20,6 +21,7 @@ class HomeViewModel(
 
     init {
         fetchPosts()
+        fetchUserInfo()
     }
 
     fun fetchPosts(
@@ -38,8 +40,25 @@ class HomeViewModel(
             }
         }
     }
+
+    fun fetchUserInfo(
+
+    ) = intent {
+        viewModelScope.launch(Dispatchers.IO) {
+            kotlin.runCatching {
+                userRepository.fetchUserInfo()
+            }.onSuccess {
+                reduce {
+                    state.copy(userInfo = it)
+                }
+            }.onFailure {
+                it.printStackTrace()
+            }
+        }
+    }
 }
 
 data class HomeUiState(
     val posts: List<PostList.Post>? = null,
+    val userInfo: UserInfo? = null,
 )
