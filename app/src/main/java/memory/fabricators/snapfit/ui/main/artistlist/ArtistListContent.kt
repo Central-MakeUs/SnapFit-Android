@@ -1,17 +1,13 @@
 package memory.fabricators.snapfit.ui.main.artistlist
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
@@ -24,9 +20,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -34,12 +30,16 @@ import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistListContent(
     modifier: Modifier = Modifier,
+    viewModel: ArtistListViewModel = koinViewModel(),
 ) {
+    val state by viewModel.collectAsState()
     val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -93,7 +93,7 @@ fun ArtistListContent(
                 ) {
                     Tab(
                         selected = true,
-                        onClick = { /*TODO*/ },
+                        onClick = { setSelectedTab(0) },
                     ) {
                         Text(
                             text = "전체",
@@ -104,7 +104,7 @@ fun ArtistListContent(
 
                     Tab(
                         selected = true,
-                        onClick = { /*TODO*/ },
+                        onClick = { setSelectedTab(1) },
                     ) {
                         Text(
                             text = "러블리",
@@ -115,7 +115,7 @@ fun ArtistListContent(
 
                     Tab(
                         selected = true,
-                        onClick = { /*TODO*/ },
+                        onClick = { setSelectedTab(2) },
                     ) {
                         Text(
                             text = "시크",
@@ -126,7 +126,7 @@ fun ArtistListContent(
 
                     Tab(
                         selected = true,
-                        onClick = { /*TODO*/ },
+                        onClick = { setSelectedTab(3) },
                     ) {
                         Text(
                             text = "키치",
@@ -137,7 +137,7 @@ fun ArtistListContent(
 
                     Tab(
                         selected = true,
-                        onClick = { /*TODO*/ },
+                        onClick = { setSelectedTab(4) },
                     ) {
                         Text(
                             text = "차분함",
@@ -147,7 +147,7 @@ fun ArtistListContent(
                     }
                 }
             }
-            Row(
+            /*Row(
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(
@@ -174,7 +174,12 @@ fun ArtistListContent(
             HorizontalDivider(
                 thickness = 5.dp,
                 color = LocalColorScheme.current.secondary100,
-            )
+            )*/
+        }
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(count = 2),
+        ) {
+
         }
     }
 }

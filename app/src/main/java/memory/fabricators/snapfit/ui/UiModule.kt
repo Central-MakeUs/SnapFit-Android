@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui
 
+import memory.fabricators.snapfit.ui.main.artistlist.di.mainArtistUiModule
 import memory.fabricators.snapfit.ui.main.home.di.mainHomeUiModule
 import memory.fabricators.snapfit.ui.signup.di.signUpUiModule
 import memory.fabricators.snapfit.ui.start.di.startUiModule
@@ -11,6 +12,7 @@ val uiModule: Module
         includes(
             signUpUiModule,
             startUiModule,
+            mainArtistUiModule,
             mainHomeUiModule,
         )
     }
