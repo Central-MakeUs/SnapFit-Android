@@ -18,6 +18,10 @@ class ArtistListViewModel(
 
     init {
         fetchAllPosts()
+        fetchLovelyPosts()
+        fetchChicPosts()
+        fetchKitschPosts()
+        fetchCalmPosts()
     }
 
     fun fetchAllPosts() = intent {
@@ -56,7 +60,7 @@ class ArtistListViewModel(
         }
     }
 
-    fun kitschPosts() = intent {
+    fun fetchKitschPosts() = intent {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 postRepository.getPostsByVibes(vibes = listOf("키치"))
@@ -68,7 +72,7 @@ class ArtistListViewModel(
         }
     }
 
-    fun calmPosts() = intent {
+    fun fetchCalmPosts() = intent {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 postRepository.getPostsByVibes(vibes = listOf("차분한"))

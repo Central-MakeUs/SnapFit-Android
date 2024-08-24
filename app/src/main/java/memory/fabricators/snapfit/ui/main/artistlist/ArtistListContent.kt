@@ -1,12 +1,14 @@
 package memory.fabricators.snapfit.ui.main.artistlist
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -30,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.ui.common.ProductItem
+import memory.fabricators.snapfit.ui.common.ProductItemTag
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -42,6 +46,8 @@ fun ArtistListContent(
     val state by viewModel.collectAsState()
     val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val (selectedTab, setSelectedTab) = remember { mutableIntStateOf(0) }
+
     Scaffold(
         modifier = modifier,
         containerColor = LocalColorScheme.current.primaryWhite,
@@ -69,12 +75,8 @@ fun ArtistListContent(
                 )
                 .nestedScroll(
                     connection = scrollBehavior.nestedScrollConnection,
-                )
-                .verticalScroll(
-                    state = scrollState,
                 ),
         ) {
-            val (selectedTab, setSelectedTab) = remember { mutableIntStateOf(0) }
             TabRow(
                 selectedTabIndex = selectedTab,
                 containerColor = LocalColorScheme.current.primaryWhite,
@@ -147,39 +149,32 @@ fun ArtistListContent(
                     }
                 }
             }
-            /*Row(
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(
-                        top = 8.dp,
-                        end = 16.dp,
-                        bottom = 8.dp,
-                    ),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(count = 2),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(all = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Icon(
-                    tint = LocalColorScheme.current.primaryBlack,
-                    painter = painterResource(id = R.drawable.icon_menu),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp),
-                )
-                Text(
-                    text = "필터",
-                    style = LocalTypography.current.body2Regular.copy(
-                        color = LocalColorScheme.current.primaryBlack,
-                    ),
-                )
+                items(
+                    when (selectedTab) {
+                        0 -> state.allPosts ?: emptyList()
+                        1 -> state.lovelyPosts ?: emptyList()
+                        2 -> state.chicPosts ?: emptyList()
+                        3 -> state.kitschPosts ?: emptyList()
+                        4 -> state.calmPosts ?: emptyList()
+                        else -> emptyList()
+                    },
+                ) { post ->
+                    ProductItem(
+                        backgroundImageUrl = post.thumbnail,
+                        title = { Text(text = post.title) },
+                        tags = post.vibes.map { ProductItemTag(text = it) },
+                        price = { Text(text = post.price.toString()) },
+                        subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
+                    )
+                }
             }
-            HorizontalDivider(
-                thickness = 5.dp,
-                color = LocalColorScheme.current.secondary100,
-            )*/
-        }
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(count = 2),
-        ) {
-
         }
     }
 }
