@@ -72,7 +72,7 @@ class PostNetworkDataSourceImpl(
     }
 
     override suspend fun getPostsByVibes(vibes: List<String>): PostListResponse {
-        val response = httpClient.get("/snapfit/posts/vibes") {
+        val response = httpClient.get("/snapfit/posts/filter/vibes?vibes=4&limit=6&offset=0") {
             bearerAuth(token = tokenManager.accessToken)
         }
         return response.body()

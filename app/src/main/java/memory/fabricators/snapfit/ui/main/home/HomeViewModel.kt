@@ -35,15 +35,30 @@ class HomeViewModel(
                 reduce {
                     state.copy(posts = it.data)
                 }
+                fetchPostsByVibes()
             }.onFailure {
                 it.printStackTrace()
             }
         }
     }
 
-    fun fetchUserInfo(
+    fun fetchPostsByVibes() = intent {
+        assert(state.userInfo != null)
+        viewModelScope.launch(Dispatchers.IO) {
+            kotlin.runCatching {
+                val vibes = state.userInfo!!.vibes.map { it.name }
+                postRepository.getPostsByVibes(vibes)
+            }.onSuccess {
+                reduce {
+                    state.copy(posts = it.data)
+                }
+            }.onFailure {
+                it.printStackTrace()
+            }
+        }
+    }
 
-    ) = intent {
+    fun fetchUserInfo() = intent {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 userRepository.fetchUserInfo()
@@ -60,5 +75,6 @@ class HomeViewModel(
 
 data class HomeUiState(
     val posts: List<PostList.Post>? = null,
+    val postsByVibe: List<PostList.Post>? = null,
     val userInfo: UserInfo? = null,
 )

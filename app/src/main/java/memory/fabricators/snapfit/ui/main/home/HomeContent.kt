@@ -149,18 +149,27 @@ fun HomeContent(
                 },
             )
 
-            Box(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 16.dp,
-                    )
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(
-                        color = Color.Red,
-                        shape = RoundedCornerShape(2.dp),
-                    ),
-            )
+            AnimatedVisibility(
+                visible = state.posts != null,
+            ) {
+                val post = state.posts!![0]
+                AsyncImage(
+                    model = post.thumbnail,
+                    contentDescription = post.title,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                        )
+                        .fillMaxWidth()
+                        .height(
+                            height = 230.dp,
+                        )
+                        .clip(
+                            shape = RoundedCornerShape(2.dp),
+                        ),
+                    contentScale = ContentScale.Crop,
+                )
+            }
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(
@@ -330,7 +339,7 @@ private fun Header(
             )
         }
         AsyncImage(
-            model = profileImage,
+            model = profileImage ?: R.drawable.image_profile_placeholder,
             contentDescription = "profile",
             modifier = Modifier
                 .size(
@@ -340,7 +349,7 @@ private fun Header(
                     shape = CircleShape,
                 ),
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background)
+            placeholder = painterResource(id = R.drawable.image_profile_placeholder),
         )
     }
 }
