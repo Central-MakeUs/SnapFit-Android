@@ -1,6 +1,7 @@
 package memory.fabricators.snapfit.ui.post.details
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -347,26 +348,27 @@ fun PostDetailsScreen(
                 }
                 Spacer(modifier = Modifier.height(128.dp))
             }
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp,
-                    ),
+            AnimatedVisibility(
+                visible = state.postDetails != null,
+                enter = fadeIn(),
             ) {
-                Text(text = "예약하기")
+                Button(
+                    onClick = { /*TODO*/
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp,
+                        ),
+                ) {
+                    Text(text = "예약하기")
+                }
             }
         }
     }
 }
-
-data class ArtistImage(
-    val id: String,
-    val imageUrl: String,
-)
 
 // TODO: Duplication
 @Composable
