@@ -249,6 +249,7 @@ fun PostDetailsScreen(
                         .clip(
                             shape = CircleShape,
                         ),
+                    contentScale = ContentScale.Crop,
                 )
                 Text(
                     text = state.postDetails?.maker?.nickname ?: "-",
