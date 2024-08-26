@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import memory.fabricators.snapfit.ui.artist.details.ArtistDetailsScreen
+import memory.fabricators.snapfit.ui.artist.details.PostDetailsScreen
 import memory.fabricators.snapfit.ui.artist.listfilter.ArtistListFilterScreen
 import memory.fabricators.snapfit.ui.artist.result.BookingCompletionScreen
 import memory.fabricators.snapfit.ui.main.MainScreen
@@ -24,7 +24,13 @@ fun SnapfitApp() {
         startDestination = SnapfitDestinations.START.route,
     ) {
         composable(route = SnapfitDestinations.MAIN.route) {
-            MainScreen()
+            MainScreen(
+                onOpenPostDetails = {
+                    navController.navigate(route = SnapfitDestinations.POST_DETAILS.route) {
+                        launchSingleTop = true
+                    }
+                },
+            )
         }
         composable(route = SnapfitDestinations.START.route) {
             StartScreen(
@@ -69,8 +75,8 @@ fun SnapfitApp() {
                 socialAccessToken = socialAccessToken,
             )
         }
-        composable(route = SnapfitDestinations.ARTIST_DETAILS.route) {
-            ArtistDetailsScreen()
+        composable(route = SnapfitDestinations.POST_DETAILS.route) {
+            PostDetailsScreen()
         }
         composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
             BookingCompletionScreen()
@@ -93,8 +99,8 @@ enum class SnapfitDestinations(
     MAIN(
         route = "main",
     ),
-    ARTIST_DETAILS(
-        route = "artist_details",
+    POST_DETAILS(
+        route = "post_details",
     ),
     BOOKING_COMPLETION(
         route = "booking_completion",

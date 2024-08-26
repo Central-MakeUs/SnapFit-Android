@@ -38,13 +38,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
@@ -59,6 +57,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
+    onOpenPostDetails: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
@@ -195,81 +194,9 @@ fun HomeContent(
                     }
                 },
             )
-
-            val tempRecommendation = listOf(
-                MemoryRecommendation(
-                    id = "123",
-                    title = "추카랜드",
-                    tags = listOf(
-                        MemoryRecommendation.Tag(
-                            id = "1234",
-                            title = "시크",
-                        ),
-                        MemoryRecommendation.Tag(
-                            id = "123432",
-                            title = "시크",
-                        ),
-                        MemoryRecommendation.Tag(
-                            id = "123413",
-                            title = "시크",
-                        ),
-                    ),
-                ),
-                MemoryRecommendation(
-                    id = "1234",
-                    title = "추카랜드",
-                    tags = listOf(
-                        MemoryRecommendation.Tag(
-                            id = "1234",
-                            title = "시크",
-                        ),
-                    ),
-                ),
-                MemoryRecommendation(
-                    id = "1235",
-                    title = "추카랜드",
-                    tags = listOf(
-                        MemoryRecommendation.Tag(
-                            id = "12355",
-                            title = "시크",
-                        ),
-                        MemoryRecommendation.Tag(
-                            id = "1234",
-                            title = "시크",
-                        ),
-                    ),
-                ),
-
-                MemoryRecommendation(
-                    id = "12352",
-                    title = "추카랜드",
-                    tags = listOf(
-                        MemoryRecommendation.Tag(
-                            id = "12355",
-                            title = "시크",
-                        ),
-                    ),
-                ),
-
-                MemoryRecommendation(
-                    id = "123522",
-                    title = "추카랜드",
-                    tags = listOf(
-                        MemoryRecommendation.Tag(
-                            id = "12355",
-                            title = "시크",
-                        ),
-                        MemoryRecommendation.Tag(
-                            id = "12343",
-                            title = "시크",
-                        ),
-                    ),
-                ),
-            )
-            val height = 300 * ((tempRecommendation.size + 1) / 2)
-
-            // TODO
-            //FlowRow {}
+            val height = state.posts?.let {
+                300 * ((it.size + 1) / 2)
+            } ?: 0
 
             LazyVerticalGrid(
                 modifier = Modifier.height(height.dp),
@@ -279,15 +206,17 @@ fun HomeContent(
                 contentPadding = PaddingValues(16.dp),
                 userScrollEnabled = false,
             ) {
-                items(
-                    items = tempRecommendation,
-                    key = { it.id },
-                ) { recommendation ->
-                    MemoryRecommendationItem(
-                        modifier = Modifier.weight(1f),
-                        memoryRecommendation = recommendation,
-                    )
-                }
+                if (state.posts != null)
+                    items(
+                        items = state.posts!!,
+                        key = { it.id },
+                    ) { recommendation ->
+                        MemoryRecommendationItem(
+                            modifier = Modifier.weight(1f),
+                            onClick = { },
+                            post = recommendation,
+                        )
+                    }
             }
         }
     }
@@ -404,49 +333,29 @@ private fun PhotoRecommendationItem(
     }
 }
 
-data class MemoryRecommendation(
-    // val imageUrl: String,
-    val id: String,
-    val title: String,
-    val tags: List<Tag>,
-) {
-    data class Tag(
-        val id: String,
-        val title: String,
-    )
-}
-
 @Composable
 private fun MemoryRecommendationItem(
-    memoryRecommendation: MemoryRecommendation,
+    post: PostList.Post,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
-        Box(
+        AsyncImage(
+            model = post.thumbnail,
+            contentDescription = post.title,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(
-                    color = Color.Green,
+                .clip(
                     shape = RoundedCornerShape(5.dp),
                 ),
-        ) {/*
-            IconButton(
-                modifier = Modifier.align(Alignment.TopEnd),
-                onClick = { *//*TODO*//* },
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "favorite",
-                )
-            }*/
-        }
+        )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = memoryRecommendation.title,
+            text = post.title,
             style = LocalTypography.current.body2Semibold,
             color = LocalColorScheme.current.primaryBlack,
             overflow = TextOverflow.Ellipsis,
@@ -457,11 +366,11 @@ private fun MemoryRecommendationItem(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(
-                items = memoryRecommendation.tags,
-                key = { it.id },
-            ) { tag ->
+                items = post.vibes,
+                key = { it },
+            ) { vibe ->
                 MemoryRecommendationTag {
-                    Text(text = tag.title)
+                    Text(text = vibe)
                 }
             }
         }
@@ -493,10 +402,4 @@ private fun MemoryRecommendationTag(
             content = content,
         )
     }
-}
-
-@Preview
-@Composable
-private fun HomeScreenPreview() {
-    HomeContent()
 }

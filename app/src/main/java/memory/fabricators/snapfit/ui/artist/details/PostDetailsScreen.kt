@@ -47,7 +47,7 @@ import memory.fabricators.snapfit.core.design_system.LocalTypography
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun ArtistDetailsScreen(
+fun PostDetailsScreen(
     modifier: Modifier = Modifier,
 ) {
     // TODO
@@ -354,5 +354,5 @@ private fun Tag(
 @Preview
 @Composable
 private fun ArtistDetailsScreenPreview() {
-    ArtistDetailsScreen()
+    PostDetailsScreen()
 }

@@ -26,6 +26,7 @@ import memory.fabricators.snapfit.ui.main.mypage.MyPageContent
 
 @Composable
 fun MainScreen(
+    onOpenPostDetails: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val (currentSection, onCurrentSectionChange) = remember {
@@ -79,6 +80,7 @@ fun MainScreen(
     ) { innerPaddings ->
         when (currentSection) {
             MainSections.HOME -> HomeContent(
+                onOpenPostDetails = {},
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
