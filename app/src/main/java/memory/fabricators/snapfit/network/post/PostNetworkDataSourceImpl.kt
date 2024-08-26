@@ -12,6 +12,7 @@ import memory.fabricators.snapfit.network.post.model.PostLikeCountResponse
 import memory.fabricators.snapfit.network.post.model.PostListResponse
 import memory.fabricators.snapfit.network.post.model.PostRequest
 import memory.fabricators.snapfit.network.post.model.PostResponse
+import java.net.URLEncoder
 
 class PostNetworkDataSourceImpl(
     private val httpClient: HttpClient,
@@ -72,9 +73,16 @@ class PostNetworkDataSourceImpl(
     }
 
     override suspend fun getPostsByVibes(vibes: List<String>): PostListResponse {
-        val response = httpClient.get("/snapfit/posts/filter/vibes?vibes=4&limit=6&offset=0") {
-            bearerAuth(token = tokenManager.accessToken)
-        }
+        val parsed = vibes.map { URLEncoder.encode(it, "UTF-8") }
+        val response =
+            httpClient.get(
+                "/snapfit/posts/filter/vibes?" + parsed.joinToString(
+                    prefix = "vibes=",
+                    separator = "&vibes=",
+                ) + "&limit=30&offset=1",
+            ) {
+                bearerAuth(token = tokenManager.accessToken)
+            }
         return response.body()
     }
 }
