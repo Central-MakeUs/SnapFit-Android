@@ -39,7 +39,11 @@ class PostRepositoryImpl(
         offset: Int,
         limit: Int,
     ): PostList {
-        val response = postNetworkDataSource.getMakerPosts(makerId)
+        val response = postNetworkDataSource.getMakerPosts(
+            makerId = makerId,
+            offset = offset,
+            limit = limit,
+        )
         return with(response) {
             PostList(
                 offset = offset,
