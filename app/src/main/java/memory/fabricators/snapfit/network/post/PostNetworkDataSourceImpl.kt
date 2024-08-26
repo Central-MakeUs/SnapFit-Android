@@ -33,7 +33,7 @@ class PostNetworkDataSourceImpl(
     }
 
     override suspend fun getPostDetails(postId: Long): PostDetailsResponse {
-        val response = httpClient.get("/snapfit/post/$postId") {
+        val response = httpClient.get("/snapfit/post?id=$postId") {
             bearerAuth(token = tokenManager.accessToken)
         }
         return response.body()
