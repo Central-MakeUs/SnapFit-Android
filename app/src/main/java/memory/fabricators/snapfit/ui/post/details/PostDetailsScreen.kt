@@ -43,7 +43,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -328,14 +327,7 @@ fun PostDetailsScreen(
                                     tags = post.vibes.map { ProductItemTag(text = it) },
                                     price = { Text(text = post.price.toString()) },
                                     subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .height(300.dp)
-                                        .background(
-                                            color = Color.Green,
-                                        ),
+                                    modifier = Modifier.weight(1f),
                                 )
                             }
                         }
