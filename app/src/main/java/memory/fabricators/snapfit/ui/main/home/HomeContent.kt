@@ -80,19 +80,6 @@ fun HomeContent(
                         contentDescription = null,
                     )
                 },
-                /*actions = {
-                    IconButton(
-                        onClick = { */
-                /*TODO*/
-                /* },
-                                    ) {
-                                        Icon(
-                                            tint = LocalColorScheme.current.primaryBlack,
-                                            painter = painterResource(id = R.drawable.icon_notification),
-                                            contentDescription = stringResource(id = R.string.home_notification),
-                                        )
-                                    }
-                                },*/
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -109,7 +96,6 @@ fun HomeContent(
                 .verticalScroll(
                     state = scrollState,
                 ),
-            // TODO
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             AnimatedVisibility(visible = state.userInfo != null) {
@@ -368,7 +354,9 @@ private fun PhotoRecommendationItem(
             AsyncImage(
                 model = post.thumbnail,
                 contentDescription = post.title,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(size = 2.dp)),
                 contentScale = ContentScale.Crop,
             )
             IconButton(
