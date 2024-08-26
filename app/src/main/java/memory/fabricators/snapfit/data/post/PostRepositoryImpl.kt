@@ -34,7 +34,11 @@ class PostRepositoryImpl(
         }
     }
 
-    override suspend fun getMakerPosts(makerId: Long): PostList {
+    override suspend fun getMakerPosts(
+        makerId: Long,
+        offset: Int,
+        limit: Int,
+    ): PostList {
         val response = postNetworkDataSource.getMakerPosts(makerId)
         return with(response) {
             PostList(
