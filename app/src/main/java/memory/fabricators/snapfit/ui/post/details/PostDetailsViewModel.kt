@@ -21,6 +21,7 @@ class PostDetailsViewModel(
             kotlin.runCatching {
                 postRepository.getPostDetails(postId)
             }.onSuccess {
+                println("POSTPOST $it")
                 reduce {
                     state.copy(postDetails = it)
                 }
