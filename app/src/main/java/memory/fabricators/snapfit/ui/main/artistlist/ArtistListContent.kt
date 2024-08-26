@@ -44,7 +44,6 @@ fun ArtistListContent(
     viewModel: ArtistListViewModel = koinViewModel(),
 ) {
     val state by viewModel.collectAsState()
-    val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val (selectedTab, setSelectedTab) = remember { mutableIntStateOf(0) }
 
