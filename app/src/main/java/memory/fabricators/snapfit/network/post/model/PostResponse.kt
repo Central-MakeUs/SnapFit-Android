@@ -9,7 +9,7 @@ data class PostResponse(
     val maker: MakerResponse,
     val createdAt: String,
     val thumbnail: String,
-    val images: String,
+    val images: List<String>,
     val desc: String,
     val title: String,
     val vibes: List<String>,
