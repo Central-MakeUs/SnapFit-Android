@@ -1,4 +1,4 @@
-package memory.fabricators.snapfit.ui.artist.result
+package memory.fabricators.snapfit.ui.post.result
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

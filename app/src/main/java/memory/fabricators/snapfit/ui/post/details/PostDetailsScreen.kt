@@ -1,4 +1,4 @@
-package memory.fabricators.snapfit.ui.artist.details
+package memory.fabricators.snapfit.ui.post.details
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

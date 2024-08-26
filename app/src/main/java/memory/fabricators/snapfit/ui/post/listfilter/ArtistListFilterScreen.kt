@@ -1,4 +1,4 @@
-package memory.fabricators.snapfit.ui.artist.listfilter
+package memory.fabricators.snapfit.ui.post.listfilter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

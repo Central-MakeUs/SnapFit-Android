@@ -8,9 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import memory.fabricators.snapfit.ui.artist.details.PostDetailsScreen
-import memory.fabricators.snapfit.ui.artist.listfilter.ArtistListFilterScreen
-import memory.fabricators.snapfit.ui.artist.result.BookingCompletionScreen
+import memory.fabricators.snapfit.ui.post.details.PostDetailsScreen
+import memory.fabricators.snapfit.ui.post.listfilter.ArtistListFilterScreen
+import memory.fabricators.snapfit.ui.post.result.BookingCompletionScreen
 import memory.fabricators.snapfit.ui.main.MainScreen
 import memory.fabricators.snapfit.ui.signup.SignUpScreen
 import memory.fabricators.snapfit.ui.start.StartScreen
