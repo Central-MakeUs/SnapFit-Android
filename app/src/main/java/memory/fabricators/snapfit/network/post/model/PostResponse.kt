@@ -14,7 +14,7 @@ data class PostResponse(
     val title: String,
     val vibes: List<String>,
     val locations: List<String>,
-    val prices: List<PriceResponse>,
+    val prices: PriceResponse,
     val personPrice: Long,
     val studio: Boolean,
     val like: Boolean,
@@ -28,6 +28,6 @@ data class PostResponse(
     @Serializable
     data class PriceResponse(
         val min: Long,
-        val max: Long,
+        val price: Long,
     )
 }
