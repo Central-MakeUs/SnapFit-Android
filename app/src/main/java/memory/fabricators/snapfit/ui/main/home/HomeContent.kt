@@ -197,7 +197,7 @@ fun HomeContent(
                     }
                 },
             )
-            val height = state.posts?.let {
+            val height = state.postsByVibe?.let {
                 300 * ((it.size + 1) / 2)
             } ?: 0
 
@@ -209,9 +209,9 @@ fun HomeContent(
                 contentPadding = PaddingValues(16.dp),
                 userScrollEnabled = false,
             ) {
-                if (state.posts != null)
+                if (state.postsByVibe != null)
                     items(
-                        items = state.posts!!,
+                        items = state.postsByVibe!!,
                         key = { it.id },
                     ) { recommendation ->
                         MemoryRecommendationItem(

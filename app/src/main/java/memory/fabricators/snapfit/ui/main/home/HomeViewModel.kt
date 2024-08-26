@@ -50,7 +50,7 @@ class HomeViewModel(
                 postRepository.getPostsByVibes(vibes)
             }.onSuccess {
                 reduce {
-                    state.copy(posts = it.data)
+                    state.copy(postsByVibe = it.data)
                 }
             }.onFailure {
                 it.printStackTrace()
