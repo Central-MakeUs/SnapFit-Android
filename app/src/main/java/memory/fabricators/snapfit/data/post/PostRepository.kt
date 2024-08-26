@@ -5,7 +5,7 @@ import memory.fabricators.snapfit.data.post.model.PostList
 
 abstract class PostRepository {
     abstract suspend fun getLikedPosts(postId: String): PostList
-    abstract suspend fun getMakerPosts(makerId: String): PostList
+    abstract suspend fun getMakerPosts(makerId: Long): PostList
     abstract suspend fun getPostDetails(postId: Long): PostDetails
     abstract suspend fun createPost(
         vibes: List<String>,
