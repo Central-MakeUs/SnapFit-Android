@@ -80,7 +80,7 @@ fun MainScreen(
     ) { innerPaddings ->
         when (currentSection) {
             MainSections.HOME -> HomeContent(
-                onOpenPostDetails = {},
+                onOpenPostDetails = onOpenPostDetails,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

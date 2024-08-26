@@ -3,6 +3,7 @@ package memory.fabricators.snapfit.ui.main.home
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -168,6 +170,7 @@ fun HomeContent(
                         key = { it.id },
                     ) { post ->
                         PhotoRecommendationItem(
+                            onOpenPostDetails = onOpenPostDetails,
                             post = post,
                         )
                     }
@@ -271,11 +274,19 @@ private fun Header(
 
 @Composable
 private fun PhotoRecommendationItem(
+    onOpenPostDetails: () -> Unit,
     post: PostList.Post,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .clip(
+                shape = RoundedCornerShape(5.dp),
+            )
+            .clickable(
+                onClick = onOpenPostDetails,
+                role = Role.Button,
+            ),
     ) {
         Box(
             modifier = Modifier.size(120.dp),
