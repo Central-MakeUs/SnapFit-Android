@@ -26,7 +26,7 @@ import memory.fabricators.snapfit.ui.main.mypage.MyPageContent
 
 @Composable
 fun MainScreen(
-    onOpenPostDetails: () -> Unit,
+    onOpenPostDetails: (postId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val (currentSection, onCurrentSectionChange) = remember {

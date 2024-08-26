@@ -59,7 +59,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
-    onOpenPostDetails: () -> Unit,
+    onOpenPostDetails: (postId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
@@ -170,7 +170,7 @@ fun HomeContent(
                         key = { it.id },
                     ) { post ->
                         PhotoRecommendationItem(
-                            onOpenPostDetails = onOpenPostDetails,
+                            onClick = { onOpenPostDetails(post.id) },
                             post = post,
                         )
                     }
@@ -274,7 +274,7 @@ private fun Header(
 
 @Composable
 private fun PhotoRecommendationItem(
-    onOpenPostDetails: () -> Unit,
+    onClick: () -> Unit,
     post: PostList.Post,
     modifier: Modifier = Modifier,
 ) {
@@ -284,7 +284,7 @@ private fun PhotoRecommendationItem(
                 shape = RoundedCornerShape(5.dp),
             )
             .clickable(
-                onClick = onOpenPostDetails,
+                onClick = onClick,
                 role = Role.Button,
             ),
     ) {

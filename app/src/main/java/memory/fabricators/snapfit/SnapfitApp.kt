@@ -25,8 +25,10 @@ fun SnapfitApp() {
     ) {
         composable(route = SnapfitDestinations.MAIN.route) {
             MainScreen(
-                onOpenPostDetails = {
-                    navController.navigate(route = SnapfitDestinations.POST_DETAILS.route) {
+                onOpenPostDetails = { postId ->
+                    navController.navigate(
+                        route = SnapfitDestinations.POST_DETAILS.route + "?postId=$postId",
+                    ) {
                         launchSingleTop = true
                     }
                 },
@@ -75,8 +77,18 @@ fun SnapfitApp() {
                 socialAccessToken = socialAccessToken,
             )
         }
-        composable(route = SnapfitDestinations.POST_DETAILS.route) {
-            PostDetailsScreen()
+        composable(
+            route = SnapfitDestinations.POST_DETAILS.route + "?postId={postId}",
+            arguments = listOf(
+                navArgument("postId") { type = NavType.LongType },
+            ),
+        ) { backStackEntry ->
+            val postId = backStackEntry.arguments?.getLong("postId")
+                ?: throw RuntimeException("Post ID not found.")
+            PostDetailsScreen(
+                postId = postId,
+                onNavigateUp = navController::navigateUp,
+            )
         }
         composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
             BookingCompletionScreen()
