@@ -54,6 +54,8 @@ import memory.fabricators.snapfit.core.design_system.BasicDialog
 import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.ui.common.ProductItem
+import memory.fabricators.snapfit.ui.common.ProductItemTag
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -308,27 +310,34 @@ fun PostDetailsScreen(
                         color = LocalColorScheme.current.primaryBlack,
                     )
                     Spacer(modifier = Modifier.height(32.dp))
-                    // TODO
-                    val items = listOf(
-                        "123", "3215"
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                            ),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    AnimatedVisibility(
+                        visible = state.artistPosts != null,
                     ) {
-                        items.forEach { item ->
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(300.dp)
-                                    .background(
-                                        color = Color.Green,
-                                    ),
-                            )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                ),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            state.artistPosts!!.forEach { post ->
+                                ProductItem(
+                                    backgroundImageUrl = post.thumbnail,
+                                    title = { Text(text = post.title) },
+                                    tags = post.vibes.map { ProductItemTag(text = it) },
+                                    price = { Text(text = post.price.toString()) },
+                                    subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(300.dp)
+                                        .background(
+                                            color = Color.Green,
+                                        ),
+                                )
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(32.dp))
