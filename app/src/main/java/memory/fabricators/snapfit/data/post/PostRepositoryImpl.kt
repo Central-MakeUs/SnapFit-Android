@@ -60,7 +60,7 @@ class PostRepositoryImpl(
         }
     }
 
-    override suspend fun getPostDetails(postId: String): PostDetails {
+    override suspend fun getPostDetails(postId: Long): PostDetails {
         val response = postNetworkDataSource.getPostDetails(postId)
         return with(response) {
             PostDetails(
