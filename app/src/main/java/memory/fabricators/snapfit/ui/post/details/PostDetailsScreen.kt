@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui.post.details
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +24,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,6 +36,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,9 +48,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
+import memory.fabricators.snapfit.core.design_system.BasicDialog
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -54,28 +62,32 @@ fun PostDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = koinViewModel(),
 ) {
-    // TODO
-    val images = listOf(
-        ArtistImage(
-            id = "1",
-            imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR14NETh5SYT4HXp3KvnmgmvB5xNqj0a1oEKw&s",
-        ),
-        ArtistImage(
-            id = "2",
-            imageUrl = "https://wallpapers.com/images/hd/best-hd-autumn-leaves-57tbt9tq3xf3vdm2.jpg",
-        ),
-        ArtistImage(
-            id = "3",
-            imageUrl = "https://static.vecteezy.com/system/resources/previews/030/355/618/non_2x/flowers-in-the-field-mountains-flowers-nature-nature-hd-wallpaper-ai-generated-free-photo.jpg",
-        ),
-        ArtistImage(
-            id = "4",
-            imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrlfYAIT-nlIWL5KaDn4ngk1avOoSbitiwow&s",
-        ),
-    )
-    val pagerState = rememberPagerState {
-        images.size
+    val state by viewModel.collectAsState()
+    val (showReportDropdown, onChangeShowReportDropdown) = remember {
+        mutableStateOf(false)
     }
+    val (showReportCompleteDialog, onChangeShowReportCompleteDialog) = remember {
+        mutableStateOf(false)
+    }
+
+    DropdownMenu(
+        expanded = showReportDropdown,
+        onDismissRequest = { onChangeShowReportDropdown(false) },
+    ) {
+        DropdownMenuItem(
+            text = { Text(text = "신고하기") },
+            onClick = {
+                onChangeShowReportDropdown(false)
+                onChangeShowReportCompleteDialog(true)
+            },
+        )
+    }
+    if (showReportCompleteDialog)
+        BasicDialog(
+            content = { Text(text = "신고가 완료되었습니다") },
+            primaryAction = { Text(text = "확인") },
+            onDismissRequest = { onChangeShowReportCompleteDialog(false) },
+        )
 
     LaunchedEffect(key1 = postId) {
         viewModel.fetchPostDetails(postId = postId)
@@ -85,7 +97,7 @@ fun PostDetailsScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { /*TODO*/ },
+                title = { },
                 navigationIcon = {
                     IconButton(
                         onClick = onNavigateUp,
@@ -99,7 +111,7 @@ fun PostDetailsScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {},
                     ) {
                         Icon(
                             tint = LocalColorScheme.current.primaryBlack,
@@ -108,7 +120,7 @@ fun PostDetailsScreen(
                         )
                     }
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { onChangeShowReportDropdown(true) },
                     ) {
                         Icon(
                             tint = LocalColorScheme.current.primaryBlack,
@@ -126,88 +138,88 @@ fun PostDetailsScreen(
                 .padding(innerPaddings)
                 .verticalScroll(rememberScrollState()),
         ) {
-            HorizontalPager(
-                modifier = Modifier.fillMaxWidth(),
-                state = pagerState,
-                key = { images[it].id },
-            ) { page ->
-                AsyncImage(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(350.dp),
-                    // TODO: placeholder = painterResource(id = R.drawable.img_start_background),
-                    contentScale = ContentScale.Crop,
-                    model = images[page].imageUrl,
-                    contentDescription = null,
-                )
-            }
-
-            // TODO
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        vertical = 32.dp,
-                    ),
+            AnimatedVisibility(
+                visible = state.postDetails != null,
             ) {
-                val dummyTags = listOf(
-                    "시크",
-                    "야외스냅",
-                    "러블리",
-                )
-                LazyRow(
+                val postDetails = state.postDetails!!
+                val pagerState = rememberPagerState { postDetails.images.size }
+                HorizontalPager(
+                    modifier = Modifier.fillMaxWidth(),
+                    state = pagerState,
+                    key = { state.postDetails!!.images[it] },
+                ) { page ->
+                    val image = postDetails.images[page]
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(350.dp),
+                        // TODO: placeholder = painterResource(id = R.drawable.img_start_background),
+                        contentScale = ContentScale.Crop,
+                        model = image,
+                        contentDescription = null,
+                    )
+                }
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            start = 16.dp,
+                            vertical = 32.dp,
                         ),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    items(dummyTags) { tag ->
-                        Tag {
-                            Text(text = tag)
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                            ),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        items(postDetails.vibes) { vibe ->
+                            Tag {
+                                Text(text = vibe)
+                            }
                         }
                     }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "나의 첫 스냅사진을 감성을 담은 스냅사진",
-                    modifier = Modifier.padding(start = 16.dp),
-                    style = LocalTypography.current.title2Semibold,
-                    color = LocalColorScheme.current.primaryBlack,
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                    ),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp),
-                        tint = LocalColorScheme.current.secondary400,
-                    )
-                    // TODO
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "서울 용산구 | 중구",
-                        style = LocalTypography.current.body2Regular,
-                        color = LocalColorScheme.current.secondary400,
+                        text = postDetails.title,
+                        modifier = Modifier.padding(start = 16.dp),
+                        style = LocalTypography.current.title2Semibold,
+                        color = LocalColorScheme.current.primaryBlack,
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.padding(
+                            start = 16.dp,
+                        ),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.LocationOn,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = LocalColorScheme.current.secondary400,
+                        )
+                        Text(
+                            text = postDetails.locations.joinToString(separator = " | "),
+                            style = LocalTypography.current.body2Regular,
+                            color = LocalColorScheme.current.secondary400,
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        text = postDetails.personPrice.toString(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp),
+                        style = LocalTypography.current.title1Semibold,
+                        color = LocalColorScheme.current.secondary500,
                     )
                 }
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = "32,400원",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp),
-                    style = LocalTypography.current.title1Semibold,
-                    color = LocalColorScheme.current.secondary500,
-                )
             }
+
             HorizontalDivider(
                 thickness = 5.dp,
                 color = LocalColorScheme.current.secondary100,
@@ -279,8 +291,7 @@ fun PostDetailsScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 val items = listOf(
-                    "123",
-                    "3215"
+                    "123", "3215"
                 )
                 Row(
                     modifier = Modifier
@@ -311,13 +322,7 @@ fun PostDetailsScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
-                    text = "가. 기본 환불 규정\n" +
-                            "1. 전문가와 의뢰인의 상호 협의하에 청약 철회 및 환불이 \n" +
-                            "   가능합니다.\n" +
-                            "2. 섭외, 대여 등 사전 준비 도중 청약 철회 시, 해당 비용을 공제한 \n" +
-                            "    금액을 환불 가능합니다.\n" +
-                            "3. 촬영 또는 편집 작업 착수 이후 청약 철회 시, 진행된 작업량 \n" +
-                            "    또는 작업 일수를 산정한 금액을 공제한 금액을 환불 가능합니다.",
+                    text = "가. 기본 환불 규정\n" + "1. 전문가와 의뢰인의 상호 협의하에 청약 철회 및 환불이 \n" + "   가능합니다.\n" + "2. 섭외, 대여 등 사전 준비 도중 청약 철회 시, 해당 비용을 공제한 \n" + "    금액을 환불 가능합니다.\n" + "3. 촬영 또는 편집 작업 착수 이후 청약 철회 시, 진행된 작업량 \n" + "    또는 작업 일수를 산정한 금액을 공제한 금액을 환불 가능합니다.",
                     modifier = Modifier.padding(horizontal = 16.dp),
                     style = LocalTypography.current.body2Regular,
                     color = LocalColorScheme.current.secondary400,
