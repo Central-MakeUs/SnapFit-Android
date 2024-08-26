@@ -32,6 +32,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +44,7 @@ import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -50,6 +52,7 @@ fun PostDetailsScreen(
     postId: Long,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: PostDetailsViewModel = koinViewModel(),
 ) {
     // TODO
     val images = listOf(
@@ -73,6 +76,11 @@ fun PostDetailsScreen(
     val pagerState = rememberPagerState {
         images.size
     }
+
+    LaunchedEffect(key1 = postId) {
+        viewModel.fetchPostDetails(postId = postId)
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -80,7 +88,7 @@ fun PostDetailsScreen(
                 title = { /*TODO*/ },
                 navigationIcon = {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = onNavigateUp,
                     ) {
                         Icon(
                             tint = LocalColorScheme.current.primaryBlack,
