@@ -83,21 +83,20 @@ fun PostDetailsScreen(
             },
         )
     }
-    if (showReportCompleteDialog)
-        BasicDialog(
-            content = { Text(text = "신고가 완료되었습니다") },
-            primaryAction = {
-                Text(
-                    text = "확인",
-                    modifier = Modifier
-                        .clickable { onChangeShowReportCompleteDialog(false) }
-                        .fillMaxWidth()
-                        .padding(all = 16.dp),
-                    textAlign = TextAlign.Center,
-                )
-            },
-            onDismissRequest = { onChangeShowReportCompleteDialog(false) },
-        )
+    if (showReportCompleteDialog) BasicDialog(
+        content = { Text(text = "신고가 완료되었습니다") },
+        primaryAction = {
+            Text(
+                text = "확인",
+                modifier = Modifier
+                    .clickable { onChangeShowReportCompleteDialog(false) }
+                    .fillMaxWidth()
+                    .padding(all = 16.dp),
+                textAlign = TextAlign.Center,
+            )
+        },
+        onDismissRequest = { onChangeShowReportCompleteDialog(false) },
+    )
 
     LaunchedEffect(key1 = postId) {
         viewModel.fetchPostDetails(postId = postId)
@@ -268,7 +267,6 @@ fun PostDetailsScreen(
                         vertical = 32.dp,
                     ),
             ) {
-                // TODO
                 Text(
                     text = "작가의 설명",
                     modifier = Modifier.padding(
@@ -279,7 +277,7 @@ fun PostDetailsScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
-                    text = "사진에서는 빛과 색감의 조화가 돋보이며, 피사체에 대한 깊이 있는 관찰력이 드러납니다. 사진에서는 빛과 색감의 조화가 돋보이며, 피사체에 대한 깊이 있는 관찰력이 드러납니다.",
+                    text = state.postDetails?.desc ?: "-",
                     modifier = Modifier.padding(
                         horizontal = 16.dp,
                     ),
@@ -302,6 +300,7 @@ fun PostDetailsScreen(
                     color = LocalColorScheme.current.primaryBlack,
                 )
                 Spacer(modifier = Modifier.height(32.dp))
+                // TODO
                 val items = listOf(
                     "123", "3215"
                 )
