@@ -30,9 +30,10 @@ class PostNetworkDataSourceImpl(
         offset: Int,
         limit: Int,
     ): PostListResponse {
-        val response = httpClient.get("/snapfit/maker/$makerId/posts?limit=$limit&offset=$offset") {
-            bearerAuth(token = tokenManager.accessToken)
-        }
+        val response =
+            httpClient.get("/snapfit/posts/maker?limit=$limit&offset=$offset&userId=$makerId") {
+                bearerAuth(token = tokenManager.accessToken)
+            }
         return response.body()
     }
 
