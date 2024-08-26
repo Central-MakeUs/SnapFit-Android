@@ -31,7 +31,7 @@ fun BasicDialog(
 ) {
     BasicAlertDialog(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier
+        modifier = modifier
             .width(350.dp)
             .height(200.dp)
             .background(

@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +46,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
@@ -85,7 +87,16 @@ fun PostDetailsScreen(
     if (showReportCompleteDialog)
         BasicDialog(
             content = { Text(text = "신고가 완료되었습니다") },
-            primaryAction = { Text(text = "확인") },
+            primaryAction = {
+                Text(
+                    text = "확인",
+                    modifier = Modifier
+                        .clickable { onChangeShowReportCompleteDialog(false) }
+                        .fillMaxWidth()
+                        .padding(all = 16.dp),
+                    textAlign = TextAlign.Center,
+                )
+            },
             onDismissRequest = { onChangeShowReportCompleteDialog(false) },
         )
 
