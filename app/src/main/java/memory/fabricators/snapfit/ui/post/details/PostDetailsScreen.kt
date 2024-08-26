@@ -2,7 +2,6 @@ package memory.fabricators.snapfit.ui.post.details
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -152,82 +151,84 @@ fun PostDetailsScreen(
             AnimatedVisibility(
                 visible = state.postDetails != null,
             ) {
-                val postDetails = state.postDetails!!
-                val pagerState = rememberPagerState { postDetails.images.size }
-                HorizontalPager(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = pagerState,
-                    key = { state.postDetails!!.images[it] },
-                ) { page ->
-                    val image = postDetails.images[page]
-                    AsyncImage(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(350.dp),
-                        // TODO: placeholder = painterResource(id = R.drawable.img_start_background),
-                        contentScale = ContentScale.Crop,
-                        model = image,
-                        contentDescription = null,
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            vertical = 32.dp,
-                        ),
-                ) {
-                    LazyRow(
+                Column {
+                    val postDetails = state.postDetails!!
+                    val pagerState = rememberPagerState { postDetails.images.size }
+                    HorizontalPager(
+                        modifier = Modifier.fillMaxWidth(),
+                        state = pagerState,
+                        key = { state.postDetails!!.images[it] },
+                    ) { page ->
+                        val image = postDetails.images[page]
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(350.dp),
+                            // TODO: placeholder = painterResource(id = R.drawable.img_start_background),
+                            contentScale = ContentScale.Crop,
+                            model = image,
+                            contentDescription = null,
+                        )
+                    }
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                start = 16.dp,
+                                vertical = 32.dp,
                             ),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        items(postDetails.vibes) { vibe ->
-                            Tag {
-                                Text(text = vibe)
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                ),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            items(postDetails.vibes) { vibe ->
+                                Tag {
+                                    Text(text = vibe)
+                                }
                             }
                         }
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = postDetails.title,
-                        modifier = Modifier.padding(start = 16.dp),
-                        style = LocalTypography.current.title2Semibold,
-                        color = LocalColorScheme.current.primaryBlack,
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                        ),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp),
-                            tint = LocalColorScheme.current.secondary400,
-                        )
+                        Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = postDetails.locations.joinToString(separator = " | "),
-                            style = LocalTypography.current.body2Regular,
-                            color = LocalColorScheme.current.secondary400,
+                            text = postDetails.title,
+                            modifier = Modifier.padding(start = 16.dp),
+                            style = LocalTypography.current.title2Semibold,
+                            color = LocalColorScheme.current.primaryBlack,
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Row(
+                            modifier = Modifier.padding(
+                                start = 16.dp,
+                            ),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.LocationOn,
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp),
+                                tint = LocalColorScheme.current.secondary400,
+                            )
+                            Text(
+                                text = postDetails.locations.joinToString(separator = " | "),
+                                style = LocalTypography.current.body2Regular,
+                                color = LocalColorScheme.current.secondary400,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text(
+                            text = postDetails.prices.price.toString(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp),
+                            style = LocalTypography.current.title1Semibold,
+                            color = LocalColorScheme.current.secondary500,
                         )
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Text(
-                        text = postDetails.personPrice.toString(),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp),
-                        style = LocalTypography.current.title1Semibold,
-                        color = LocalColorScheme.current.secondary500,
-                    )
                 }
             }
 
@@ -240,8 +241,8 @@ fun PostDetailsScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                AsyncImage(
+                    model = state.postDetails?.thumbnail ?: R.drawable.ic_launcher_background,
                     contentDescription = null,
                     modifier = Modifier
                         .size(30.dp)
@@ -249,9 +250,8 @@ fun PostDetailsScreen(
                             shape = CircleShape,
                         ),
                 )
-                // TODO
                 Text(
-                    text = "추카랜드",
+                    text = state.postDetails?.maker?.nickname ?: "-",
                     style = LocalTypography.current.body1Regular,
                     color = LocalColorScheme.current.primaryBlack,
                 )
