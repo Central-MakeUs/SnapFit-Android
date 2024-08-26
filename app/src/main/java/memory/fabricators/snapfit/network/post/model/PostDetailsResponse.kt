@@ -7,14 +7,14 @@ import kotlinx.serialization.Serializable
 data class PostDetailsResponse(
     val id: Long,
     val maker: MakerResponse,
-    val createdAt: String,
+    val createAt: String,
     val thumbnail: String,
     val images: List<String>,
     val desc: String,
     val title: String,
     val vibes: List<String>,
     val locations: List<String>,
-    val prices: List<PriceResponse>,
+    val prices: PriceResponse,
     val personPrice: Long,
     val studio: Boolean,
     val like: Boolean,
@@ -28,6 +28,6 @@ data class PostDetailsResponse(
     @Serializable
     data class PriceResponse(
         val min: Long,
-        val max: Long,
+        val price: Long,
     )
 }
