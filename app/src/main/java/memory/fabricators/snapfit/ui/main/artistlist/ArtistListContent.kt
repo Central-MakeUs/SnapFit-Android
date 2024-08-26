@@ -154,7 +154,7 @@ fun ArtistListContent(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(all = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(32.dp),
             ) {
                 items(
                     when (selectedTab) {
