@@ -73,18 +73,7 @@ fun PostDetailsScreen(
         mutableStateOf(false)
     }
 
-    DropdownMenu(
-        expanded = showReportDropdown,
-        onDismissRequest = { onChangeShowReportDropdown(false) },
-    ) {
-        DropdownMenuItem(
-            text = { Text(text = "신고하기") },
-            onClick = {
-                onChangeShowReportDropdown(false)
-                onChangeShowReportCompleteDialog(true)
-            },
-        )
-    }
+
     if (showReportCompleteDialog) BasicDialog(
         content = { Text(text = "신고가 완료되었습니다") },
         primaryAction = {
@@ -137,6 +126,18 @@ fun PostDetailsScreen(
                             tint = LocalColorScheme.current.primaryBlack,
                             painter = painterResource(id = R.drawable.icon_more),
                             contentDescription = "more",
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = showReportDropdown,
+                        onDismissRequest = { onChangeShowReportDropdown(false) },
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = "신고하기") },
+                            onClick = {
+                                onChangeShowReportDropdown(false)
+                                onChangeShowReportCompleteDialog(true)
+                            },
                         )
                     }
                 },
