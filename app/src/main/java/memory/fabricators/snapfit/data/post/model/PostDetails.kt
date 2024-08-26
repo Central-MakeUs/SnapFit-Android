@@ -10,7 +10,7 @@ data class PostDetails(
     val title: String,
     val vibes: List<String>,
     val locations: List<String>,
-    val prices: List<Price>,
+    val prices: Prices,
     val personPrice: Long,
     val studio: Boolean,
     val like: Boolean,
@@ -20,8 +20,8 @@ data class PostDetails(
         val nickname: String,
     )
 
-    data class Price(
+    data class Prices(
         val min: Long,
-        val max: Long,
+        val price: Long,
     )
 }
