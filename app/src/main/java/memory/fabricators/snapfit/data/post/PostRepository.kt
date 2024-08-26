@@ -14,7 +14,7 @@ abstract class PostRepository {
         thumbnail: String,
         title: String,
         desc: String,
-        prices: List<Pair<Long, Long>>,
+        prices: PostDetails.Prices,
         personPrice: Long,
         studio: Boolean,
     ): PostDetails

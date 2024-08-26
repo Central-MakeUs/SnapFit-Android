@@ -76,13 +76,11 @@ class PostRepositoryImpl(
                 locations = locations,
                 studio = studio,
                 like = like,
-                createdAt = createdAt,
-                prices = prices.map {
-                    PostDetails.Price(
-                        min = it.min,
-                        max = it.max,
-                    )
-                },
+                createdAt = createAt,
+                prices = PostDetails.Prices(
+                    min = prices.min,
+                    price = prices.price,
+                ),
                 personPrice = personPrice,
                 desc = desc,
             )
@@ -96,7 +94,7 @@ class PostRepositoryImpl(
         thumbnail: String,
         title: String,
         desc: String,
-        prices: List<Pair<Long, Long>>,
+        prices: PostDetails.Prices,
         personPrice: Long,
         studio: Boolean,
     ): PostDetails {
@@ -108,12 +106,10 @@ class PostRepositoryImpl(
                 thumbnail = thumbnail,
                 title = title,
                 desc = desc,
-                prices = prices.map {
-                    PostRequest.PriceRequest(
-                        min = it.first,
-                        price = it.second,
-                    )
-                },
+                prices = PostRequest.PriceRequest(
+                    min = prices.min,
+                    price = prices.price,
+                ),
                 personPrice = personPrice,
                 studio = studio,
             )
@@ -133,12 +129,10 @@ class PostRepositoryImpl(
                 studio = studio,
                 like = like,
                 createdAt = createdAt,
-                prices = prices.map {
-                    PostDetails.Price(
-                        min = it.first,
-                        max = it.second,
-                    )
-                },
+                prices = PostDetails.Prices(
+                    min = prices.min,
+                    price = prices.price,
+                ),
                 personPrice = personPrice,
                 desc = desc,
             )
