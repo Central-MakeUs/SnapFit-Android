@@ -25,7 +25,7 @@ class PostNetworkDataSourceImpl(
         return response.body()
     }
 
-    override suspend fun getMakerPosts(makerId: String): PostListResponse {
+    override suspend fun getMakerPosts(makerId: Long): PostListResponse {
         val response = httpClient.get("/snapfit/maker/$makerId/posts?limit=20&offset=0") {
             bearerAuth(token = tokenManager.accessToken)
         }

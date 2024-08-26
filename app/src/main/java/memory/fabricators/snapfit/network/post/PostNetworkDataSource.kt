@@ -9,7 +9,7 @@ import memory.fabricators.snapfit.network.post.model.PostResponse
 
 abstract class PostNetworkDataSource {
     abstract suspend fun getLikedPosts(postId: String): PostListResponse
-    abstract suspend fun getMakerPosts(makerId: String): PostListResponse
+    abstract suspend fun getMakerPosts(makerId: Long): PostListResponse
     abstract suspend fun getPostDetails(postId: Long): PostDetailsResponse
     abstract suspend fun createPost(postRequest: PostRequest): PostResponse
     abstract suspend fun likePost(postId: String)
