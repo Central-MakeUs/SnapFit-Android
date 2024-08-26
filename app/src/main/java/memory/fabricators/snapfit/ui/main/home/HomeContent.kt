@@ -362,6 +362,7 @@ private fun MemoryRecommendationItem(
                 .clip(
                     shape = RoundedCornerShape(5.dp),
                 ),
+            contentScale = ContentScale.Crop,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
