@@ -8,10 +8,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import memory.fabricators.snapfit.ui.main.MainScreen
+import memory.fabricators.snapfit.ui.post.booking.BookingScreen
 import memory.fabricators.snapfit.ui.post.details.PostDetailsScreen
 import memory.fabricators.snapfit.ui.post.listfilter.ArtistListFilterScreen
 import memory.fabricators.snapfit.ui.post.result.BookingCompletionScreen
-import memory.fabricators.snapfit.ui.main.MainScreen
 import memory.fabricators.snapfit.ui.signup.SignUpScreen
 import memory.fabricators.snapfit.ui.start.StartScreen
 
@@ -88,6 +89,13 @@ fun SnapfitApp() {
             PostDetailsScreen(
                 postId = postId,
                 onNavigateUp = navController::navigateUp,
+                onNavigateToBooking = {
+                    navController.navigate(
+                        route = SnapfitDestinations.BOOKING_SCREEN.route + "?postId=$postId",
+                    ) {
+                        launchSingleTop = true
+                    }
+                },
             )
         }
         composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
@@ -95,6 +103,19 @@ fun SnapfitApp() {
         }
         composable(route = SnapfitDestinations.ARTIST_LIST_FILTER.route) {
             ArtistListFilterScreen()
+        }
+        composable(
+            route = SnapfitDestinations.BOOKING_SCREEN.route + "?postId={postId}",
+            arguments = listOf(
+                navArgument("postId") { type = NavType.LongType },
+            ),
+        ) { backStackEntry ->
+            val postId = backStackEntry.arguments?.getLong("postId")
+                ?: throw RuntimeException("Post ID not provided.")
+            BookingScreen(
+                onNavigateUp = navController::navigateUp,
+                postId = postId,
+            )
         }
     }
 }
@@ -120,4 +141,7 @@ enum class SnapfitDestinations(
     ARTIST_LIST_FILTER(
         route = "artist_list_filter",
     ),
+    BOOKING_SCREEN(
+        route = "booking",
+    )
 }

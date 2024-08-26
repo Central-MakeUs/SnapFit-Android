@@ -63,6 +63,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun PostDetailsScreen(
     postId: Long,
     onNavigateUp: () -> Unit,
+    onNavigateToBooking: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = koinViewModel(),
 ) {
@@ -355,8 +356,7 @@ fun PostDetailsScreen(
                 enter = fadeIn(),
             ) {
                 Button(
-                    onClick = { /*TODO*/
-                    },
+                    onClick = onNavigateToBooking,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
