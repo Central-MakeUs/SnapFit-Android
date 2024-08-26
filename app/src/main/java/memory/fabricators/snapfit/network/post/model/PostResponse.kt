@@ -14,7 +14,7 @@ data class PostResponse(
     val title: String,
     val vibes: List<String>,
     val locations: List<String>,
-    val prices: PriceResponse,
+    val prices: List<PriceResponse>,
     val personPrice: Long,
     val studio: Boolean,
     val like: Boolean,

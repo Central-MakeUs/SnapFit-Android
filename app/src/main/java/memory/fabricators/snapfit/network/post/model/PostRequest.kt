@@ -11,7 +11,7 @@ data class PostRequest(
     @SerialName("thumbnail") val thumbnail: String,
     val title: String,
     val desc: String,
-    val prices: PriceRequest,
+    val prices: List<PriceRequest>,
     val personPrice: Long,
     val studio: Boolean,
 ) {

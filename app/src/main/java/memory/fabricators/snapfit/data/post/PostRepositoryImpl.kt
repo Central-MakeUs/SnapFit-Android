@@ -78,8 +78,8 @@ class PostRepositoryImpl(
                 like = like,
                 createdAt = createAt,
                 prices = PostDetails.Prices(
-                    min = prices.min,
-                    price = prices.price,
+                    min = prices[0].min,
+                    price = prices[0].price,
                 ),
                 personPrice = personPrice,
                 desc = desc,
@@ -94,7 +94,7 @@ class PostRepositoryImpl(
         thumbnail: String,
         title: String,
         desc: String,
-        prices: PostDetails.Prices,
+        prices: List<PostDetails.Prices>,
         personPrice: Long,
         studio: Boolean,
     ): PostDetails {
@@ -106,9 +106,11 @@ class PostRepositoryImpl(
                 thumbnail = thumbnail,
                 title = title,
                 desc = desc,
-                prices = PostRequest.PriceRequest(
-                    min = prices.min,
-                    price = prices.price,
+                prices = listOf(
+                    PostRequest.PriceRequest(
+                        min = prices[0].min,
+                        price = prices[0].price,
+                    ),
                 ),
                 personPrice = personPrice,
                 studio = studio,
@@ -130,8 +132,8 @@ class PostRepositoryImpl(
                 like = like,
                 createdAt = createdAt,
                 prices = PostDetails.Prices(
-                    min = prices.min,
-                    price = prices.price,
+                    min = prices[0].min,
+                    price = prices[0].price,
                 ),
                 personPrice = personPrice,
                 desc = desc,
