@@ -64,6 +64,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun BookingScreen(
     postId: Long,
     onNavigateUp: () -> Unit,
+    onOpenReservationResult: (reservationId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BookingViewModel = koinViewModel(),
 ) {
@@ -109,6 +110,8 @@ fun BookingScreen(
                 "시간 형식을 확인해주세요.",
                 Toast.LENGTH_SHORT,
             ).show()
+
+            is BookingSideEffect.ReservationCreated -> onOpenReservationResult(sideEffect.reservationId)
         }
     }
 

@@ -50,7 +50,8 @@ class BookingViewModel(
         val date: String
         try {
             val (m, d, h) = reservationTime.split('-').map(String::toInt)
-            date = LocalDateTime.of(LocalDateTime.now().year, m, d, h, 0).toString().also { println(it) }
+            date = LocalDateTime.of(LocalDateTime.now().year, m, d, h, 0).toString()
+                .also { println(it) }
         } catch (_: Exception) {
             postSideEffect(BookingSideEffect.CheckTimeFormat)
             return@intent
@@ -70,9 +71,7 @@ class BookingViewModel(
                     reservationTime = date,
                 )
             }.onSuccess {
-                reduce {
-                    state.copy(reservationDetails = it)
-                }
+                postSideEffect(BookingSideEffect.ReservationCreated(reservationId = it.id))
             }.onFailure {
                 it.printStackTrace()
             }
@@ -82,9 +81,9 @@ class BookingViewModel(
 
 data class BookingState(
     val postDetails: PostDetails? = null,
-    val reservationDetails: ReservationDetails? = null,
 )
 
 sealed class BookingSideEffect {
     data object CheckTimeFormat : BookingSideEffect()
+    class ReservationCreated(val reservationId: Long) : BookingSideEffect()
 }
