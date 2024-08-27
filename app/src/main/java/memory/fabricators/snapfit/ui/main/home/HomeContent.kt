@@ -213,11 +213,11 @@ fun HomeContent(
                     items(
                         items = state.postsByVibe!!,
                         key = { it.id },
-                    ) { recommendation ->
+                    ) { post ->
                         MemoryRecommendationItem(
                             modifier = Modifier.weight(1f),
-                            onClick = { },
-                            post = recommendation,
+                            onClick = { onOpenPostDetails(post.id) },
+                            post = post,
                         )
                     }
             }
@@ -351,7 +351,13 @@ private fun MemoryRecommendationItem(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .clip(
+                shape = RoundedCornerShape(5.dp),
+            )
+            .clickable(
+                onClick = onClick,
+            ),
     ) {
         AsyncImage(
             model = post.thumbnail,
