@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val postBookingUiModule: Module
     get() = module {
-        viewModel { BookingViewModel() }
+        viewModel { BookingViewModel(postRepository = get()) }
     }
