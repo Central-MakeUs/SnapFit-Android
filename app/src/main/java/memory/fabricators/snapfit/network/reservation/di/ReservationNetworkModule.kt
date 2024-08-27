@@ -7,5 +7,10 @@ import org.koin.dsl.module
 
 val reservationNetworkModule: Module
     get() = module {
-        single<ReservationNetworkDataSource> { ReservationNetworkDataSourceImpl(httpClient = get()) }
+        single<ReservationNetworkDataSource> {
+            ReservationNetworkDataSourceImpl(
+                httpClient = get(),
+                tokenManager = get(),
+            )
+        }
     }
