@@ -22,6 +22,7 @@ import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.SectionHeader
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,6 +30,7 @@ fun BookingScreen(
     postId: Long,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: BookingViewModel = koinViewModel(),
 ) {
     val (time, onChangeTime) = remember { mutableStateOf("") }
     val (preferLocation, onChangePreferLocation) = remember { mutableStateOf("") }
@@ -73,6 +75,10 @@ fun BookingScreen(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     // AsyncImage(model = , contentDescription = )
+                    /*AsyncImage(
+                        model =,
+                        contentDescription =,
+                    )*/
                 }
             }
         }
