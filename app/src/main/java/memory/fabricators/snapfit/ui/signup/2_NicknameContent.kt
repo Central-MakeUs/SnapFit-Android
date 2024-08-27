@@ -78,7 +78,7 @@ fun NicknameContent(
                     end = 16.dp,
                     bottom = 24.dp,
                 ),
-            enabled = nickname.isNotBlank(),
+            enabled = nickname.length in 2..8,
         ) {
             Text(text = stringResource(id = R.string.signup_nickname_button_main))
         }
