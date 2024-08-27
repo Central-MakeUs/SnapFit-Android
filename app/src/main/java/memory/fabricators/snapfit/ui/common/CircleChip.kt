@@ -42,11 +42,11 @@ fun CircleChip(
                 role = Role.Button
             }
             .size(24.dp)
-            .clickable(
-                onClick = onClick,
-            )
             .clip(
                 shape = CircleShape,
+            )
+            .clickable(
+                onClick = onClick,
             )
             .border(
                 border = BorderStroke(
