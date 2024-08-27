@@ -114,6 +114,14 @@ fun SnapfitApp() {
                 ?: throw RuntimeException("Post ID not provided.")
             BookingScreen(
                 onNavigateUp = navController::navigateUp,
+                onOpenReservationResult = {
+                    navController.navigate(SnapfitDestinations.BOOKING_COMPLETION.route) {
+                        launchSingleTop = true
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                },
                 postId = postId,
             )
         }
