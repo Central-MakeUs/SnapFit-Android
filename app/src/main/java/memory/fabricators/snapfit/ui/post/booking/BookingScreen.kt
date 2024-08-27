@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui.post.booking
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,10 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -24,6 +28,8 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,11 +39,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
+import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
@@ -45,6 +57,7 @@ import memory.fabricators.snapfit.core.design_system.TextField
 import memory.fabricators.snapfit.ui.common.CircleChip
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,12 +69,48 @@ fun BookingScreen(
 ) {
     val state by viewModel.collectAsState()
 
+    val focus = LocalFocusManager.current
+    val context = LocalContext.current
+
+    val (showDatePicker, onChangeShowDatePicker) = remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
+
+    val (showTimePicker, onChangeShowTimePicker) = remember { mutableStateOf(false) }
+    val timePickerState = rememberTimePickerState()
+
     val (time, onChangeTime) = remember { mutableStateOf("") }
     val (preferLocation, onChangePreferLocation) = remember { mutableStateOf("") }
     val (preferTime, onChangePreferTime) = remember { mutableStateOf("") }
     val (countOfPeople, onChangeCountOfPeople) = remember { mutableIntStateOf(0) }
     val (email, onChangeEmail) = remember { mutableStateOf("") }
     val (phoneNumber, onChangePhoneNumber) = remember { mutableStateOf("") }
+    /*
+
+        if (showDatePicker) {
+            DatePicker(
+                state = datePickerState,
+            )
+        }
+
+        if (showTimePicker) {
+            TimePicker(
+                state = timePickerState,
+            )
+        }
+
+        LaunchedEffect(key1 = timePickerState) {
+
+        }
+    */
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            BookingSideEffect.CheckTimeFormat -> Toast.makeText(
+                context,
+                "시간 형식을 확인해주세요.",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
 
     LaunchedEffect(key1 = postId) {
         viewModel.fetchPostDetails(postId)
@@ -90,7 +139,8 @@ fun BookingScreen(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .padding(innerPaddings),
+                .padding(innerPaddings)
+                .imePadding(),
         ) {
             Column(
                 modifier = Modifier
@@ -180,6 +230,13 @@ fun BookingScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
                         hintValue = "시간을 선택해주세요",
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword,
+                            imeAction = ImeAction.Done,
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { focus.clearFocus() },
+                        ),
                     )
                 }
                 Column(
@@ -233,7 +290,13 @@ fun BookingScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
-                        hintValue = "00월 00일 00시",
+                        hintValue = "MM-DD-HH",
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { focus.moveFocus(FocusDirection.Next) },
+                        ),
                     )
                 }
                 Column(
@@ -246,7 +309,7 @@ fun BookingScreen(
                         },
                     )
                     Text(
-                        text = "- 2인 이상 1인당 17,000원 추가",
+                        text = "- 2인 이상 1인당 ${state.postDetails?.personPrice ?: "-"}원 추가",
                         style = LocalTypography.current.body1Regular,
                         color = LocalColorScheme.current.secondary300,
                         modifier = Modifier.padding(start = 16.dp),
@@ -354,6 +417,39 @@ fun BookingScreen(
                         hintValue = "010-****-****",
                     )
                 }
+            }
+            Button(
+                onClick = {
+                    try {
+                        viewModel.createReservation(
+                            email = email,
+                            phoneNumber = phoneNumber,
+                            postId = postId,
+                            makerId = state.postDetails!!.maker.id,
+                            minutes = time.toLong(),
+                            price = state.postDetails!!.prices.price,
+                            person = countOfPeople.toLong(),
+                            personPrice = state.postDetails!!.personPrice,
+                            reservationLocation = preferLocation,
+                            reservationTime = preferTime,
+                        )
+                    } catch (_: Exception) {
+                        Toast.makeText(
+                            context,
+                            "입력한 값을 확인해주세요",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp,
+                    ),
+            ) {
+                Text(text = "예약하기")
             }
         }
     }

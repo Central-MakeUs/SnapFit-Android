@@ -1,7 +1,8 @@
 [versions]
 # project
 compileSdk = "34"
-minSdk = "23"
+# TODO 23
+minSdk = "32"
 targetSdk = "34"
 
 # android & kotlin

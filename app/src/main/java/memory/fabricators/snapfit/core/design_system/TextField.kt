@@ -20,6 +20,7 @@ fun TextField(
     maxLines: Int = 1,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    readOnly: Boolean = false,
 ) = androidx.compose.material3.OutlinedTextField(
     modifier = modifier,
     value = value,
@@ -34,6 +35,7 @@ fun TextField(
     keyboardOptions = keyboardOptions,
     keyboardActions = keyboardActions,
     maxLines = maxLines,
+    readOnly = readOnly,
 )
 
 object TextFieldDefaults {

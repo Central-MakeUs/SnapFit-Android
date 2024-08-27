@@ -68,7 +68,7 @@ fun MyPageContent(
         containerColor = LocalColorScheme.current.primaryWhite,
         topBar = {
             MyPageTopAppBar(
-                username = "한소희",
+                username = "박준수",
                 tags = listOf(
                     Tag(
                         id = "123",
@@ -219,11 +219,11 @@ private fun MyPageTopAppBar(
                             color = LocalColorScheme.current.primaryBlack,
                         )
                         // TODO
-                        Text(
+                        /*Text(
                             text = "작가",
                             style = LocalTypography.current.title2Semibold,
                             color = LocalColorScheme.current.primaryBlack,
-                        )
+                        )*/
                     }
                     TagList(tags = tags)
                 }
