@@ -201,8 +201,8 @@ fun BookingScreen(
                         },
                     )
                     TextField(
-                        value = time,
-                        onValueChange = onChangeTime,
+                        value = preferLocation,
+                        onValueChange = onChangePreferLocation,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
@@ -228,8 +228,8 @@ fun BookingScreen(
                         },
                     )
                     TextField(
-                        value = time,
-                        onValueChange = onChangeTime,
+                        value = preferTime,
+                        onValueChange = onChangePreferTime,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
@@ -319,8 +319,8 @@ fun BookingScreen(
                         },
                     )
                     TextField(
-                        value = time,
-                        onValueChange = onChangeTime,
+                        value = email,
+                        onValueChange = onChangeEmail,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
@@ -346,8 +346,8 @@ fun BookingScreen(
                         },
                     )
                     TextField(
-                        value = time,
-                        onValueChange = onChangeTime,
+                        value = phoneNumber,
+                        onValueChange = onChangePhoneNumber,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
