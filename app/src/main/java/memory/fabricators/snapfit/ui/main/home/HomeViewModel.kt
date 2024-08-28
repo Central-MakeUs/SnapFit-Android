@@ -3,6 +3,7 @@ package memory.fabricators.snapfit.ui.main.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import memory.fabricators.snapfit.data.post.PostRepository
 import memory.fabricators.snapfit.data.post.model.PostList
@@ -43,8 +44,9 @@ class HomeViewModel(
     }
 
     fun fetchPostsByVibes() = intent {
-        assert(state.userInfo != null)
         viewModelScope.launch(Dispatchers.IO) {
+            delay(1000)
+            assert(state.userInfo != null)
             kotlin.runCatching {
                 val vibes = state.userInfo!!.vibes.map { it.name }
                 postRepository.getPostsByVibes(vibes)
