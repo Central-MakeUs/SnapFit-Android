@@ -38,6 +38,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,13 +46,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.ui.main.mypage.content.ArtistContent
 import memory.fabricators.snapfit.ui.main.mypage.content.UserContent
 import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,25 +60,17 @@ import org.koin.androidx.compose.koinViewModel
 fun MyPageContent(
     isArtist: Boolean,
     modifier: Modifier = Modifier,
-    viewModel: ViewModel = koinViewModel(),
+    viewModel: MyPageViewModel = koinViewModel(),
 ) {
+    val state by viewModel.collectAsState()
     val scrollState = rememberScrollState()
     Scaffold(
         modifier = modifier,
         containerColor = LocalColorScheme.current.primaryWhite,
         topBar = {
             MyPageTopAppBar(
-                username = "박준수",
-                tags = listOf(
-                    Tag(
-                        id = "123",
-                        title = "서울 용산구",
-                    ),
-                    Tag(
-                        id = "1234",
-                        title = "서울 중구",
-                    ),
-                ),
+                username = state.userInfo?.nickname ?: "-",
+                vibes = state.userInfo?.vibes?.map { it.name } ?: emptyList(),
                 expanded = !scrollState.canScrollBackward,
                 navigationIcon = {
                     IconButton(
@@ -130,7 +123,7 @@ private fun MyPageTopAppBar(
     // backgroundImageUrl: String,
     // profileImageUrl: String,
     username: String,
-    tags: List<Tag>,
+    vibes: List<String>,
     expanded: Boolean,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
@@ -200,7 +193,6 @@ private fun MyPageTopAppBar(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    // TODO
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -217,14 +209,8 @@ private fun MyPageTopAppBar(
                             style = LocalTypography.current.title2Regular,
                             color = LocalColorScheme.current.primaryBlack,
                         )
-                        // TODO
-                        /*Text(
-                            text = "작가",
-                            style = LocalTypography.current.title2Semibold,
-                            color = LocalColorScheme.current.primaryBlack,
-                        )*/
                     }
-                    TagList(tags = tags)
+                    TagList(tags = vibes)
                 }
             }
             if (!expanded) {
@@ -238,7 +224,7 @@ private fun MyPageTopAppBar(
 
 @Composable
 private fun TagList(
-    tags: List<Tag>,
+    tags: List<String>,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
@@ -247,7 +233,7 @@ private fun TagList(
     ) {
         items(
             items = tags,
-            key = { it.id },
+            key = { it },
         ) { tag ->
             TagListItem(tag = tag)
         }
@@ -256,7 +242,7 @@ private fun TagList(
 
 @Composable
 private fun TagListItem(
-    tag: Tag,
+    tag: String,
     modifier: Modifier = Modifier,
 ) {
     CompositionLocalProvider(
@@ -281,7 +267,7 @@ private fun TagListItem(
                 contentDescription = null,
             )
             Text(
-                text = tag.title,
+                text = tag,
                 style = LocalTypography.current.caption1Semibold,
                 color = LocalColorScheme.current.primaryWhite,
             )
