@@ -7,13 +7,13 @@ import kotlinx.coroutines.launch
 import memory.fabricators.snapfit.data.post.PostRepository
 import memory.fabricators.snapfit.data.post.model.PostDetails
 import memory.fabricators.snapfit.data.reservation.ReservationRepository
-import memory.fabricators.snapfit.data.reservation.model.ReservationDetails
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class BookingViewModel(
     private val postRepository: PostRepository,
@@ -50,8 +50,8 @@ class BookingViewModel(
         val date: String
         try {
             val (m, d, h) = reservationTime.split('-').map(String::toInt)
-            date = LocalDateTime.of(LocalDateTime.now().year, m, d, h, 0).toString()
-                .also { println(it) }
+            val time = LocalDateTime.of(LocalDateTime.now().year, m, d, h, 0, 0, 0)
+            date = time.format(DateTimeFormatter.ISO_DATE_TIME) + ".675Z"
         } catch (_: Exception) {
             postSideEffect(BookingSideEffect.CheckTimeFormat)
             return@intent
@@ -66,7 +66,7 @@ class BookingViewModel(
                     minutes = minutes,
                     price = price,
                     person = person,
-                    personPrice = personPrice,
+                    personPrice = personPrice * person,
                     reservationLocation = reservationLocation,
                     reservationTime = date,
                 )
