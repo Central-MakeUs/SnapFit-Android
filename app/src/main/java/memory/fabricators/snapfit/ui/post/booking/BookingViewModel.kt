@@ -12,8 +12,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class BookingViewModel(
     private val postRepository: PostRepository,
@@ -47,15 +45,6 @@ class BookingViewModel(
         reservationLocation: String,
         reservationTime: String,
     ) = intent {
-        val date: String
-        try {
-            val (m, d, h) = reservationTime.split('-').map(String::toInt)
-            val time = LocalDateTime.of(LocalDateTime.now().year, m, d, h, 0, 0, 0)
-            date = time.format(DateTimeFormatter.ISO_DATE_TIME) + ".675Z"
-        } catch (_: Exception) {
-            postSideEffect(BookingSideEffect.CheckTimeFormat)
-            return@intent
-        }
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 reservationRepository.createReservation(
@@ -68,7 +57,8 @@ class BookingViewModel(
                     person = person,
                     personPrice = personPrice * person,
                     reservationLocation = reservationLocation,
-                    reservationTime = date,
+                    // TODO
+                    reservationTime = "$reservationTime:00.699Z",
                 )
             }.onSuccess {
                 postSideEffect(BookingSideEffect.ReservationCreated(reservationId = it.id))

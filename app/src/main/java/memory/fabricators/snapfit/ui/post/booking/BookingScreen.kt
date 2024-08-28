@@ -136,7 +136,7 @@ fun BookingScreen(
                             padChar = '0',
                         )
                         val minute = "00"
-                        onChangePreferTime("$hour-$minute")
+                        onChangePreferTime("$hour:$minute")
                         onChangeShowTimePicker(false)
                     },
                 ) {
