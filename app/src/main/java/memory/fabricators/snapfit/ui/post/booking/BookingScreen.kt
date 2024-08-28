@@ -335,7 +335,7 @@ fun BookingScreen(
                         )
                         CircleChip(
                             onClick = {
-                                if (countOfPeople > 0) {
+                                if (countOfPeople > 1) {
                                     onChangeCountOfPeople(countOfPeople - 1)
                                 }
                             },
