@@ -29,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
@@ -93,11 +94,27 @@ fun BookingScreen(
         DatePickerDialog(
             onDismissRequest = { onChangeShowDatePicker(false) },
             confirmButton = {
-                val date = Date(datePickerState.selectedDateMillis!!)
-                val year = date.year
-                val month = date.month
-                val day = date.day
-                onChangePreferDate("$year-$month-$day")
+                TextButton(
+                    onClick = {
+                        val date = Date(datePickerState.selectedDateMillis!!)
+                        val year = (date.year + 1900).toString().padStart(
+                            length = 2,
+                            padChar = '0',
+                        )
+                        val month = (date.month + 1).toString().padStart(
+                            length = 2,
+                            padChar = '0',
+                        )
+                        val day = date.date.toString().padStart(
+                            length = 2,
+                            padChar = '0',
+                        )
+                        onChangePreferDate("$year-$month-$day")
+                        onChangeShowDatePicker(false)
+                    },
+                ) {
+                    Text(text = "확인")
+                }
             },
         ) {
             DatePicker(
@@ -110,13 +127,26 @@ fun BookingScreen(
         DatePickerDialog(
             onDismissRequest = { onChangeShowTimePicker(false) },
             confirmButton = {
-                val hour = timePickerState.hour
-                val minute = "00"
-                onChangePreferTime("$hour-$minute")
+                TextButton(
+                    onClick = {
+                        val hour = timePickerState.hour.toString().padStart(
+                            length = 2,
+                            padChar = '0',
+                        )
+                        val minute = "00"
+                        onChangePreferTime("$hour-$minute")
+                        onChangeShowTimePicker(false)
+                    },
+                ) {
+                    Text(text = "확인")
+                }
             },
         ) {
             TimePicker(
                 state = timePickerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = 16.dp),
             )
         }
     }
