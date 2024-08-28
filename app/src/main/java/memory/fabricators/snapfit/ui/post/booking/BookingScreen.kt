@@ -20,6 +20,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -45,7 +47,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
@@ -79,10 +80,10 @@ fun BookingScreen(
     val (showTimePicker, onChangeShowTimePicker) = remember { mutableStateOf(false) }
     val timePickerState = rememberTimePickerState()
 
-    val (time, onChangeTime) = remember { mutableStateOf("") }
+    val (minutes, onChangeMinutes) = remember { mutableStateOf("") }
     val (preferLocation, onChangePreferLocation) = remember { mutableStateOf("") }
     val (preferTime, onChangePreferTime) = remember { mutableStateOf("") }
-    val (countOfPeople, onChangeCountOfPeople) = remember { mutableIntStateOf(0) }
+    val (countOfPeople, onChangeCountOfPeople) = remember { mutableIntStateOf(1) }
     val (email, onChangeEmail) = remember { mutableStateOf("") }
     val (phoneNumber, onChangePhoneNumber) = remember { mutableStateOf("") }
     /*
@@ -226,21 +227,42 @@ fun BookingScreen(
                     SectionHeader(
                         title = { Text(text = "옵션") },
                     )
-                    TextField(
-                        value = time,
-                        onValueChange = onChangeTime,
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
-                        hintValue = "시간을 선택해주세요",
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.NumberPassword,
-                            imeAction = ImeAction.Done,
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { focus.clearFocus() },
-                        ),
-                    )
+                        contentAlignment = Alignment.CenterEnd,
+                    ) {
+                        TextField(
+                            value = minutes.run { if (isNotEmpty()) return@run this + "분" else this },
+                            onValueChange = onChangeMinutes,
+                            modifier = Modifier.fillMaxWidth(),
+                            hintValue = "시간을 선택해주세요",
+                            readOnly = true,
+                        )
+                        IconButton(
+                            onClick = { onChangeShowTimePicker(true) },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.icon_arrow_bottom),
+                                contentDescription = "open",
+                                tint = LocalColorScheme.current.secondary300,
+                            )
+                            if (state.postDetails != null)
+                                DropdownMenu(
+                                    expanded = showTimePicker,
+                                    onDismissRequest = { onChangeShowTimePicker(false) },
+                                ) {
+                                    DropdownMenuItem(
+                                        text = { Text(text = state.postDetails!!.prices.min.toString() + "분") },
+                                        onClick = {
+                                            onChangeMinutes(state.postDetails!!.prices.min.toString())
+                                            onChangeShowTimePicker(false)
+                                        },
+                                    )
+                                }
+                        }
+                    }
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -417,7 +439,7 @@ fun BookingScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
-                        hintValue = "010-****-****",
+                        hintValue = "01012345678",
                     )
                 }
             }
@@ -429,7 +451,7 @@ fun BookingScreen(
                             phoneNumber = phoneNumber,
                             postId = postId,
                             makerId = state.postDetails!!.maker.id,
-                            minutes = time.toLong(),
+                            minutes = minutes.toLong(),
                             price = state.postDetails!!.prices.price,
                             person = countOfPeople.toLong(),
                             personPrice = state.postDetails!!.personPrice,
