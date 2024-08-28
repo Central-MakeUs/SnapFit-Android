@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,11 +19,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,11 +44,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
@@ -70,6 +76,7 @@ fun MyPageContent(
         topBar = {
             MyPageTopAppBar(
                 username = state.userInfo?.nickname ?: "-",
+                profileImageUrl = state.userInfo?.profile,
                 vibes = state.userInfo?.vibes?.map { it.name } ?: emptyList(),
                 expanded = !scrollState.canScrollBackward,
                 navigationIcon = {
@@ -121,7 +128,7 @@ fun MyPageContent(
 @Composable
 private fun MyPageTopAppBar(
     // backgroundImageUrl: String,
-    // profileImageUrl: String,
+    profileImageUrl: String?,
     username: String,
     vibes: List<String>,
     expanded: Boolean,
@@ -189,18 +196,43 @@ private fun MyPageTopAppBar(
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
-                            .background(color = Color.Black),
+                            .height(160.dp)
+                            .background(
+                                color = Color.Black,
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.app_logo_extended),
+                            contentDescription = null,
+                        )
+                    }
+                    AsyncImage(
+                        model = profileImageUrl ?: R.drawable.image_profile_placeholder,
+                        contentDescription = "profile",
+                        modifier = Modifier
+                            .padding(
+                                start = 16.dp,
+                                top = 16.dp,
+                                bottom = 16.dp,
+                            )
+                            .size(
+                                size = 64.dp,
+                            )
+                            .clip(
+                                shape = CircleShape,
+                            ),
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(id = R.drawable.image_profile_placeholder),
                     )
-                    // TODO
                     Row(
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -210,7 +242,13 @@ private fun MyPageTopAppBar(
                             color = LocalColorScheme.current.primaryBlack,
                         )
                     }
-                    TagList(tags = vibes)
+                    TagList(
+                        tags = vibes,
+                        modifier = Modifier.padding(
+                            start = 16.dp,
+                            bottom = 16.dp,
+                        ),
+                    )
                 }
             }
             if (!expanded) {
