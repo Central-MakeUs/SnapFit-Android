@@ -14,12 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
@@ -41,12 +42,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
@@ -59,6 +58,7 @@ import memory.fabricators.snapfit.ui.common.CircleChip
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,34 +76,51 @@ fun BookingScreen(
 
     val (showDatePicker, onChangeShowDatePicker) = remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
-
     val (showTimePicker, onChangeShowTimePicker) = remember { mutableStateOf(false) }
     val timePickerState = rememberTimePickerState()
 
+    val (showMinutePicker, onChangeShowMinutePicker) = remember { mutableStateOf(false) }
+
     val (minutes, onChangeMinutes) = remember { mutableStateOf("") }
     val (preferLocation, onChangePreferLocation) = remember { mutableStateOf("") }
+    val (preferDate, onChangePreferDate) = remember { mutableStateOf("") }
     val (preferTime, onChangePreferTime) = remember { mutableStateOf("") }
     val (countOfPeople, onChangeCountOfPeople) = remember { mutableIntStateOf(1) }
     val (email, onChangeEmail) = remember { mutableStateOf("") }
     val (phoneNumber, onChangePhoneNumber) = remember { mutableStateOf("") }
-    /*
 
-        if (showDatePicker) {
+    if (showDatePicker) {
+        DatePickerDialog(
+            onDismissRequest = { onChangeShowDatePicker(false) },
+            confirmButton = {
+                val date = Date(datePickerState.selectedDateMillis!!)
+                val year = date.year
+                val month = date.month
+                val day = date.day
+                onChangePreferDate("$year-$month-$day")
+            },
+        ) {
             DatePicker(
                 state = datePickerState,
             )
         }
+    }
 
-        if (showTimePicker) {
+    if (showTimePicker) {
+        DatePickerDialog(
+            onDismissRequest = { onChangeShowTimePicker(false) },
+            confirmButton = {
+                val hour = timePickerState.hour
+                val minute = "00"
+                onChangePreferTime("$hour-$minute")
+            },
+        ) {
             TimePicker(
                 state = timePickerState,
             )
         }
+    }
 
-        LaunchedEffect(key1 = timePickerState) {
-
-        }
-    */
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             BookingSideEffect.CheckTimeFormat -> Toast.makeText(
@@ -241,7 +258,7 @@ fun BookingScreen(
                             readOnly = true,
                         )
                         IconButton(
-                            onClick = { onChangeShowTimePicker(true) },
+                            onClick = { onChangeShowMinutePicker(true) },
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.icon_arrow_bottom),
@@ -250,14 +267,14 @@ fun BookingScreen(
                             )
                             if (state.postDetails != null)
                                 DropdownMenu(
-                                    expanded = showTimePicker,
-                                    onDismissRequest = { onChangeShowTimePicker(false) },
+                                    expanded = showMinutePicker,
+                                    onDismissRequest = { onChangeShowMinutePicker(false) },
                                 ) {
                                     DropdownMenuItem(
                                         text = { Text(text = state.postDetails!!.prices.min.toString() + "분") },
                                         onClick = {
                                             onChangeMinutes(state.postDetails!!.prices.min.toString())
-                                            onChangeShowTimePicker(false)
+                                            onChangeShowMinutePicker(false)
                                         },
                                     )
                                 }
@@ -300,7 +317,7 @@ fun BookingScreen(
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                             ) {
-                                Text(text = "원하시는 날짜와 시간을 적어주세요")
+                                Text(text = "원하시는 날짜를 선택해주세요")
                                 Text(
                                     text = "[필수]",
                                     style = LocalTypography.current.body2Regular,
@@ -309,20 +326,74 @@ fun BookingScreen(
                             }
                         },
                     )
-                    TextField(
-                        value = preferTime,
-                        onValueChange = onChangePreferTime,
+
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
-                        hintValue = "MM-DD-HH",
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Next,
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { focus.moveFocus(FocusDirection.Next) },
-                        ),
+                        contentAlignment = Alignment.CenterEnd,
+                    ) {
+                        TextField(
+                            value = preferDate,
+                            onValueChange = {},
+                            modifier = Modifier.fillMaxWidth(),
+                            hintValue = "날짜를 선택해주세요",
+                            readOnly = true,
+                        )
+                        IconButton(
+                            onClick = { onChangeShowDatePicker(true) },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.icon_arrow_bottom),
+                                contentDescription = "open",
+                                tint = LocalColorScheme.current.secondary300,
+                            )
+                        }
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    SectionHeader(
+                        title = {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            ) {
+                                Text(text = "원하시는 시간을 선택해주세요")
+                                Text(
+                                    text = "[필수]",
+                                    style = LocalTypography.current.body2Regular,
+                                    color = LocalColorScheme.current.secondary400,
+                                )
+                            }
+                        },
                     )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        contentAlignment = Alignment.CenterEnd,
+                    ) {
+                        TextField(
+                            value = preferTime,
+                            onValueChange = {},
+                            modifier = Modifier.fillMaxWidth(),
+                            hintValue = "시간을 선택해주세요",
+                            readOnly = true,
+                        )
+                        IconButton(
+                            onClick = { onChangeShowTimePicker(true) },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.icon_arrow_bottom),
+                                contentDescription = "open",
+                                tint = LocalColorScheme.current.secondary300,
+                            )
+                        }
+                    }
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth(),
