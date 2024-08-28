@@ -59,6 +59,8 @@ import memory.fabricators.snapfit.ui.common.CircleChip
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -295,19 +297,18 @@ fun BookingScreen(
                                 contentDescription = "open",
                                 tint = LocalColorScheme.current.secondary300,
                             )
-                            if (state.postDetails != null)
-                                DropdownMenu(
-                                    expanded = showMinutePicker,
-                                    onDismissRequest = { onChangeShowMinutePicker(false) },
-                                ) {
-                                    DropdownMenuItem(
-                                        text = { Text(text = state.postDetails!!.prices.min.toString() + "분") },
-                                        onClick = {
-                                            onChangeMinutes(state.postDetails!!.prices.min.toString())
-                                            onChangeShowMinutePicker(false)
-                                        },
-                                    )
-                                }
+                            if (state.postDetails != null) DropdownMenu(
+                                expanded = showMinutePicker,
+                                onDismissRequest = { onChangeShowMinutePicker(false) },
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text(text = state.postDetails!!.prices.min.toString() + "분") },
+                                    onClick = {
+                                        onChangeMinutes(state.postDetails!!.prices.min.toString())
+                                        onChangeShowMinutePicker(false)
+                                    },
+                                )
+                            }
                         }
                     }
                 }
@@ -557,7 +558,14 @@ fun BookingScreen(
                             person = countOfPeople.toLong(),
                             personPrice = state.postDetails!!.personPrice,
                             reservationLocation = preferLocation,
-                            reservationTime = preferTime,
+                            reservationTime = run {
+                                val date = Date(datePickerState.selectedDateMillis!!).apply {
+                                    hours = timePickerState.hour
+                                    setMinutes(timePickerState.minute)
+                                }
+                                LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+                                    .toString()
+                            },
                         )
                     } catch (_: Exception) {
                         Toast.makeText(
@@ -574,6 +582,13 @@ fun BookingScreen(
                         end = 16.dp,
                         bottom = 16.dp,
                     ),
+                enabled = minutes.isNotBlank()
+                        && preferLocation.isNotBlank()
+                        && preferDate.isNotBlank()
+                        && preferTime.isNotBlank()
+                        && countOfPeople != 0
+                        && email.isNotBlank()
+                        && phoneNumber.isNotBlank(),
             ) {
                 Text(text = "예약하기")
             }
