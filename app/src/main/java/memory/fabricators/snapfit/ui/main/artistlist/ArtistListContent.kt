@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -40,6 +39,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistListContent(
+    onOpenPostDetails: (postId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ArtistListViewModel = koinViewModel(),
 ) {
@@ -170,6 +170,7 @@ fun ArtistListContent(
                         title = { Text(text = post.title) },
                         tags = post.vibes.map { ProductItemTag(text = it) },
                         price = { Text(text = post.price.toString()) },
+                        onClick = { onOpenPostDetails(post.id) },
                         subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
                     )
                 }

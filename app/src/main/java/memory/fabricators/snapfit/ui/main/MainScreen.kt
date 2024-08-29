@@ -89,6 +89,7 @@ fun MainScreen(
             )
 
             MainSections.ARTIST_LIST -> ArtistListContent(
+                onOpenPostDetails = onOpenPostDetails,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
