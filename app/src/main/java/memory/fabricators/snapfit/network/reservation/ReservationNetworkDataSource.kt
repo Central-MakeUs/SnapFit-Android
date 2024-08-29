@@ -11,5 +11,8 @@ abstract class ReservationNetworkDataSource {
     abstract suspend fun cancelReservation(reservationId: String)
     abstract suspend fun getReservationCount(): ReservationCountResponse
     abstract suspend fun getMakerReservations(makerId: String): ReservationListResponse
-    abstract suspend fun getUserReservations(userId: String): ReservationListResponse
+    abstract suspend fun getUserReservations(
+        offset: Int,
+        limit: Int,
+    ): ReservationListResponse
 }
