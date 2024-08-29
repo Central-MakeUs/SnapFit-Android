@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val reservationUiModule: Module
     get() = module {
-        viewModel { ReservationDetailsViewModel() }
+        viewModel { ReservationDetailsViewModel(reservationRepository = get()) }
     }
