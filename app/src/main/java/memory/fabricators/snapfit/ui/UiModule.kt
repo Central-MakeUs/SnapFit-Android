@@ -6,6 +6,7 @@ import memory.fabricators.snapfit.ui.main.mypage.di.mainMyPageUiModule
 import memory.fabricators.snapfit.ui.post.booking.di.postBookingUiModule
 import memory.fabricators.snapfit.ui.post.details.di.postDetailsUiModule
 import memory.fabricators.snapfit.ui.post.result.di.bookingCompletionUiModule
+import memory.fabricators.snapfit.ui.reservation.details.reservationUiModule
 import memory.fabricators.snapfit.ui.signup.di.signUpUiModule
 import memory.fabricators.snapfit.ui.start.di.startUiModule
 import org.koin.core.module.Module
@@ -22,5 +23,6 @@ val uiModule: Module
             postBookingUiModule,
             postDetailsUiModule,
             bookingCompletionUiModule,
+            reservationUiModule,
         )
     }
