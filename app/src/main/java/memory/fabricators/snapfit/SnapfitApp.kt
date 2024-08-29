@@ -149,6 +149,14 @@ fun SnapfitApp() {
         ) {
             ReservationListScreen(
                 onNavigateUp = navController::navigateUp,
+                onOpenReservationDetails = { bookingId ->
+                    navController.navigate(SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId=$bookingId") {
+                        launchSingleTop = true
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                },
             )
         }
         composable(
