@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.ui.post.result
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +29,7 @@ import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +39,8 @@ fun BookingCompletionScreen(
     modifier: Modifier = Modifier,
     viewModel: BookingCompletionViewModel = koinViewModel(),
 ) {
+    val state by viewModel.collectAsState()
+
     LaunchedEffect(key1 = bookingId) {
         viewModel.fetchBookingDetails(bookingId)
     }
@@ -59,7 +66,6 @@ fun BookingCompletionScreen(
                         vertical = 32.dp,
                     ),
             ) {
-                // TODO
                 Text(
                     text = "예약이 접수되었습니다.",
                     modifier = Modifier.padding(
@@ -111,43 +117,49 @@ fun BookingCompletionScreen(
                 thickness = 5.dp,
                 color = LocalColorScheme.current.secondary100,
             )
-            // TODO
-            val dummyOptions = mapOf(
-                "옵션" to "30분 스냅",
-                "위치" to "센트럴파크",
-                "예약일시" to "24.02.22(목) 오후 5:00",
-                "인원" to "성인 1명",
-                "이메일" to "snap@naver.com",
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        vertical = 32.dp,
-                    ),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
+            AnimatedVisibility(
+                visible = state.reservationDetails != null,
             ) {
-                dummyOptions.forEach { option ->
-                    BookingDescription(
-                        title = { Text(text = option.key) },
-                        description = { Text(text = option.value) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
+                val reservation = state.reservationDetails!!
+                val options = remember(key1 = reservation) {
+                    mutableStateMapOf(
+                        "옵션" to reservation.post.title,
+                        "위치" to reservation.reservationLocation,
+                        "에약일시" to reservation.reservationTime,
+                        "인원" to "${reservation.person}명",
+                        "이메일" to reservation.email,
                     )
                 }
-            }
-            Button(
-                onClick = onNavigateUp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp,
-                    ),
-            ) {
-                Text(text = "예약내역 보러가기")
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            vertical = 32.dp,
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                ) {
+                    options.forEach { option ->
+                        BookingDescription(
+                            title = { Text(text = option.key) },
+                            description = { Text(text = option.value) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                        )
+                    }
+                }
+                Button(
+                    onClick = onNavigateUp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp,
+                        ),
+                ) {
+                    Text(text = "예약내역 보러가기")
+                }
             }
         }
     }
