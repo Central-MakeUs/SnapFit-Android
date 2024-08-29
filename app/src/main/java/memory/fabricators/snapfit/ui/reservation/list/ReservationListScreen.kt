@@ -13,18 +13,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
+import org.koin.androidx.compose.koinViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReservationListScreen(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
-
+    viewModel: ReservationListViewModel = koinViewModel(),
 ) {
+    val state by viewModel.collectAsState()
+
     Scaffold(
         modifier = modifier,
         topBar = {
