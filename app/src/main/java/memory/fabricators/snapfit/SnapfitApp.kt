@@ -79,7 +79,7 @@ fun SnapfitApp() {
                         route = SnapfitDestinations.MAIN.route,
                     ) {
                         launchSingleTop = true
-                        popUpTo(navController.graph.startDestinationId) {
+                        popUpTo(SnapfitDestinations.MAIN.route) {
                             inclusive = true
                         }
                     }
@@ -134,9 +134,9 @@ fun SnapfitApp() {
             BookingScreen(
                 onNavigateUp = navController::navigateUp,
                 onOpenReservationResult = { bookingId ->
-                    navController.navigate(SnapfitDestinations.RESERVATION_DETAILS.route + "?bookingId=$bookingId") {
+                    navController.navigate(SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId=$bookingId") {
                         launchSingleTop = true
-                        popUpTo(navController.graph.startDestinationId) {
+                        popUpTo(SnapfitDestinations.BOOKING_COMPLETION.route) {
                             inclusive = true
                         }
                     }
@@ -150,11 +150,9 @@ fun SnapfitApp() {
             ReservationListScreen(
                 onNavigateUp = navController::navigateUp,
                 onOpenReservationDetails = { bookingId ->
-                    navController.navigate(SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId=$bookingId") {
+                    navController.navigate(SnapfitDestinations.RESERVATION_DETAILS.route + "?bookingId=$bookingId") {
                         launchSingleTop = true
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
+                        popUpTo(SnapfitDestinations.MAIN.route)
                     }
                 },
             )
