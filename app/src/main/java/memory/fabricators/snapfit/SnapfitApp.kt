@@ -136,9 +136,7 @@ fun SnapfitApp() {
                 onOpenReservationResult = { bookingId ->
                     navController.navigate(SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId=$bookingId") {
                         launchSingleTop = true
-                        popUpTo(SnapfitDestinations.BOOKING_COMPLETION.route) {
-                            inclusive = true
-                        }
+                        popUpTo(SnapfitDestinations.MAIN.route)
                     }
                 },
                 postId = postId,
