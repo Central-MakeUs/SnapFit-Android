@@ -15,4 +15,6 @@ abstract class ReservationRepository {
         reservationLocation: String,
         reservationTime: String,
     ): ReservationDetails
+
+    abstract suspend fun getReservationDetails(reservationId: Long): ReservationDetails
 }

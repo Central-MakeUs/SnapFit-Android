@@ -70,4 +70,44 @@ class ReservationRepositoryImpl(
             )
         }
     }
+
+    override suspend fun getReservationDetails(reservationId: Long): ReservationDetails {
+        val response = reservationNetworkDataSource.getReservationDetails(reservationId.toString())
+        return with(response) {
+            ReservationDetails(
+                id = id,
+                user = ReservationDetails.User(
+                    id = user.id,
+                    nickName = user.nickName,
+                ),
+                post = ReservationDetails.Post(
+                    id = post.id,
+                    maker = ReservationDetails.Maker(
+                        id = post.maker.id,
+                        nickName = post.maker.nickName,
+                    ),
+                    title = post.title,
+                    thumbNail = post.thumbNail,
+                    vibes = post.vibes,
+                    locations = post.locations,
+                    price = post.price,
+                    studio = post.studio,
+                    like = post.like,
+                ),
+                maker = ReservationDetails.Maker(
+                    id = maker.id,
+                    nickName = maker.nickName,
+                ),
+                reservationTime = reservationTime,
+                reservationLocation = reservationLocation,
+                person = person,
+                personPrice = personPrice,
+                basePrice = basePrice,
+                totalPrice = totalPrice,
+                cancelMessage = cancelMessage,
+                email = email,
+                phoneNumber = phoneNumber,
+            )
+        }
+    }
 }
