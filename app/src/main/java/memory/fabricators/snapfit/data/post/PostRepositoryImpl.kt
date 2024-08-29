@@ -147,7 +147,7 @@ class PostRepositoryImpl(
                         price = it.price,
                     )
                 },
-                personPrice = personPrice,
+                personPrice = response.personPrice,
                 desc = desc,
             )
         }

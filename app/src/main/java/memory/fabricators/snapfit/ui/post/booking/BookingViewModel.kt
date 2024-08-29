@@ -55,7 +55,7 @@ class BookingViewModel(
                     minutes = minutes,
                     price = price,
                     person = person,
-                    personPrice = personPrice * person,
+                    personPrice = personPrice,
                     reservationLocation = reservationLocation,
                     // TODO
                     reservationTime = "$reservationTime:00.699Z",
