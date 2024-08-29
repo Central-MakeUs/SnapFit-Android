@@ -6,6 +6,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ReservationDetailsScreen(
+    bookingId: Long,
     modifier: Modifier = Modifier,
     viewModel: ReservationDetailsViewModel = koinViewModel(),
 ) {

@@ -160,9 +160,16 @@ fun SnapfitApp() {
             )
         }
         composable(
-            route = SnapfitDestinations.RESERVATION_DETAILS.route,
-        ) {
-            ReservationDetailsScreen()
+            route = SnapfitDestinations.RESERVATION_DETAILS.route + "?bookingId={bookingId}",
+            arguments = listOf(
+                navArgument("bookingId") { type = NavType.LongType },
+            ),
+        ) { backStackEntry ->
+            val bookingId = backStackEntry.arguments?.getLong("bookingId")
+                ?: throw RuntimeException("Booking ID not provided.")
+            ReservationDetailsScreen(
+                bookingId = bookingId,
+            )
         }
     }
 }
