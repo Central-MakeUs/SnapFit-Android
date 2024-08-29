@@ -56,7 +56,7 @@ fun ReservationDetailsScreen(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             SectionHeader(
-                title = { Text(text = "주문상품") },
+                title = { Text(text = "주문 상품") },
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -121,7 +121,7 @@ fun ReservationDetailsScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             SectionHeader(
-                title = { Text(text = "주문상품") },
+                title = { Text(text = "예약 내역") },
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
