@@ -27,6 +27,7 @@ import memory.fabricators.snapfit.ui.main.mypage.MyPageContent
 @Composable
 fun MainScreen(
     onOpenPostDetails: (postId: Long) -> Unit,
+    onOpenReservationList: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val (currentSection, onCurrentSectionChange) = remember {
@@ -99,6 +100,7 @@ fun MainScreen(
 
             MainSections.MY_PAGE -> MyPageContent(
                 isArtist = false,
+                onOpenReservationList = onOpenReservationList,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

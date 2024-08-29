@@ -35,6 +35,13 @@ fun SnapfitApp() {
                         launchSingleTop = true
                     }
                 },
+                onOpenReservationList = {
+                    navController.navigate(
+                        route = SnapfitDestinations.RESERVATION_LIST.route,
+                    ) {
+                        launchSingleTop = true
+                    }
+                },
             )
         }
         composable(route = SnapfitDestinations.START.route) {

@@ -29,6 +29,7 @@ import memory.fabricators.snapfit.ui.main.mypage.composables.SettingsList
 
 @Composable
 fun UserContent(
+    onOpenReservationList: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -98,9 +99,7 @@ fun UserContent(
                     title = {
                         Text(text = "예약관리")
                     },
-                    onClick = {
-
-                    },
+                    onClick = onOpenReservationList,
                 ),
             ),
         )

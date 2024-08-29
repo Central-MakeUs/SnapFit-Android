@@ -48,7 +48,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -65,6 +64,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun MyPageContent(
     isArtist: Boolean,
+    onOpenReservationList: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MyPageViewModel = koinViewModel(),
 ) {
@@ -113,6 +113,7 @@ fun MyPageContent(
             )
         } else {
             UserContent(
+                onOpenReservationList = onOpenReservationList,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
@@ -195,8 +196,7 @@ private fun MyPageTopAppBar(
                 visible = expanded,
             ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Box(
@@ -316,17 +316,4 @@ private fun TagListItem(
 private object MyPageTopAppBarDefaults {
     val ContainerHeight = 320.0.dp
     val PinnedHeight = 64.0.dp
-}
-
-data class Tag(
-    val id: String,
-    val title: String,
-)
-
-@Preview
-@Composable
-private fun MyPageScreenPreview() {
-    MyPageContent(
-        isArtist = false,
-    )
 }
