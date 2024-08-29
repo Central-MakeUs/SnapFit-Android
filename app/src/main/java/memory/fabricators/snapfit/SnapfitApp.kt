@@ -98,8 +98,16 @@ fun SnapfitApp() {
                 },
             )
         }
-        composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
+        composable(
+            route = SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId={bookingId}",
+            arguments = listOf(
+                navArgument("bookingId") { type = NavType.LongType },
+            ),
+        ) { backStackEntry ->
+            val bookingId = backStackEntry.arguments?.getLong("bookingId")
+                ?: throw RuntimeException("Booking ID not provided.")
             BookingCompletionScreen(
+                bookingId = bookingId,
                 onNavigateUp = navController::navigateUp,
             )
         }
