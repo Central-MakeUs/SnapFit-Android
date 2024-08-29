@@ -134,7 +134,7 @@ fun SnapfitApp() {
             BookingScreen(
                 onNavigateUp = navController::navigateUp,
                 onOpenReservationResult = { bookingId ->
-                    navController.navigate(SnapfitDestinations.BOOKING_COMPLETION.route + "?bookingId=$bookingId") {
+                    navController.navigate(SnapfitDestinations.RESERVATION_DETAILS.route + "?bookingId=$bookingId") {
                         launchSingleTop = true
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
