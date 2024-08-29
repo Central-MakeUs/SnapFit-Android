@@ -353,7 +353,7 @@ private fun MemoryRecommendationItem(
     Column(
         modifier = modifier
             .clip(
-                shape = RoundedCornerShape(5.dp),
+                shape = RoundedCornerShape(2.dp),
             )
             .clickable(
                 onClick = onClick,

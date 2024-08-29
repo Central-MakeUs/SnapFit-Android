@@ -1,6 +1,7 @@
 package memory.fabricators.snapfit.ui.common
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,11 +39,24 @@ fun ProductItem(
     price: @Composable () -> Unit,
     subtitle: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
     favoriteIcon: (@Composable () -> Unit)? = null,
 ) {
     val density = LocalDensity.current
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .clip(
+                shape = RoundedCornerShape(2.dp),
+            )
+            .then(
+                if (onClick != null) {
+                    Modifier.clickable(
+                        onClick = onClick,
+                    )
+                } else {
+                    Modifier
+                },
+            ),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         var imageBoxWidth by remember { mutableStateOf(0.dp) }
