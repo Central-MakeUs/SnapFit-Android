@@ -13,6 +13,8 @@ import memory.fabricators.snapfit.ui.post.booking.BookingScreen
 import memory.fabricators.snapfit.ui.post.details.PostDetailsScreen
 import memory.fabricators.snapfit.ui.post.listfilter.ArtistListFilterScreen
 import memory.fabricators.snapfit.ui.post.result.BookingCompletionScreen
+import memory.fabricators.snapfit.ui.reservation.details.ReservationDetailsScreen
+import memory.fabricators.snapfit.ui.reservation.list.ReservationListScreen
 import memory.fabricators.snapfit.ui.signup.SignUpScreen
 import memory.fabricators.snapfit.ui.start.StartScreen
 
@@ -135,6 +137,18 @@ fun SnapfitApp() {
                 postId = postId,
             )
         }
+        composable(
+            route = SnapfitDestinations.RESERVATION_LIST.route,
+        ) {
+            ReservationListScreen(
+                onNavigateUp = navController::navigateUp,
+            )
+        }
+        composable(
+            route = SnapfitDestinations.RESERVATION_DETAILS.route,
+        ) {
+            ReservationDetailsScreen()
+        }
     }
 }
 
@@ -161,5 +175,11 @@ enum class SnapfitDestinations(
     ),
     BOOKING_SCREEN(
         route = "booking",
-    )
+    ),
+    RESERVATION_LIST(
+        route = "reservation_list",
+    ),
+    RESERVATION_DETAILS(
+        route = "reservation_details",
+    ),
 }
