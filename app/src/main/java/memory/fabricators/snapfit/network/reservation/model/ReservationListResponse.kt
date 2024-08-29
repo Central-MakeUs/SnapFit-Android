@@ -14,7 +14,7 @@ data class ReservationListResponse(
         val reservationTime: String,
         val post: PostResponse,
         val totalPrice: Long,
-        val cancelMessage: String,
+        val cancelMessage: String?,
     )
 
     @Serializable

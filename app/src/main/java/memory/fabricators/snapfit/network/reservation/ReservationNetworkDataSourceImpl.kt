@@ -51,7 +51,7 @@ class ReservationNetworkDataSourceImpl(
         offset: Int,
         limit: Int,
     ): ReservationListResponse {
-        val response = httpClient.get("/snapfit/reservation/user") {
+        val response = httpClient.get("/snapfit/reservation/user?offset=$offset&limit=$limit") {
             bearerAuth(token = tokenManager.accessToken)
         }
         return response.body()

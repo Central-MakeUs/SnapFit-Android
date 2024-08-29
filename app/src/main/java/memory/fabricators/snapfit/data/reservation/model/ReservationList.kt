@@ -10,7 +10,7 @@ data class ReservationList(
         val reservationTime: String,
         val post: Post,
         val totalPrice: Long,
-        val cancelMessage: String,
+        val cancelMessage: String?,
     )
 
     data class Post(
