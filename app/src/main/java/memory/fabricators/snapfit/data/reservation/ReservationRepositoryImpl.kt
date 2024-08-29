@@ -54,10 +54,10 @@ class ReservationRepositoryImpl(
                     studio = post.studio,
                     like = post.like,
                 ),
-                reservationTime = reservationTime,
-                reservationLocation = reservationLocation,
-                person = person,
-                personPrice = personPrice,
+                reservationTime = response.reservationTime,
+                reservationLocation = response.reservationLocation,
+                person = response.person,
+                personPrice = response.personPrice,
                 basePrice = basePrice,
                 totalPrice = totalPrice,
                 cancelMessage = cancelMessage,
@@ -65,6 +65,8 @@ class ReservationRepositoryImpl(
                     id = maker.id,
                     nickName = maker.nickName,
                 ),
+                email = response.email,
+                phoneNumber = response.phoneNumber,
             )
         }
     }
