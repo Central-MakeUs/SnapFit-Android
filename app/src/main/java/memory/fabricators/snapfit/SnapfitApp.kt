@@ -99,7 +99,9 @@ fun SnapfitApp() {
             )
         }
         composable(route = SnapfitDestinations.BOOKING_COMPLETION.route) {
-            BookingCompletionScreen()
+            BookingCompletionScreen(
+                onNavigateUp = navController::navigateUp,
+            )
         }
         composable(route = SnapfitDestinations.ARTIST_LIST_FILTER.route) {
             ArtistListFilterScreen()
