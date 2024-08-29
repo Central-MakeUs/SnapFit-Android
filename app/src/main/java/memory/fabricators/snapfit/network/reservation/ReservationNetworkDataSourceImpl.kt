@@ -47,8 +47,13 @@ class ReservationNetworkDataSourceImpl(
         return response.body()
     }
 
-    override suspend fun getUserReservations(userId: String): ReservationListResponse {
-        val response = httpClient.get("/snapfit/reservation/user/$userId") {}
+    override suspend fun getUserReservations(
+        offset: Int,
+        limit: Int,
+    ): ReservationListResponse {
+        val response = httpClient.get("/snapfit/reservation/user") {
+            bearerAuth(token = tokenManager.accessToken)
+        }
         return response.body()
     }
 }
