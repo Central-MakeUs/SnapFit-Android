@@ -165,6 +165,7 @@ fun SnapfitApp() {
                 ?: throw RuntimeException("Booking ID not provided.")
             ReservationDetailsScreen(
                 bookingId = bookingId,
+                onNavigateUp = navController::navigateUp,
             )
         }
     }
