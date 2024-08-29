@@ -126,12 +126,34 @@ fun ReservationDetailsScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
-            BookingDescription(
-                title = { Text(text = "예약 일시") },
-                description = { Text(text = state.reservationDetails?.reservationTime ?: "-") },
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(
+                        all = 16.dp,
+                    )
+                    .background(
+                        color = LocalColorScheme.current.secondary100,
+                        shape = RoundedCornerShape(2.dp),
+                    )
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 32.dp,
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                BookingDescription(
+                    title = { Text(text = "예약 일시") },
+                    description = { Text(text = state.reservationDetails?.reservationTime ?: "-") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionHeader(
+                title = { Text(text = "예약 내역") },
+                modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
             BookingDescription(
@@ -141,12 +163,12 @@ fun ReservationDetailsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             HorizontalDivider(
                 thickness = 1.dp,
                 color = LocalColorScheme.current.secondary100,
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             BookingDescription(
                 title = {
                     Text(
@@ -159,7 +181,7 @@ fun ReservationDetailsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(48.dp))
             Button(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
