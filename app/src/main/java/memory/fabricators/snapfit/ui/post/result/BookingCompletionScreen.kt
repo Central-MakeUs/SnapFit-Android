@@ -148,18 +148,18 @@ fun BookingCompletionScreen(
                         )
                     }
                 }
-                Button(
-                    onClick = onNavigateUp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 16.dp,
-                        ),
-                ) {
-                    Text(text = "예약내역 보러가기")
-                }
+            }
+            Button(
+                onClick = onNavigateUp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp,
+                    ),
+            ) {
+                Text(text = "예약내역 보러가기")
             }
         }
     }
