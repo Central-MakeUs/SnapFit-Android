@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
@@ -125,6 +126,52 @@ fun ReservationDetailsScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
+            BookingDescription(
+                title = { Text(text = "예약 일시") },
+                description = { Text(text = state.reservationDetails?.reservationTime ?: "-") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            BookingDescription(
+                title = { Text(text = "기본") },
+                description = { Text(text = "${state.reservationDetails?.basePrice ?: "-"}원") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = LocalColorScheme.current.secondary100,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            BookingDescription(
+                title = {
+                    Text(
+                        text = "최종 결재액",
+                        style = LocalTypography.current.body1Semibold,
+                    )
+                },
+                description = { Text(text = "${state.reservationDetails?.totalPrice ?: "-"}원") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp,
+                    ),
+            ) {
+                Text(text = "예약 취소")
+            }
         }
     }
 }
@@ -152,6 +199,33 @@ private fun MemoryRecommendationTag(
                 color = LocalColorScheme.current.accentPink,
             ),
             content = content,
+        )
+    }
+}
+
+@Composable
+private fun BookingDescription(
+    title: @Composable () -> Unit,
+    description: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ProvideTextStyle(
+            value = LocalTypography.current.body2Regular.copy(
+                color = LocalColorScheme.current.secondary400,
+            ),
+            content = title,
+        )
+
+        ProvideTextStyle(
+            value = LocalTypography.current.body2Semibold.copy(
+                color = LocalColorScheme.current.secondary500,
+            ),
+            content = description,
         )
     }
 }
