@@ -1,8 +1,6 @@
 package memory.fabricators.snapfit.ui.post.result
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,45 +12,37 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingCompletionScreen(
+    bookingId: Long,
+    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: BookingCompletionViewModel = koinViewModel(),
 ) {
+    LaunchedEffect(key1 = bookingId) {
+        viewModel.fetchBookingDetails(bookingId)
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { /*TODO*/ },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                    ) {
-                        Icon(
-                            tint = LocalColorScheme.current.primaryBlack,
-                            painter = painterResource(id = R.drawable.icon_cancel),
-                            contentDescription = "close",
-                        )
-                    }
-                },
+                title = { },
             )
         },
     ) { innerPaddings ->
@@ -88,7 +78,7 @@ fun BookingCompletionScreen(
                     color = LocalColorScheme.current.secondary400,
                 )
             }
-            HorizontalDivider(
+            /*HorizontalDivider(
                 thickness = 5.dp,
                 color = LocalColorScheme.current.secondary100,
             )
@@ -116,7 +106,7 @@ fun BookingCompletionScreen(
                         .height(130.dp)
                         .background(color = Color.Green),
                 )
-            }
+            }*/
             HorizontalDivider(
                 thickness = 5.dp,
                 color = LocalColorScheme.current.secondary100,
@@ -148,7 +138,7 @@ fun BookingCompletionScreen(
                 }
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = onNavigateUp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
@@ -188,10 +178,4 @@ private fun BookingDescription(
             content = description,
         )
     }
-}
-
-@Preview
-@Composable
-private fun BookingCompletionScreenPreview() {
-    BookingCompletionScreen()
 }
