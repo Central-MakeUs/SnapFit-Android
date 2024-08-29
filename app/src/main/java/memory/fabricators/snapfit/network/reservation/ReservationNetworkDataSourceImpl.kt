@@ -19,7 +19,9 @@ class ReservationNetworkDataSourceImpl(
 ) : ReservationNetworkDataSource() {
 
     override suspend fun getReservationDetails(reservationId: String): ReservationDetailsResponse {
-        val response = httpClient.get("/snapfit/reservation/$reservationId") {}
+        val response = httpClient.get("/snapfit/reservation/$reservationId") {
+            bearerAuth(token = tokenManager.accessToken)
+        }
         return response.body()
     }
 
