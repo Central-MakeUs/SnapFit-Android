@@ -38,6 +38,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun ReservationListScreen(
     onNavigateUp: () -> Unit,
+    onOpenReservationDetails: (bookingId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReservationListViewModel = koinViewModel(),
 ) {
@@ -76,7 +77,7 @@ fun ReservationListScreen(
                         locations = item.post.locations,
                         reservationTime = item.reservationTime,
                         price = item.totalPrice,
-                        onClick = { /*TODO*/ },
+                        onClick = { onOpenReservationDetails(item.id) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                     HorizontalDivider(
