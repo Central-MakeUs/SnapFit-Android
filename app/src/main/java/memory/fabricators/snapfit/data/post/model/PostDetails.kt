@@ -10,7 +10,7 @@ data class PostDetails(
     val title: String,
     val vibes: List<String>,
     val locations: List<String>,
-    val prices: Prices,
+    val prices: List<Prices>,
     val personPrice: Long,
     val studio: Boolean,
     val like: Boolean,

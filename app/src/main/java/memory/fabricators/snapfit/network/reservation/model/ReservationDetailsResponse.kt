@@ -15,7 +15,7 @@ data class ReservationDetailsResponse(
     val personPrice: Long,
     val basePrice: Long,
     val totalPrice: Long,
-    val cancelMessage: String,
+    val cancelMessage: String?,
 ) {
     @Serializable
     data class UserResponse(

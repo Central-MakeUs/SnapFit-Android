@@ -230,7 +230,7 @@ fun PostDetailsScreen(
                             }
                             Spacer(modifier = Modifier.height(32.dp))
                             Text(
-                                text = postDetails.prices.price.toString(),
+                                text = if (postDetails.prices.size > 1) "${postDetails.prices[0].price}원~" else "${postDetails.prices[0].price}원",
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(start = 16.dp),

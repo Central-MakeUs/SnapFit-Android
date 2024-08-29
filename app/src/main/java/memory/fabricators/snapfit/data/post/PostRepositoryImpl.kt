@@ -85,10 +85,12 @@ class PostRepositoryImpl(
                 studio = studio,
                 like = like,
                 createdAt = createAt,
-                prices = PostDetails.Prices(
-                    min = prices[0].min,
-                    price = prices[0].price,
-                ),
+                prices = prices.map {
+                    PostDetails.Prices(
+                        min = it.min,
+                        price = it.price,
+                    )
+                },
                 personPrice = personPrice,
                 desc = desc,
             )
@@ -139,10 +141,12 @@ class PostRepositoryImpl(
                 studio = studio,
                 like = like,
                 createdAt = createdAt,
-                prices = PostDetails.Prices(
-                    min = prices[0].min,
-                    price = prices[0].price,
-                ),
+                prices = prices.map {
+                    PostDetails.Prices(
+                        min = it.min,
+                        price = it.price,
+                    )
+                },
                 personPrice = personPrice,
                 desc = desc,
             )

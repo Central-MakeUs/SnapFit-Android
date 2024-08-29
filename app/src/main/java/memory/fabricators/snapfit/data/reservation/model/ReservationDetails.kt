@@ -11,7 +11,7 @@ data class ReservationDetails(
     val personPrice: Long,
     val basePrice: Long,
     val totalPrice: Long,
-    val cancelMessage: String,
+    val cancelMessage: String?,
 ) {
     data class User(
         val id: Long,

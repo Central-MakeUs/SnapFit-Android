@@ -242,7 +242,7 @@ fun BookingScreen(
                                 color = LocalColorScheme.current.secondary500,
                             )
                             Text(
-                                text = postDetails.prices.price.toString(),
+                                text = postDetails.personPrice.toString(),
                                 style = LocalTypography.current.caption1Semibold,
                                 color = LocalColorScheme.current.secondary500,
                             )
@@ -301,13 +301,15 @@ fun BookingScreen(
                                 expanded = showMinutePicker,
                                 onDismissRequest = { onChangeShowMinutePicker(false) },
                             ) {
-                                DropdownMenuItem(
-                                    text = { Text(text = state.postDetails!!.prices.min.toString() + "분") },
-                                    onClick = {
-                                        onChangeMinutes(state.postDetails!!.prices.min.toString())
-                                        onChangeShowMinutePicker(false)
-                                    },
-                                )
+                                state.postDetails!!.prices.forEach { price ->
+                                    DropdownMenuItem(
+                                        text = { Text(text = price.min.toString() + "분") },
+                                        onClick = {
+                                            onChangeMinutes(price.min.toString())
+                                            onChangeShowMinutePicker(false)
+                                        },
+                                    )
+                                }
                             }
                         }
                     }
@@ -554,7 +556,7 @@ fun BookingScreen(
                             postId = postId,
                             makerId = state.postDetails!!.maker.id,
                             minutes = minutes.toLong(),
-                            price = state.postDetails!!.prices.price,
+                            price = state.postDetails!!.prices.find { it.min == minutes.toLong() }!!.price,
                             person = countOfPeople.toLong(),
                             personPrice = state.postDetails!!.personPrice,
                             reservationLocation = preferLocation,
