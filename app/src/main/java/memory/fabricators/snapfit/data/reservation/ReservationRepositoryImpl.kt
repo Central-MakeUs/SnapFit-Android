@@ -1,6 +1,7 @@
 package memory.fabricators.snapfit.data.reservation
 
 import memory.fabricators.snapfit.data.reservation.model.ReservationDetails
+import memory.fabricators.snapfit.data.reservation.model.ReservationList
 import memory.fabricators.snapfit.network.reservation.ReservationNetworkDataSource
 import memory.fabricators.snapfit.network.reservation.model.ReservationRequest
 
@@ -109,5 +110,41 @@ class ReservationRepositoryImpl(
                 phoneNumber = phoneNumber,
             )
         }
+    }
+
+    override suspend fun getReservations(
+        offset: Int,
+        limit: Int,
+    ): ReservationList {
+        val response = reservationNetworkDataSource.getUserReservations(
+            offset = offset,
+            limit = limit,
+        )
+        return ReservationList(
+            offset = response.offset,
+            limit = response.limit,
+            data = response.data.map {
+                ReservationList.ReservationListItem(
+                    id = it.id,
+                    reservationTime = it.reservationTime,
+                    post = ReservationList.Post(
+                        id = it.post.id,
+                        maker = ReservationList.Maker(
+                            id = it.post.maker.id,
+                            nickName = it.post.maker.nickName,
+                        ),
+                        title = it.post.title,
+                        vibes = it.post.vibes,
+                        locations = it.post.locations,
+                        thumbNail = it.post.thumbNail,
+                        price = it.post.price,
+                        studio = it.post.studio,
+                        like = it.post.like,
+                    ),
+                    totalPrice = it.totalPrice,
+                    cancelMessage = it.cancelMessage,
+                )
+            },
+        )
     }
 }
