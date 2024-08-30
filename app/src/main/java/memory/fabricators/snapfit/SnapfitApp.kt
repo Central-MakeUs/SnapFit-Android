@@ -64,6 +64,9 @@ fun SnapfitApp(
                         route = SnapfitDestinations.MAIN.route,
                     ) {
                         launchSingleTop = true
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
                     }
                 },
             )
