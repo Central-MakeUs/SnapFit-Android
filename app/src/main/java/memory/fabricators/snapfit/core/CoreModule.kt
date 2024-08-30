@@ -1,5 +1,6 @@
 package memory.fabricators.snapfit.core
 
+import memory.fabricators.snapfit.core.datastore.di.dataStoreCoreModule
 import memory.fabricators.snapfit.core.network.di.networkCoreModule
 import memory.fabricators.snapfit.core.token.di.tokenCoreModule
 import org.koin.core.module.Module
@@ -10,5 +11,6 @@ val coreModule: Module
         includes(
             networkCoreModule,
             tokenCoreModule,
+            dataStoreCoreModule,
         )
     }
