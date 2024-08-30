@@ -7,9 +7,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.request.header
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import memory.fabricators.snapfit.network.login.model.TokenResponse
 
@@ -37,7 +36,6 @@ class TokenManagerImpl(
 
     init {
         try {
-            println("INIT")
             this.initialize()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -59,28 +57,25 @@ class TokenManagerImpl(
 
     override fun initialize() {
         runBlocking {
-            dataStore.data.last().also { println() }
-            /*
-            val refreshToken = dataStore.data.lastOrNull()?.get(KEY_REFRESH_TOKEN)
-                ?: throw RuntimeException("Stored Refresh Token not found.")
-            val tokens = reissueToken(refreshToken)
+            val refreshToken = dataStore.data.map {
+                it[KEY_REFRESH_TOKEN] ?: throw RuntimeException("Stored Refresh Token not found.")
+            }
+            val tokens = reissueToken(refreshToken.first())
             setTokens(
                 accessToken = tokens.accessToken,
                 refreshToken = tokens.refreshToken,
-            )*/
+            )
         }
     }
 
-    private suspend fun reissueToken(refreshToken: String): TokenResponse {
+    private fun reissueToken(refreshToken: String): TokenResponse = runBlocking {
         val response = try {
-            httpClient.get("/refresh/token") {
-                header("refreshToken", refreshToken)
-            }
+            httpClient.get("/refresh/token?refreshToken=$refreshToken")
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
         }
-        return response.body<TokenResponse>().also { println("BODYBODY $it") }
+        return@runBlocking response.body()
     }
 }
 
