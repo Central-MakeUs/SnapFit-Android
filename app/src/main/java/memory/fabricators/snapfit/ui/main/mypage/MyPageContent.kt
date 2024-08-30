@@ -79,9 +79,9 @@ fun MyPageContent(
                 profileImageUrl = state.userInfo?.profile,
                 vibes = state.userInfo?.vibes?.map { it.name } ?: emptyList(),
                 expanded = !scrollState.canScrollBackward,
-                navigationIcon = {
+                /*navigationIcon = {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { *//*TODO*//* },
                     ) {
                         Icon(
                             tint = LocalColorScheme.current.primaryBlack,
@@ -91,14 +91,14 @@ fun MyPageContent(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { *//*TODO*//* }) {
                         Icon(
                             tint = LocalColorScheme.current.primaryBlack,
                             painter = painterResource(id = R.drawable.icon_write),
                             contentDescription = "post",
                         )
                     }
-                },
+                },*/
             )
         },
     ) { innerPaddings ->

@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
@@ -32,6 +33,7 @@ fun UserContent(
     onOpenReservationList: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val uriHandler = LocalUriHandler.current
     Column(
         modifier = modifier,
     ) {
@@ -84,15 +86,7 @@ fun UserContent(
                         Text(text = "사진작가로 전환")
                     },
                     onClick = {
-
-                    },
-                ),
-                Setting(
-                    title = {
-                        Text(text = "상품관리")
-                    },
-                    onClick = {
-
+                        /* TODO */
                     },
                 ),
                 Setting(
@@ -116,7 +110,7 @@ fun UserContent(
                         Text(text = "고객센터")
                     },
                     onClick = {
-
+                        uriHandler.openUri("https://forms.gle/tMHQQ37FQDW3jrDU8")
                     },
                 ),
                 Setting(
@@ -124,7 +118,15 @@ fun UserContent(
                         Text(text = "이용약관")
                     },
                     onClick = {
-
+                        uriHandler.openUri("https://mixolydian-beef-6a0.notion.site/04cb97bab76c40d68aa17475c6e53172?pvs=4")
+                    },
+                ),
+                Setting(
+                    title = {
+                        Text(text = "개인정보처리방침")
+                    },
+                    onClick = {
+                        uriHandler.openUri("https://mixolydian-beef-6a0.notion.site/497ab7ab659743c8b797e2c62e4c7bc9?pvs=4")
                     },
                 ),
                 Setting(
