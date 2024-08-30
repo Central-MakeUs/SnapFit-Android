@@ -5,11 +5,13 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
 import memory.fabricators.snapfit.ui.theme.SnapfitTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel by viewModel<MainActivityViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,7 +23,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SnapfitTheme {
-                SnapfitApp()
+                SnapfitApp(
+                    skipSignUp = viewModel.validTokenExists,
+                )
             }
         }
     }
