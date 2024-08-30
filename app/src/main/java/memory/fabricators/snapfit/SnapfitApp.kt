@@ -111,6 +111,11 @@ fun SnapfitApp(
                         launchSingleTop = true
                     }
                 },
+                onOpenPostDetails = {
+                    navController.navigate(
+                        route = SnapfitDestinations.POST_DETAILS.route + "?postId=$postId",
+                    )
+                }
             )
         }
         composable(

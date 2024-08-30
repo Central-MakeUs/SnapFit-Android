@@ -64,6 +64,7 @@ fun PostDetailsScreen(
     postId: Long,
     onNavigateUp: () -> Unit,
     onNavigateToBooking: () -> Unit,
+    onOpenPostDetails: (postId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = koinViewModel(),
 ) {
@@ -329,6 +330,7 @@ fun PostDetailsScreen(
                                     price = { Text(text = post.price.toString()) },
                                     subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
                                     modifier = Modifier.weight(1f),
+                                    onClick = { onOpenPostDetails(post.id) },
                                 )
                             }
                         }
