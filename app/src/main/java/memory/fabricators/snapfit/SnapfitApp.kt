@@ -19,12 +19,18 @@ import memory.fabricators.snapfit.ui.signup.SignUpScreen
 import memory.fabricators.snapfit.ui.start.StartScreen
 
 @Composable
-fun SnapfitApp() {
+fun SnapfitApp(
+    skipSignUp: Boolean = false,
+) {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = SnapfitDestinations.START.route,
+        startDestination = if(skipSignUp){
+            SnapfitDestinations.MAIN.route
+        } else {
+            SnapfitDestinations.START.route
+        },
     ) {
         composable(route = SnapfitDestinations.MAIN.route) {
             MainScreen(
