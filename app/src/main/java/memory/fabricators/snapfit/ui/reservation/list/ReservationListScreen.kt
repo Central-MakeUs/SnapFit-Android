@@ -31,6 +31,7 @@ import coil.compose.AsyncImage
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.core.number.decFormat
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -127,7 +128,7 @@ private fun ReservationItem(
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text(
-                text = "$title|${locations.joinToString()}",
+                text = "$title | ${locations.joinToString()}",
                 style = LocalTypography.current.body2Semibold,
                 color = LocalColorScheme.current.secondary500,
             )
@@ -148,7 +149,7 @@ private fun ReservationItem(
             }
 
             Text(
-                text = "${price}원",
+                text = "${decFormat.format(price)}원",
                 style = LocalTypography.current.body1Semibold,
                 color = LocalColorScheme.current.secondary500,
             )
