@@ -298,10 +298,10 @@ private fun PhotoRecommendationItem(
                     .fillMaxSize()
                     .clip(RoundedCornerShape(size = 2.dp)),
                 contentScale = ContentScale.Crop,
-            )
+            )/*
             IconButton(
                 modifier = Modifier.align(Alignment.TopEnd),
-                onClick = { /*TODO*/ },
+                onClick = { *//*TODO*//* },
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_favorite_outlined),
@@ -309,7 +309,7 @@ private fun PhotoRecommendationItem(
                     modifier = Modifier.size(24.dp),
                     tint = LocalColorScheme.current.primaryWhite,
                 )
-            }
+            }*/
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(

@@ -84,10 +84,10 @@ fun ProductItem(
                 Box(
                     modifier = Modifier.align(Alignment.TopEnd),
                 ) {
-                    CompositionLocalProvider(
+                    /*CompositionLocalProvider(
                         value = LocalContentColor provides LocalColorScheme.current.primaryWhite,
                         content = favoriteIcon,
-                    )
+                    )*/
                 }
             }
         }
