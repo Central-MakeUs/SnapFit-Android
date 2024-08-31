@@ -47,6 +47,7 @@ import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
+import memory.fabricators.snapfit.core.number.decFormat
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -93,29 +94,28 @@ fun ReservationDetailsScreen(
         onChangeShowDialog(false)
     }
 
-    if (showDialog)
-        BasicDialog(
-            content = {
-                Text("예약이 취소되었습니다")
-            },
-            primaryAction = {
-                TextButton(
-                    onClick = {
-                        closeCancelDialog()
-                        onNavigateUp()
-                    },
-                ) {
-                    Text(
-                        text = "확인",
-                        modifier = Modifier.padding(all = 12.dp),
-                    )
-                }
-            },
-            onDismissRequest = {
-                closeCancelDialog()
-                onNavigateUp()
-            },
-        )
+    if (showDialog) BasicDialog(
+        content = {
+            Text("예약이 취소되었습니다")
+        },
+        primaryAction = {
+            TextButton(
+                onClick = {
+                    closeCancelDialog()
+                    onNavigateUp()
+                },
+            ) {
+                Text(
+                    text = "확인",
+                    modifier = Modifier.padding(all = 12.dp),
+                )
+            }
+        },
+        onDismissRequest = {
+            closeCancelDialog()
+            onNavigateUp()
+        },
+    )
 
     LaunchedEffect(key1 = bookingId) {
         viewModel.fetchReservationDetails(bookingId)
@@ -154,8 +154,7 @@ fun ReservationDetailsScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "정말로 예약을 취소하실건가요?\n" +
-                                "이유를 알려주세요",
+                        text = "정말로 예약을 취소하실건가요?\n" + "이유를 알려주세요",
                         style = LocalTypography.current.title2Semibold,
                         color = LocalColorScheme.current.primaryBlack,
                     )
@@ -348,7 +347,15 @@ fun ReservationDetailsScreen(
             Spacer(modifier = Modifier.height(16.dp))
             BookingDescription(
                 title = { Text(text = "기본") },
-                description = { Text(text = "${state.reservationDetails?.basePrice ?: "-"}원") },
+                description = {
+                    Text(
+                        text = "${
+                            state.reservationDetails?.basePrice?.run {
+                                decFormat.format(this)
+                            } ?: "-"
+                        }원",
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
@@ -366,7 +373,15 @@ fun ReservationDetailsScreen(
                         style = LocalTypography.current.body1Semibold,
                     )
                 },
-                description = { Text(text = "${state.reservationDetails?.totalPrice ?: "-"}원") },
+                description = {
+                    Text(
+                        text = "${
+                            state.reservationDetails?.totalPrice?.run {
+                                decFormat.format(this)
+                            } ?: "-"
+                        }원",
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),

@@ -36,7 +36,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -51,6 +50,7 @@ import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
+import memory.fabricators.snapfit.core.number.decFormat
 import memory.fabricators.snapfit.data.post.model.PostList
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -198,7 +198,7 @@ fun HomeContent(
                 },
             )
             val height = state.postsByVibe?.let {
-                300 * ((it.size + 1) / 2)
+                300 * ((it.size + 1) / 2) + 120
             } ?: 0
 
             LazyVerticalGrid(
@@ -335,8 +335,7 @@ private fun PhotoRecommendationItem(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            // TODO
-            text = "${post.price}원",
+            text = "${decFormat.format(post.price)}원",
             style = LocalTypography.current.body2Semibold,
             color = LocalColorScheme.current.secondary500,
             overflow = TextOverflow.Ellipsis,

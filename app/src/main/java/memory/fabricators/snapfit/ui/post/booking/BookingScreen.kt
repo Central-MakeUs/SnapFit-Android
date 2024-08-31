@@ -55,6 +55,7 @@ import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
 import memory.fabricators.snapfit.core.design_system.TextField
+import memory.fabricators.snapfit.core.number.decFormat
 import memory.fabricators.snapfit.ui.common.CircleChip
 import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -202,7 +203,7 @@ fun BookingScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 SectionHeader(
-                    title = { Text(text = "주문상품") },
+                    title = { Text(text = "주문 상품") },
                 )
                 AnimatedVisibility(
                     visible = state.postDetails != null,
@@ -242,7 +243,7 @@ fun BookingScreen(
                                 color = LocalColorScheme.current.secondary500,
                             )
                             Text(
-                                text = postDetails.personPrice.toString(),
+                                text = decFormat.format(postDetails.personPrice) + "원",
                                 style = LocalTypography.current.caption1Semibold,
                                 color = LocalColorScheme.current.secondary500,
                             )
@@ -438,7 +439,11 @@ fun BookingScreen(
                         },
                     )
                     Text(
-                        text = "- 2인 이상 1인당 ${state.postDetails?.personPrice ?: "-"}원 추가",
+                        text = "- 2인 이상 1인당 ${
+                            state.postDetails?.personPrice?.run {
+                                decFormat.format(this)
+                            } ?: "-"
+                        }원 추가",
                         style = LocalTypography.current.body1Regular,
                         color = LocalColorScheme.current.secondary300,
                         modifier = Modifier.padding(start = 16.dp),
@@ -584,13 +589,7 @@ fun BookingScreen(
                         end = 16.dp,
                         bottom = 16.dp,
                     ),
-                enabled = minutes.isNotBlank()
-                        && preferLocation.isNotBlank()
-                        && preferDate.isNotBlank()
-                        && preferTime.isNotBlank()
-                        && countOfPeople != 0
-                        && email.isNotBlank()
-                        && phoneNumber.isNotBlank(),
+                enabled = minutes.isNotBlank() && preferLocation.isNotBlank() && preferDate.isNotBlank() && preferTime.isNotBlank() && countOfPeople != 0 && email.isNotBlank() && phoneNumber.isNotBlank(),
             ) {
                 Text(text = "예약하기")
             }

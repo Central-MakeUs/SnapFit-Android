@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,11 +48,12 @@ fun UserContent(
         BasicDialog(
             content = {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = ("인증된 사용자만 사진작가로 전환할 수 있습니다"),
+                        text = "인증된 사용자만 사진작가로 전환할 수 있습니다",
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         textAlign = TextAlign.Center,
                     )
                 }
@@ -175,7 +175,7 @@ fun UserContent(
                     onClick = {
 
                     },
-                ),
+                ),/*
                 Setting(
                     title = {
                         Text(
@@ -186,7 +186,7 @@ fun UserContent(
                     onClick = {
 
                     },
-                ),
+                ),*/
             ),
         )
         Spacer(modifier = Modifier.height(120.dp))

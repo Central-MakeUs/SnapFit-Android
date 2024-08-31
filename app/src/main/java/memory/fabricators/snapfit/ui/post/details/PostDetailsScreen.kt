@@ -53,6 +53,7 @@ import memory.fabricators.snapfit.core.design_system.BasicDialog
 import memory.fabricators.snapfit.core.design_system.Button
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.core.number.decFormat
 import memory.fabricators.snapfit.ui.common.ProductItem
 import memory.fabricators.snapfit.ui.common.ProductItemTag
 import org.koin.androidx.compose.koinViewModel
@@ -231,7 +232,11 @@ fun PostDetailsScreen(
                             }
                             Spacer(modifier = Modifier.height(32.dp))
                             Text(
-                                text = if (postDetails.prices.size > 1) "${postDetails.prices[0].price}원~" else "${postDetails.prices[0].price}원",
+                                text = if (postDetails.prices.size > 1) {
+                                    "${decFormat.format(postDetails.prices[0].price)}원~"
+                                } else {
+                                    "${decFormat.format(postDetails.prices[0].price)}원"
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(start = 16.dp),
@@ -327,7 +332,7 @@ fun PostDetailsScreen(
                                     backgroundImageUrl = post.thumbnail,
                                     title = { Text(text = post.title) },
                                     tags = post.vibes.map { ProductItemTag(text = it) },
-                                    price = { Text(text = post.price.toString()) },
+                                    price = { Text(text = decFormat.format(post.price) + "원") },
                                     subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
                                     modifier = Modifier.weight(1f),
                                     onClick = { onOpenPostDetails(post.id) },

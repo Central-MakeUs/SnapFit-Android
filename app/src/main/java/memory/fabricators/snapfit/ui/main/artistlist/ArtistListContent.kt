@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import memory.fabricators.snapfit.R
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
+import memory.fabricators.snapfit.core.number.decFormat
 import memory.fabricators.snapfit.ui.common.ProductItem
 import memory.fabricators.snapfit.ui.common.ProductItemTag
 import org.koin.androidx.compose.koinViewModel
@@ -169,7 +170,7 @@ fun ArtistListContent(
                         backgroundImageUrl = post.thumbnail,
                         title = { Text(text = post.title) },
                         tags = post.vibes.map { ProductItemTag(text = it) },
-                        price = { Text(text = post.price.toString()) },
+                        price = { Text(text = "${decFormat.format(post.price)}원") },
                         onClick = { onOpenPostDetails(post.id) },
                         subtitle = { Text(text = post.locations.joinToString { "$it, " }) },
                     )
