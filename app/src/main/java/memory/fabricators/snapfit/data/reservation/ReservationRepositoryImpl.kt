@@ -147,4 +147,7 @@ class ReservationRepositoryImpl(
             },
         )
     }
+
+    override suspend fun getReservationCount(): Int =
+        reservationNetworkDataSource.getReservationCount().count
 }

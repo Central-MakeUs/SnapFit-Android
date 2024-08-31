@@ -20,4 +20,6 @@ abstract class ReservationRepository {
     abstract suspend fun getReservationDetails(reservationId: Long): ReservationDetails
 
     abstract suspend fun getReservations(offset: Int, limit: Int): ReservationList
+
+    abstract suspend fun getReservationCount(): Int
 }
