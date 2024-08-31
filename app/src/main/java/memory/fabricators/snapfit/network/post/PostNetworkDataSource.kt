@@ -19,7 +19,7 @@ abstract class PostNetworkDataSource {
     abstract suspend fun createPost(postRequest: PostRequest): PostResponse
     abstract suspend fun likePost(postId: String)
     abstract suspend fun unlikePost(postId: String)
-    abstract suspend fun getPostLikeCount(postId: String): PostLikeCountResponse
+    abstract suspend fun getPostLikeCount(): PostLikeCountResponse
     abstract suspend fun getAllPosts(): PostListResponse
     abstract suspend fun getPostsByVibes(vibes: List<String>): PostListResponse
 }

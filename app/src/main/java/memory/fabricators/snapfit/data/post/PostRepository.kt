@@ -26,7 +26,7 @@ abstract class PostRepository {
 
     abstract suspend fun likePost(postId: String)
     abstract suspend fun unlikePost(postId: String)
-    abstract suspend fun getPostLikeCount(postId: String): Int
+    abstract suspend fun getPostLikeCount(): Int
     abstract suspend fun getAllPosts(): PostList
     abstract suspend fun getPostsByVibes(vibes: List<String>): PostList
 }

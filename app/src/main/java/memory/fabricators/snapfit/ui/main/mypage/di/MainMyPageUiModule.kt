@@ -7,5 +7,11 @@ import org.koin.dsl.module
 
 val mainMyPageUiModule: Module
     get() = module {
-        viewModel { MyPageViewModel(userRepository = get()) }
+        viewModel {
+            MyPageViewModel(
+                userRepository = get(),
+                reservationRepository = get(),
+                postRepository = get(),
+            )
+        }
     }

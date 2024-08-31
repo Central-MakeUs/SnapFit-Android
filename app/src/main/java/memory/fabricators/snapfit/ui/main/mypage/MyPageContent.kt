@@ -92,6 +92,8 @@ fun MyPageContent(
             )
         } else {
             UserContent(
+                reservationCount = state.reservationCount,
+                favoriteCount = state.favoriteCount,
                 onOpenReservationList = onOpenReservationList,
                 modifier = Modifier
                     .fillMaxSize()
@@ -158,7 +160,10 @@ private fun MyPageTopAppBar(
                     exit = slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut(),
                 ) {
                     Row(
-                        modifier = Modifier.padding(4.dp),
+                        modifier = Modifier.padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                         content = {
                             Text(
                                 text = username,

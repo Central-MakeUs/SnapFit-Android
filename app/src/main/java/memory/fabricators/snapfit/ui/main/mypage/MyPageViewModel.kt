@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import memory.fabricators.snapfit.data.post.PostRepository
 import memory.fabricators.snapfit.data.reservation.ReservationRepository
 import memory.fabricators.snapfit.data.user.UserRepository
 import memory.fabricators.snapfit.data.user.model.UserInfo
@@ -15,6 +16,7 @@ import org.orbitmvi.orbit.viewmodel.container
 class MyPageViewModel(
     private val userRepository: UserRepository,
     private val reservationRepository: ReservationRepository,
+    private val postRepository: PostRepository,
 ) : ViewModel(),
     ContainerHost<MyPageState, Unit> {
     override val container = container<MyPageState, Unit>(MyPageState())
@@ -55,7 +57,7 @@ class MyPageViewModel(
 
     private fun fetchFavoriteCount() = intent {
         kotlin.runCatching {
-            reservationRepository.getReservationCount()
+            postRepository.getPostLikeCount()
         }.onSuccess {
             reduce {
                 state.copy(favoriteCount = it)

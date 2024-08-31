@@ -161,8 +161,8 @@ class PostRepositoryImpl(
         postNetworkDataSource.unlikePost(postId)
     }
 
-    override suspend fun getPostLikeCount(postId: String): Int {
-        val response = postNetworkDataSource.getPostLikeCount(postId)
+    override suspend fun getPostLikeCount(): Int {
+        val response = postNetworkDataSource.getPostLikeCount()
         return response.count
     }
 

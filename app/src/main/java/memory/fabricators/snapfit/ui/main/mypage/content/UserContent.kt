@@ -1,8 +1,11 @@
 package memory.fabricators.snapfit.ui.main.mypage.content
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,11 +20,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import memory.fabricators.snapfit.core.design_system.BasicDialog
 import memory.fabricators.snapfit.core.design_system.LocalColorScheme
 import memory.fabricators.snapfit.core.design_system.LocalTypography
 import memory.fabricators.snapfit.core.design_system.SectionHeader
@@ -30,10 +36,41 @@ import memory.fabricators.snapfit.ui.main.mypage.composables.SettingsList
 
 @Composable
 fun UserContent(
+    reservationCount: Int?,
+    favoriteCount: Int?,
     onOpenReservationList: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uriHandler = LocalUriHandler.current
+
+    val (showArtistDialog, onShowArtistDialogChange) = remember { mutableStateOf(false) }
+
+    if (showArtistDialog)
+        BasicDialog(
+            content = {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = ("인증된 사용자만 사진작가로 전환할 수 있습니다"),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            },
+            primaryAction = {
+                Text(
+                    text = "확인",
+                    modifier = Modifier
+                        .clickable { onShowArtistDialogChange(false) }
+                        .fillMaxWidth()
+                        .padding(all = 16.dp),
+                    textAlign = TextAlign.Center,
+                )
+            },
+            onDismissRequest = { onShowArtistDialogChange(false) },
+        )
+
     Column(
         modifier = modifier,
     ) {
@@ -53,7 +90,7 @@ fun UserContent(
                         boxHeight = with(localDensity) { coordinates.size.height.toDp() }
                     },
             ) {
-                Text(text = "--")
+                Text(text = "${reservationCount ?: "-"}")
             }
             VerticalDivider(
                 modifier = Modifier.height(boxHeight),
@@ -66,13 +103,12 @@ fun UserContent(
                     .weight(1f)
                     .height(boxHeight),
             ) {
-                Text(text = "--")
+                Text(text = "${favoriteCount ?: "-"}")
             }
         }
         HorizontalDivider(
             color = LocalColorScheme.current.secondary100,
         )
-        // TODO
         SectionHeader(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,7 +122,7 @@ fun UserContent(
                         Text(text = "사진작가로 전환")
                     },
                     onClick = {
-                        /* TODO */
+                        onShowArtistDialogChange(true)
                     },
                 ),
                 Setting(

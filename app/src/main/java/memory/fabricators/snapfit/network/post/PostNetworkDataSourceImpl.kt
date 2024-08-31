@@ -63,8 +63,8 @@ class PostNetworkDataSourceImpl(
         }
     }
 
-    override suspend fun getPostLikeCount(postId: String): PostLikeCountResponse {
-        val response = httpClient.get("/snapfit/post/$postId/like/count") {
+    override suspend fun getPostLikeCount(): PostLikeCountResponse {
+        val response = httpClient.get("/snapfit/post//like/count") {
             bearerAuth(token = tokenManager.accessToken)
         }
         return response.body()
