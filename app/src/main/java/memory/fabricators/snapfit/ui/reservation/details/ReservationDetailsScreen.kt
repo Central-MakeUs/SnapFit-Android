@@ -288,7 +288,7 @@ fun ReservationDetailsScreen(
                             color = LocalColorScheme.current.secondary500,
                         )
                         Text(
-                            text = decFormat.format(reservationDetails.personPrice) + "원",
+                            text = decFormat.format(reservationDetails.personPrice) + "원`",
                             style = LocalTypography.current.caption1Semibold,
                             color = LocalColorScheme.current.secondary500,
                         )
